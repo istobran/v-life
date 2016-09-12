@@ -1,19 +1,12 @@
 <template>
-  <div id="calendar" class="calendar">
-    <h1>{{ today }}</h1>
-    <button v-on:click="render(2016, 08, 12)">Render</button>
-  </div>
+  <div id="calendar" class="calendar">123</div>
 </template>
 
 <script>
 export default {
   data: function() {
     return {
-      msg: 'Hello World!',
-      today: new Date(),
-      m_days: null,
-      firstday: null,
-      tr_num: null
+      today: new Date()
     }
   },
   computed: function() {
@@ -21,9 +14,9 @@ export default {
       // m_days: function() {    //定义一个包含十二个月在内的月份总天数的数组
       //   return new Array(31, 28 + this.is_leap(ynow), 31, 30, 31, 31, 30, 31, 30, 31, 30, 31);
       // }
-      cal_body: function() {
-        return this.render(ynow, mnow, dnow);
-      },
+      // cal_body: function() {
+      //   return this.render(ynow, mnow, dnow);
+      // },
       ynow: function() {
         return today.getFullYear()
       },
@@ -53,43 +46,52 @@ export default {
       }
       return res;
     },
-    buildCalHTML: function() {
-      var tempStr = "<table>";
+    render: function() {
+      // 获取当前年月日
+      var ynow = this.today.getFullYear();
+      var mnow = this.today.getMonth();
+      var dnow = this.today.getDay();
+
+      // 定义一个包含十二个月在内的月份总天数的数组
+      var m_days =  new Array(31, 28 + this.is_leap(ynow), 31, 30, 31, 31, 30, 31, 30, 31, 30, 31);
+
+      // 计算处理月第一天是星期几
+      var firstday = new Date(ynow, mnow, dnow).getDay();
+
+      // 使用以上两个条件计算日历所需的行数
+      var tr_num = Math.ceil( (m_days[mnow] + firstday) / 7 );
+
+      // 建立表格
+      var tableHTML = "<table>";
       var i, k; // 行，列计数器
       var idx, date_str;
-      for (i = 0; i < this.tr_num; i++) {
-          tempStr += "<tr>";
+      for (i = 0; i < tr_num; i++) {
+          tableHTML += "<tr>";
           for(k = 0; k < 7; k++) {        //内层for语句 - td标签
             idx = i * 7 + k;        //表格单元的自然序号
-            date_str = idx - this.firstday + 1;        //计算日期
-            if (date_str <= 0 || date_str > this.m_days[mnow]) {
+            date_str = idx - firstday + 1;        //计算日期
+            if (date_str <= 0 || date_str > m_days[mnow]) {
               date_str = "&nbsp;";      // 处理无效日期
             } else {
-              date_str = idx - this.firstday + 1;
+              date_str = idx - firstday + 1;
             }
-            //这里是处理有效日期代码
+            // 处理有效日期代码
             if (date_str == dnow) {     //判断是否是今天
-              tempStr += "<td style='border:1px solid red;'>" + date_str + "</td>";
+              tableHTML += "<td style='border:1px solid red;'>" + date_str + "</td>";
             } else {
-              tempStr += "<td>" + date_str + "</td>";
+              tableHTML += "<td>" + date_str + "</td>";
             }
           }
-          tempStr += "</tr>";
+          tableHTML += "</tr>";
       }
-      tempStr += "</table>"
-      return tempStr;
-    },
-    render: function() {
-      // 定义一个包含十二个月在内的月份总天数的数组
-      this.m_days =  new Array(31, 28 + this.is_leap(this.ynow), 31, 30, 31, 31, 30, 31, 30, 31, 30, 31);
-      // 计算处理月第一天是星期几
-      this.firstday = new Date(this.ynow, this.mnow, this.dnow).getDay();
-      // 使用以上两个条件计算日历所需的行数
-      this.tr_num = Math.ceil( (this.m_days[this.mnow] + this.firstday) / 7 );
-      // 建立表格
-      var ifg = this.buildCalHTML();
-      document.querySelector("#calendar").innerHTML = ifg;
+      tableHTML += "</table>"
+
+      // 实行渲染
+      document.getElementById("calendar").innerHTML = tableHTML;
     }
+  },
+  ready: function() {
+    this.render();
   }
 }
 </script>
