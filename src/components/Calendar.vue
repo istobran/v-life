@@ -67,14 +67,16 @@ export default {
       var idx, date_str;
       for (i = 0; i < tr_num; i++) {
           tableHTML += "<tr>";
-          for(k = 0; k < 7; k++) {        //内层for语句 - td标签
+          for(k = 0; k < 7; k++) {
             idx = i * 7 + k;        //表格单元的自然序号
             date_str = idx - firstday + 1;        //计算日期
+
             if (date_str <= 0 || date_str > m_days[mnow]) {
               date_str = "&nbsp;";      // 处理无效日期
             } else {
               date_str = idx - firstday + 1;
             }
+
             // 处理有效日期代码
             if (date_str == dnow) {     //判断是否是今天
               tableHTML += "<td style='border:1px solid red;'>" + date_str + "</td>";
