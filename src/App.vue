@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div id="app">
     <img class="logo" src="./assets/logo.png">
     <hello></hello>
@@ -20,14 +20,19 @@
       <a href="https://github.com/vuejs/vuex/" target="_blank">vuex</a> for state management.
     </p>
   </div>
+</template> -->
+<template>
+  <div id="app">
+    <calendar></calendar>
+  </div>
 </template>
 
 <script>
-import Hello from './components/Hello'
+import Calendar from './components/Calendar'
 
 export default {
   components: {
-    Hello
+    Calendar
   }
 }
 </script>

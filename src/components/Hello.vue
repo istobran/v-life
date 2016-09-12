@@ -1,18 +1,82 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
+  <div class="calendar">
+    <h1>{{ cal_body }}</h1>
   </div>
 </template>
 
 <script>
 export default {
-  data () {
+  data: function() {
     return {
-      // note: changing this line won't causes changes
-      // with hot-reload because the reloaded component
-      // preserves its current state and we are modifying
-      // its initial state.
-      msg: 'Hello World!'
+      msg: 'Hello World!',
+      today: new Date()
+    }
+  },
+  computed: function() {
+    return {
+      // m_days: function() {    //定义一个包含十二个月在内的月份总天数的数组
+      //   return new Array(31, 28 + this.is_leap(ynow), 31, 30, 31, 31, 30, 31, 30, 31, 30, 31);
+      // }
+      cal_body: function() {
+        var ynow = today.getFullYear();
+        var mnow = today.getMonth();
+        var dnow = today.getDay();
+      }
+    }
+  }
+  methods: function() {
+    return {
+      is_leap: function(year) {
+        if (year % 100 === 0) {   // 判断是否能被100整除
+          if (year % 400 === 0) {   // 判断是否能被400整除
+            res = 1;    // 能被 100 又能被 400 整除，说明是闰年
+          } else {
+            res = 0;    // 能被 100 整除但不能被 400 整除，说明是平年
+          }
+        } else {
+          if (year % 4 == 0) {    // 判断是否能被 4 整除
+            res = 1;  // 不能被 100 整除，但能被 4 整除，说明是闰年
+          } else {
+            res = 0;  // 不能被 100 也不能被 4 整除，说明是平年
+          }
+        }
+        return res;
+      },
+      buildCalHTML: function(tr_num) {
+        var tempStr = "<table>";
+        var i, j; // 行，列计数器
+        for (i = 0; i < tr_num; i++) {
+            tempStr += "<tr>";
+            for(k = 0; k < 7; k++) {        //内层for语句 - td标签
+              idx = i * 7 + k;        //表格单元的自然序号
+              date_str = idx - firstday + 1;        //计算日期
+              if (date_str <= 0 || date_str > m_days[mnow]) {
+                date_str = "&nbsp;";      // 处理无效日期
+              } else {
+                date_str = idx-firstday + 1;
+              }
+              //这里是处理有效日期代码
+              if (date_str == dnow) {     //判断是否是今天
+                tempStr += "<td style='border:1px solid red;'>" + date_str + "</td>";
+              } else {
+                tempStr += "<td>" + date_str + "</td>";
+              }
+            }
+            tempStr += "</tr>";
+        }
+        tempStr += "</table>"
+        return tempStr;
+      },
+      render: function(ynow, mnow, dnow) {
+        // 定义一个包含十二个月在内的月份总天数的数组
+        var m_days =  new Array(31, 28 + this.is_leap(ynow), 31, 30, 31, 31, 30, 31, 30, 31, 30, 31);
+        // 计算处理月第一天是星期几
+        firstday=new Date(ynow, mnow, dnow).getDay();
+        // 使用以上两个条件计算日历所需的行数
+        tr_num = Math.ceil( (m_days[mnow] + firstday) / 7 );
+        // 建立表格
+        this.buildCalHTML();
+      }
     }
   }
 }
