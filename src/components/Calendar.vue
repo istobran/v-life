@@ -1,22 +1,24 @@
-<template>
-  <h1 id="calendar" class="calendar">日程行事历</h1>
-  <table>
-    <thead>
-      <tr>
-        <td v-for="item in weekTitle">{{ item.text }}</td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="row in dateItems">
-        <td v-for="col in row">
-          <p>{{ col.day }}</p>
-          <ul>
-            <li v-for="item in col.eventList">{{ item.text }}</li>
-          </ul>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<template lang="html">
+  <div id="calendar">
+    <h1 class="calendar">日程行事历</h1>
+    <table>
+      <thead>
+        <tr>
+          <td v-for="item in weekTitle">{{ item.text }}</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="row in dateItems">
+          <td v-for="col in row">
+            <p>{{ col.day }}</p>
+            <ul>
+              <li v-for="item in col.eventList">{{ item.text }}</li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <script>
@@ -110,8 +112,22 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1 {
-  color: #42b983;
-}
+<style lang="scss" scoped>
+	#calendar {
+  	@media screen and (min-width: 961px) and (max-width: 1880px) {
+  	  margin-left: 375px;
+  	}
+
+  	@media screen and (min-width: 961px) and (max-width: 1620px) {
+  	}
+
+  	@media screen and (min-width: 961px) and (max-width: 1320px) {
+  	}
+
+  	@media screen and (max-width: 960px) {
+  	}
+
+  	@media screen and (max-width: 736px) {
+  	}
+	}
 </style>

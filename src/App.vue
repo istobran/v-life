@@ -1,8 +1,6 @@
 <template>
-  <div id="app">
     <sidebar></sidebar>
     <calendar></calendar>
-  </div>
 </template>
 
 <script>
