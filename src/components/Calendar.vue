@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  data: function() {
+  data() {
     return {
       today: new Date(),      // 现在的日期
       weekTitle: [        // 星期标头
@@ -95,7 +95,7 @@ export default {
       ]
     }
   },
-  computed: function() {
+  computed() {
     return {
 
     }
@@ -103,7 +103,7 @@ export default {
   methods: {
 
   },
-  ready: function() {
+  ready() {
     // this.render();
   }
 }
