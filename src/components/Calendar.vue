@@ -114,20 +114,17 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 	#calendar {
-  	@media screen and (min-width: 961px) and (max-width: 1880px) {
-  	  margin-left: 375px;
-  	}
-
-  	@media screen and (min-width: 961px) and (max-width: 1620px) {
+	  margin-left: 375px;
+    @media screen and (min-width: 961px) and (max-width: 1880px) {
+  	  margin-left: 300px;
   	}
 
   	@media screen and (min-width: 961px) and (max-width: 1320px) {
+  	  margin-left: 20%;
   	}
 
   	@media screen and (max-width: 960px) {
-  	}
-
-  	@media screen and (max-width: 736px) {
+  	  margin-left: 275px;
   	}
 	}
 </style>
