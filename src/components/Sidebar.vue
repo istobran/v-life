@@ -18,7 +18,7 @@
     </div>
     <div class="bottom">
       <div class="staff">
-        <span class="icon fa-diamond">Developed by <a href="https://github.com/istobran">BangZ</a></span>
+        <a href="https://github.com/istobran"><span><i class="icon fa-diamond"></i> Developed by BangZ</span></a>
       </div>
     </div>
   </div>
@@ -37,9 +37,21 @@ export default {
       navList: [
         {
           linkUrl: "#calendar",
-          classText: "icon fa-home",
-          text: "我的日历",
+          classText: "icon fa-calendar",
+          text: "日历备忘",
           active: true
+        },
+        {
+          linkUrl: "#accounting",
+          classText: "icon fa-area-chart",
+          text: "帐务信息",
+          active: false
+        },
+        {
+          linkUrl: "#s_status",
+          classText: "icon fa-server",
+          text: "服务器状态",
+          active: false
         }
       ]
     };
@@ -133,7 +145,7 @@ export default {
         box-shadow: inset 0 0 0.25em 0 rgba(0, 0, 0, 0.125);
         color: #fff;
         span:before {
-          color: #e27689;
+          color: #1e9a90;
         }
       }
       span {
@@ -159,5 +171,21 @@ export default {
     font-style: normal;
     font-weight: normal;
     line-height: 1;
+  }
+  .staff {
+    text-align: center;
+    font-size: 0.8em;
+    a {
+      display: inline-block;
+      text-decoration: none;
+      transition: color 0.35s ease-in-out;
+      color: #41484c;
+      &:hover {
+        color: #fff;
+      }
+      span {
+        display: block;
+      }
+    }
   }
 </style>
