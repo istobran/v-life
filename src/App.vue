@@ -1,15 +1,13 @@
 <template>
-    <sidebar></sidebar>
-    <calendar></calendar>
+  <sidebar></sidebar>
+  <router-view></router-view>
 </template>
 
 <script>
-import Calendar from './components/Calendar'
 import Sidebar from './components/Sidebar'
 
 export default {
   components: {
-    Calendar,
     Sidebar
   }
 }

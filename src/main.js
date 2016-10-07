@@ -1,8 +1,19 @@
 import Vue from 'vue'
+import VueRouter from 'vue-router'
 import App from './App'
+import Calendar from './components/Calendar'
 
-/* eslint-disable no-new */
-new Vue({
-  el: 'body',
-  components: { App }
+Vue.use(VueRouter)
+
+var router = new VueRouter({
+  history: true
 })
+router.map({
+  '/calendar' : {
+    component: Calendar
+  }
+})
+router.redirect({
+  '*': '/calendar'
+})
+router.start(App, 'app')

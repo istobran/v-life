@@ -52,6 +52,12 @@ export default {
           classText: "icon fa-server",
           text: "服务器状态",
           active: false
+        },
+        {
+          linkUrl: "#int_clock",
+          classText: "icon fa-clock-o",
+          text: "国际时钟",
+          active: false
         }
       ]
     };
