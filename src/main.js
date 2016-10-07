@@ -1,3 +1,6 @@
+/*
+  Vue version 1.0
+*/
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App'
