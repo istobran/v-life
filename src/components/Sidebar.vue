@@ -1,6 +1,6 @@
 <template lang="html">
-  <div id="sidebar">
-    <div class="top">
+  <aside id="sidebar">
+    <section class="top">
       <div id="userinfo">
         <span class="image avatar48"><img :src="user.avatarUrl" alt="" /></span>
         <h1 id="username">{{ user.username }}</h1>
@@ -15,13 +15,13 @@
           </li>
         </ul>
       </nav>
-    </div>
-    <div class="bottom">
+    </section>
+    <footer class="bottom">
       <div class="staff">
         <a href="https://github.com/istobran" target="_blank"><span><i class="icon fa-diamond"></i> Developed by BangZ</span></a>
       </div>
-    </div>
-  </div>
+    </footer>
+  </aside>
 </template>
 
 <script>

@@ -1,12 +1,17 @@
 <template>
   <div id="app">
-    <router-view name="sidebar"></router-view>
-    <router-view name="main"></router-view>
+    <sidebar></sidebar>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
+import Sidebar from './components/Sidebar.vue'
+
 export default {
+  components: {
+    Sidebar
+  }
 }
 </script>
 
@@ -45,15 +50,25 @@ body, input, textarea, select {
     font-size: 14pt;
   }
 }
+#app {
+  margin-left: 375px;
+  @media screen and (min-width: 961px) and (max-width: 1880px) {
+    margin-left: 300px;
+  }
+
+  @media screen and (min-width: 961px) and (max-width: 1320px) {
+    margin-left: 20%;
+  }
+
+  @media screen and (max-width: 960px) {
+    margin-left: 275px;
+  }
+}
 html {
   height: 100%;
 }
-
 body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
+  min-height: 100vh;
 }
 
 </style>

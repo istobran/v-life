@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App.vue'
-import Sidebar from './components/Sidebar.vue'
 import Calendar from './components/Calendar.vue'
 import Accounting from './components/Accounting.vue'
 import ServerStatus from './components/ServerStatus.vue'
@@ -14,10 +13,10 @@ const router = new VueRouter({
   linkActiveClass: 'active',
   routes: [
     { path: '/', redirect: '/calendar' },
-    { path: '/calendar', components: { sidebar: Sidebar, main: Calendar } },
-    { path: '/accounting', components: { sidebar: Sidebar, main: Accounting } },
-    { path: '/s_status', components: { sidebar: Sidebar, main: ServerStatus } },
-    { path: '/in_clock', components: { sidebar: Sidebar, main: IClock } },
+    { path: '/calendar', component: Calendar },
+    { path: '/accounting', component: Accounting },
+    { path: '/s_status', component: ServerStatus },
+    { path: '/in_clock', component: IClock },
     { path: '*', redirect: '/' }
   ]
 })

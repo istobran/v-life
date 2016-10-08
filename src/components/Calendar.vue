@@ -1,23 +1,34 @@
 <template lang="html">
   <div id="calendar">
-    <h1 class="calendar">日程行事历</h1>
-    <table>
-      <thead>
-        <tr>
-          <td v-for="item in weekTitle">{{ item.text }}</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="row in dateItems">
-          <td v-for="col in row">
-            <p>{{ col.day }}</p>
+    <header class="banner">
+      <h1 class="title">日程行事历</h1>
+    </header>
+    <main>
+      <aside class="c_panel">
+        <div class="display_mode">
+          <h4>显示模式</h4>
+          <p>
+            <input type="radio" name="mode" value="1">
+            <label for="mode">日历</label>
+            <input type="radio" name="mode" value="2">
+            <label for="mode">时间轴</label>
+          </p>
+        </div>
+      </aside>
+      <section class="table">
+        <ul class="thead">
+          <li v-for="item in weekTitle">{{ item.text }}</li>
+        </ul>
+        <ul class="tbody">
+          <li class="unit" v-for="unit in dateItems">
+            <p>{{ unit.day }}</p>
             <ul>
-              <li v-for="item in col.eventList">{{ item.text }}</li>
+              <li v-for="ev in unit.eventList">{{ ev.text }}</li>
             </ul>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          </li>
+        </ul>
+      </section>
+    </main>
   </div>
 </template>
 
@@ -36,64 +47,62 @@ export default {
         { text: "星期日" }
       ],
       dateItems: [      // 具体的日期数据
-        [     // 一行
-          {   // 一行中的一天
-            day: 1,   // 这天是几号
-            eventList: [    // 事件表
-              {
-                text: "one"
-              }
-            ]
-          },
-          {   // 一行中的一天
-            day: 2,   // 这天是几号
-            eventList: [    // 事件表
-              {
-                text: "two"
-              }
-            ]
-          },
-          {   // 一行中的一天
-            day: 3,   // 这天是几号
-            eventList: [    // 事件表
-              {
-                text: "three"
-              }
-            ]
-          },
-          {   // 一行中的一天
-            day: 4,   // 这天是几号
-            eventList: [    // 事件表
-              {
-                text: "four"
-              }
-            ]
-          },
-          {   // 一行中的一天
-            day: 5,   // 这天是几号
-            eventList: [    // 事件表
-              {
-                text: "five"
-              }
-            ]
-          },
-          {   // 一行中的一天
-            day: 6,   // 这天是几号
-            eventList: [    // 事件表
-              {
-                text: "six"
-              }
-            ]
-          },
-          {   // 一行中的一天
-            day: 7,   // 这天是几号
-            eventList: [    // 事件表
-              {
-                text: "seven"
-              }
-            ]
-          }
-        ]
+        {   // 一天
+          day: 1,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "one"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 2,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "two"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 3,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "three"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 4,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "four"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 5,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "five"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 6,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "six"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 7,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "seven"
+            }
+          ]
+        }
       ]
     }
   },
@@ -113,18 +122,65 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-	#calendar {
-	  margin-left: 375px;
-    @media screen and (min-width: 961px) and (max-width: 1880px) {
-  	  margin-left: 300px;
-  	}
-
-  	@media screen and (min-width: 961px) and (max-width: 1320px) {
-  	  margin-left: 20%;
-  	}
-
-  	@media screen and (max-width: 960px) {
-  	  margin-left: 275px;
-  	}
-	}
+  #calendar {
+    background: #e4e5e9;
+  }
+  .banner {
+    height: 350px;
+    background: url('../assets/banner.jpg');
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .title {
+      color: #fff;
+      font-size: 2em;
+      font-weight: bolder;
+    }
+  }
+  main {
+    position: relative;
+    margin: -72px auto 0;
+    width: 840px;
+    aside {
+      background: #00b9ff;
+      width: 330px;
+      height: 600px;
+      position: absolute;
+      top: 0;
+      right: -150px;
+    }
+    section {
+      background: #fff;
+      position: relative;
+      width: 850px;
+      height: 540px;
+      margin-left: -150px;
+      z-index: 2;
+      li {
+        display: inline-block;
+        width: 14.28%;
+      }
+      .thead {
+        box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+        li {
+          font-weight: bold;
+          text-align: center;
+          line-height: 80px;
+          font-size: .8em;
+        }
+      }
+      .tbody {
+        li.unit {
+          box-shadow: inset 0 0 1px #ccc;
+          p {
+            line-height: 2em;
+            font-size: .6em;
+            font-weight: bold;
+            text-align: right;
+            padding-right: 1em;
+          }
+        }
+      }
+    }
+  }
 </style>
