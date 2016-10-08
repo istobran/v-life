@@ -9,9 +9,12 @@
       <nav id="nav">
         <ul>
           <li v-for="item in navList">
-            <a :href="item.linkUrl" :class="{ 'active' : item.active }">
+            <router-link :to="item.linkAddr" :class="{ 'active' : item.active }">
               <span :class="item.classText">{{ item.text }}</span>
-            </a>
+            </router-link>
+            <!-- <a :href="item.linkUrl" :class="{ 'active' : item.active }">
+              <span :class="item.classText">{{ item.text }}</span>
+            </a> -->
           </li>
         </ul>
       </nav>
@@ -36,25 +39,25 @@ export default {
       },
       navList: [
         {
-          linkUrl: "#calendar",
+          linkAddr: "/calendar",
           classText: "icon fa-calendar",
           text: "日历备忘",
           active: true
         },
         {
-          linkUrl: "#accounting",
+          linkAddr: "/accounting",
           classText: "icon fa-area-chart",
           text: "帐务信息",
           active: false
         },
         {
-          linkUrl: "#s_status",
+          linkAddr: "/s_status",
           classText: "icon fa-server",
           text: "服务器状态",
           active: false
         },
         {
-          linkUrl: "#int_clock",
+          linkAddr: "/in_clock",
           classText: "icon fa-clock-o",
           text: "国际时钟",
           active: false
