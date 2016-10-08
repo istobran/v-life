@@ -11,12 +11,14 @@ Vue.use(VueRouter);
 
 const router = new VueRouter({
   mode: 'history',
+  linkActiveClass: 'active',
   routes: [
     { path: '/', redirect: '/calendar' },
     { path: '/calendar', components: { sidebar: Sidebar, main: Calendar } },
     { path: '/accounting', components: { sidebar: Sidebar, main: Accounting } },
     { path: '/s_status', components: { sidebar: Sidebar, main: ServerStatus } },
-    { path: '/in_clock', components: { sidebar: Sidebar, main: IClock } }
+    { path: '/in_clock', components: { sidebar: Sidebar, main: IClock } },
+    { path: '*', redirect: '/' }
   ]
 })
 

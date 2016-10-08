@@ -9,19 +9,16 @@
       <nav id="nav">
         <ul>
           <li v-for="item in navList">
-            <router-link :to="item.linkAddr" :class="{ 'active' : item.active }">
+            <router-link :to="item.linkAddr">
               <span :class="item.classText">{{ item.text }}</span>
             </router-link>
-            <!-- <a :href="item.linkUrl" :class="{ 'active' : item.active }">
-              <span :class="item.classText">{{ item.text }}</span>
-            </a> -->
           </li>
         </ul>
       </nav>
     </div>
     <div class="bottom">
       <div class="staff">
-        <a href="https://github.com/istobran"><span><i class="icon fa-diamond"></i> Developed by BangZ</span></a>
+        <a href="https://github.com/istobran" target="_blank"><span><i class="icon fa-diamond"></i> Developed by BangZ</span></a>
       </div>
     </div>
   </div>
@@ -31,6 +28,9 @@
 export default {
   data() {
     return {
+      pageState: {
+        selectedIndex: 0
+      },
       user: {
         avatarUrl: "http://en.gravatar.com/userimage/99616975/827489fdfb37acbf6ed0254f4f311417.jpg?size=48",
         username: "BangZ",
@@ -41,26 +41,22 @@ export default {
         {
           linkAddr: "/calendar",
           classText: "icon fa-calendar",
-          text: "日历备忘",
-          active: true
+          text: "日历备忘"
         },
         {
           linkAddr: "/accounting",
           classText: "icon fa-area-chart",
-          text: "帐务信息",
-          active: false
+          text: "帐务信息"
         },
         {
           linkAddr: "/s_status",
           classText: "icon fa-server",
-          text: "服务器状态",
-          active: false
+          text: "服务器状态"
         },
         {
           linkAddr: "/in_clock",
           classText: "icon fa-clock-o",
-          text: "国际时钟",
-          active: false
+          text: "国际时钟"
         }
       ]
     };
@@ -68,7 +64,8 @@ export default {
   computed: {},
   ready() {},
   attached() {},
-  methods: {},
+  methods: {
+  },
   components: {}
 };
 </script>
