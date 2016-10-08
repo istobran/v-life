@@ -1,6 +1,6 @@
 {
-  "name": "vue2-webpack-demo",
-  "description": "Vue2.0 project",
+  "name": "v-life",
+  "description": "refact with VueJS 2.0",
   "author": "BangZ <i@bangz.me>",
   "private": true,
   "scripts": {
