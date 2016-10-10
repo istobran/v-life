@@ -102,6 +102,286 @@ export default {
               text: "seven"
             }
           ]
+        },
+        {   // 一天
+          day: 1,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "one"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 2,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "two"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 3,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "three"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 4,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "four"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 5,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "five"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 6,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "six"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 7,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "seven"
+            }
+          ]
+        },
+        {   // 一天
+          day: 1,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "one"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 2,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "two"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 3,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "three"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 4,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "four"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 5,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "five"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 6,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "six"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 7,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "seven"
+            }
+          ]
+        },
+        {   // 一天
+          day: 1,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "one"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 2,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "two"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 3,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "three"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 4,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "four"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 5,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "five"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 6,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "six"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 7,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "seven"
+            }
+          ]
+        },
+        {   // 一天
+          day: 1,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "one"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 2,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "two"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 3,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "three"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 4,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "four"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 5,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "five"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 6,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "six"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 7,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "seven"
+            }
+          ]
+        },
+        {   // 一天
+          day: 1,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "one"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 2,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "two"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 3,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "three"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 4,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "four"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 5,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "five"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 6,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "six"
+            }
+          ]
+        },
+        {   // 一行中的一天
+          day: 7,   // 这天是几号
+          eventList: [    // 事件表
+            {
+              text: "seven"
+            }
+          ]
         }
       ]
     }
@@ -122,16 +402,13 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-  #calendar {
-    background: #e4e5e9;
-  }
   .banner {
-    height: 350px;
     background: url('../assets/banner.jpg');
     display: flex;
     justify-content: center;
-    align-items: center;
+    height: 240px;
     .title {
+      margin: 40px 0;
       color: #fff;
       font-size: 2em;
       font-weight: bolder;
@@ -139,7 +416,7 @@ export default {
   }
   main {
     position: relative;
-    margin: -72px auto 0;
+    margin: -120px auto 0;
     width: 840px;
     aside {
       background: #00b9ff;
@@ -147,14 +424,13 @@ export default {
       height: 600px;
       position: absolute;
       top: 0;
-      right: -150px;
+      right: -180px;
     }
     section {
       background: #fff;
       position: relative;
-      width: 850px;
-      height: 540px;
-      margin-left: -150px;
+      width: 960px;
+      margin-left: -180px;
       z-index: 2;
       li {
         display: inline-block;
@@ -172,6 +448,7 @@ export default {
       .tbody {
         li.unit {
           box-shadow: inset 0 0 1px #ccc;
+          height: 120px;
           p {
             line-height: 2em;
             font-size: .6em;

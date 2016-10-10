@@ -68,6 +68,7 @@ html {
   height: 100%;
 }
 body {
+  background: #e4e5e9;
   min-height: 100vh;
 }
 
