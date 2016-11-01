@@ -1,20 +1,12 @@
 <template lang="html">
   <div id="calendar">
-    <header class="banner">
-      <h1 class="title">日程行事历</h1>
-    </header>
     <main>
-      <aside class="c_panel">
-        <div class="display_mode">
-          <h4>显示模式</h4>
-          <p>
-            <input type="radio" name="mode" value="1">
-            <label for="mode">日历</label>
-            <input type="radio" name="mode" value="2">
-            <label for="mode">时间轴</label>
-          </p>
-        </div>
-      </aside>
+      <header>
+        <button type="button"><i class="icon fa-chevron-left"></i></button>
+        <span :class="{ 'selected': currYear.selected }">{{ currYear.text }}</span>
+        <span :class="{ 'selected': currMonth.selected }">{{ currMonth.text }}</span>
+        <button type="button"><i class="icon fa-chevron-right"></i></button>
+      </header>
       <section class="table">
         <ul class="thead">
           <li v-for="item in weekTitle">{{ item.text }}</li>
@@ -22,9 +14,7 @@
         <ul class="tbody">
           <li class="unit" v-for="unit in dateItems">
             <p>{{ unit.day }}</p>
-            <ul>
-              <li v-for="ev in unit.eventList">{{ ev.text }}</li>
-            </ul>
+            <div class="note">{{ unit.note }}</div>
           </li>
         </ul>
       </section>
@@ -37,6 +27,8 @@ export default {
   data() {
     return {
       today: new Date(),      // 现在的日期
+      currYear: { text: today.getFullYear(), selected: false },     // 当前正在查看的年份
+      currMonth: { text: today.getMonth(), selected: true },      // 当前正在查看的月份
       weekTitle: [        // 星期标头
         { text: "星期一" },
         { text: "星期二" },
@@ -49,339 +41,171 @@ export default {
       dateItems: [      // 具体的日期数据
         {   // 一天
           day: 1,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "one"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 2,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "two"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 3,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "three"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 4,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "four"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 5,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "five"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 6,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "six"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 7,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "seven"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一天
           day: 1,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "one"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 2,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "two"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 3,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "three"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 4,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "four"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 5,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "five"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 6,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "six"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 7,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "seven"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一天
           day: 1,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "one"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 2,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "two"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 3,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "three"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 4,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "four"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 5,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "five"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 6,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "six"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 7,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "seven"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一天
           day: 1,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "one"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 2,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "two"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 3,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "three"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 4,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "four"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 5,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "five"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 6,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "six"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 7,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "seven"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一天
           day: 1,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "one"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 2,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "two"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 3,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "three"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 4,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "four"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 5,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "five"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 6,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "six"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 7,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "seven"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一天
           day: 1,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "one"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 2,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "two"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 3,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "three"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 4,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "four"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 5,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "five"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 6,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "six"
-            }
-          ]
+          note:  "this is my note!"
         },
         {   // 一行中的一天
           day: 7,   // 这天是几号
-          eventList: [    // 事件表
-            {
-              text: "seven"
-            }
-          ]
+          note:  "this is my note!"
         }
       ]
     }
@@ -416,22 +240,12 @@ export default {
   }
   main {
     position: relative;
-    margin: -120px auto 0;
-    width: 840px;
-    aside {
-      background: #00b9ff;
-      width: 330px;
-      height: 600px;
-      position: absolute;
-      top: 0;
-      right: -180px;
-    }
     section {
-      background: #fff;
+      background: rgba(255, 255, 255, 0.8);
       position: relative;
-      width: 960px;
-      margin-left: -180px;
       z-index: 2;
+      width: 960px;
+      border-radius: 8px;
       li {
         display: inline-block;
         width: 14.28%;
@@ -441,13 +255,13 @@ export default {
         li {
           font-weight: bold;
           text-align: center;
-          line-height: 80px;
+          line-height: 40px;
           font-size: .8em;
         }
       }
       .tbody {
         li.unit {
-          box-shadow: inset 0 0 1px #ccc;
+          box-shadow: inset 0 0 1px #aaa;
           height: 120px;
           p {
             line-height: 2em;
@@ -455,6 +269,11 @@ export default {
             font-weight: bold;
             text-align: right;
             padding-right: 1em;
+          }
+          div.note {
+            font-size: .7em;
+            line-height: 1em;
+            padding: 0 10px;
           }
         }
       }
