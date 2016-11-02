@@ -32,6 +32,10 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 ol, ul {
   list-style: none;
 }
+input, button, submit {
+  border: none;
+  outline: none;
+}
 body {
   font-family: 'Source Sans Pro', sans-serif;
   font-size: 19pt;
@@ -56,10 +60,6 @@ body, input, textarea, select {
 #app {
   margin-left: 375px;
   height: 100%;
-  background: red;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   @media screen and (min-width: 961px) and (max-width: 1880px) {
     margin-left: 300px;
   }

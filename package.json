@@ -4,7 +4,7 @@
   "author": "BangZ <i@bangz.me>",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --open --inline --hot",
+    "dev": "webpack-dev-server --open --inline --hot --port=8888",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {

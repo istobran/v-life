@@ -8,11 +8,15 @@
 export default {
   data() {
     return {
+      title: "服务器状态"
     };
   },
   computed: {},
-  ready() {},
-  attached() {},
+  created() {},
+  beforeMount() {
+    window.document.title = this.title;
+  },
+  mounted() {},
   methods: {},
   components: {}
 };

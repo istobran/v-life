@@ -85,6 +85,7 @@ export default {
     text-align: right;
     overflow-y: auto;
     width: 375px;
+    z-index: 200;
   	@media screen and (min-width: 961px) and (max-width: 1880px) {
   	  width: 300px;
   	}

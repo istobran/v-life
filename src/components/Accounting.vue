@@ -1,6 +1,6 @@
 <template lang="html">
   <div id="accounting">
-    <h1>财务管理</h1>
+    <h1>账务信息</h1>
   </div>
 </template>
 
@@ -8,11 +8,15 @@
 export default {
   data() {
     return {
+      title: "账务信息"
     };
   },
   computed: {},
-  ready() {},
-  attached() {},
+  created() {},
+  beforeMount() {
+    window.document.title = this.title;
+  },
+  mounted() {},
   methods: {},
   components: {}
 };

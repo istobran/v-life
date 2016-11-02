@@ -8,11 +8,15 @@
 export default {
   data() {
     return {
+      title: "国际时钟"
     };
   },
   computed: {},
-  ready() {},
-  attached() {},
+  created() {},
+  beforeMount() {
+    window.document.title = this.title;
+  },
+  mounted() {},
   methods: {},
   components: {}
 };
