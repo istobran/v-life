@@ -19,11 +19,17 @@
         </ul>
       </section>
     </main>
+    <addition></addition>
   </div>
 </template>
 
 <script>
+import Addition from "./Addition.vue"
+
 export default {
+  components: {
+    Addition
+  },
   data() {
     return {
       title: "日历备忘",
