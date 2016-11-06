@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Sidebar from './components/Sidebar.vue'
+import Sidebar from './components/Sidebar'
 
 export default {
   components: {
@@ -16,7 +16,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../node_modules/font-awesome/css/font-awesome.min.css';
+$fa-font-path: "~font-awesome/fonts";
+@import "~font-awesome/scss/font-awesome";
 
 html, body {
   height: 100%;

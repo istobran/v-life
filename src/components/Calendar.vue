@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import Addition from "./Addition.vue"
+import Addition from "./Addition"
 
 export default {
   components: {
