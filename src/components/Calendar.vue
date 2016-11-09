@@ -19,13 +19,10 @@
         </ul>
       </section>
     </main>
-    <addition></addition>
   </div>
 </template>
 
 <script>
-import Addition from "./Addition"
-
 export default {
   components: {
     Addition
