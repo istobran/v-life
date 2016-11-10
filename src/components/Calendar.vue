@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import Addition from "./Addition"
+
 export default {
   components: {
     Addition
@@ -227,6 +229,14 @@ export default {
   mounted() {
     console.log("mounted");
     // this.render();
+    // GET /someUrl
+    this.$http.get('/someUrl').then((response) => {
+      console.log("success");
+      // success callback
+    }, (response) => {
+      console.log("error");
+      // error callback
+    });
   },
   computed: {
     unitHeight() {
