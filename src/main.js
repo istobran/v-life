@@ -2,11 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import MockData from './mock'
-import App from './App.vue'
-import Calendar from './components/Calendar.vue'
-import Accounting from './components/Accounting.vue'
-import ServerStatus from './components/ServerStatus.vue'
-import IClock from './components/InternationalClock.vue'
+import App from './App'
+import routes from './routes'
 
 Vue.use(VueRouter);
 Vue.use(VueResource);
@@ -15,14 +12,7 @@ Vue.use(MockData);
 const router = new VueRouter({
   mode: 'history',
   linkActiveClass: 'active',
-  routes: [
-    { path: '/', redirect: '/calendar' },
-    { path: '/calendar', component: Calendar },
-    { path: '/accounting', component: Accounting },
-    { path: '/s_status', component: ServerStatus },
-    { path: '/in_clock', component: IClock },
-    { path: '*', redirect: '/' }
-  ]
+  routes
 });
 
 /* Vue2.0 的写法 */
