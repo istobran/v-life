@@ -33,6 +33,7 @@ export default {
     return {
       title: "日历备忘",
       today: new Date(),      // 现在的日期
+      activeChoice: "month",
       currYear: { num: 0, selected: false },     // 当前正在查看的年份
       currMonth: { num: 0, selected: false },      // 当前正在查看的月份
       weekTitle: [        // 星期标头
@@ -64,29 +65,62 @@ export default {
     }
   },
   methods: {
+    updateChoice() {
+      if (this.currMonth.selected) {
+        this.activeChoice = "month";
+      } else if (this.currYear.selected) {
+        this.activeChoice = "year";
+      } else {
+        this.activeChoice = "month";
+      }
+    },
     changeSelected(choice) {
       switch (choice) {
         case "year":
-          this.currMonth.selected = false;
-          this.currYear.selected = !this.currYear.selected;
+            this.currMonth.selected = false;
+            this.currYear.selected = !this.currYear.selected;
           break;
         case "month":
-          this.currYear.selected = false;
-          this.currMonth.selected = !this.currMonth.selected;
+            this.currYear.selected = false;
+            this.currMonth.selected = !this.currMonth.selected;
           break;
       }
+      this.updateChoice();
     },
     fetchItems() {
-      this.$http.post('/calendar/items').then((response) => {
+      this.$http.post('/calendar/items', {
+        year: this.currYear.num,
+        month: this.currMonth.num
+      }).then((response) => {
         response.json().then(json => this.dateItems = json.data);
       }, (response) => {
         console.log("error");
       });
     },
     next() {
+      switch(this.activeChoice) {
+        case "year":
+            this.currYear.num += 1;
+            this.fetchItems();
+          break;
+        case "month":
+            this.currMonth.num = this.currMonth.num + 1 > 12 ? 1 : this.currMonth.num + 1;
+            this.fetchItems();
+          break;
+      }
       console.log("next");
     },
     previous() {
+      switch(this.activeChoice) {
+        case "year":
+            this.currYear.num -= 1;
+            this.fetchItems();
+          break;
+        case "month":
+            this.currMonth.num = !(this.currMonth.num - 1) ? 12 : this.currMonth.num - 1;
+            this.fetchItems();
+          break;
+      }
       console.log("previous");
     }
   }
