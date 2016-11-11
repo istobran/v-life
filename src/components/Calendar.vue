@@ -44,199 +44,19 @@ export default {
         { text: "星期六" },
         { text: "星期日" }
       ],
-      dateItems: [      // 具体的日期数据
-        {   // 一天
-          day: 1,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 2,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 3,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 4,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 5,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 6,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 7,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一天
-          day: 1,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 2,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 3,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 4,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 5,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 6,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 7,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一天
-          day: 1,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 2,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 3,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 4,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 5,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 6,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 7,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一天
-          day: 1,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 2,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 3,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 4,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 5,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 6,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 7,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一天
-          day: 1,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 2,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 3,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 4,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 5,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 6,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 7,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一天
-          day: 1,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 2,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 3,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 4,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 5,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 6,   // 这天是几号
-          note:  "this is my note!"
-        },
-        {   // 一行中的一天
-          day: 7,   // 这天是几号
-          note:  "this is my note!"
-        }
-      ]
+      dateItems: []      // 具体的日期数据
     }
   },
   created() {
     // 初始化年月
     this.currYear.num = this.today.getFullYear();
     this.currMonth.num = this.today.getMonth();
-    console.log("created");
   },
   beforeMount() {
-    console.log("beforeMount");
     window.document.title = this.title;
   },
   mounted() {
-    console.log("mounted");
-    // this.render();
-    // GET /someUrl
-    this.$http.get('/someUrl').then((response) => {
-      console.log("success");
-      // success callback
-    }, (response) => {
-      console.log("error");
-      // error callback
-    });
+    this.fetchItems();
   },
   computed: {
     unitHeight() {
@@ -255,6 +75,13 @@ export default {
           this.currMonth.selected = !this.currMonth.selected;
           break;
       }
+    },
+    fetchItems() {
+      this.$http.post('/calendar/items').then((response) => {
+        response.json().then(json => this.dateItems = json.data);
+      }, (response) => {
+        console.log("error");
+      });
     },
     next() {
       console.log("next");
