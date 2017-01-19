@@ -39,22 +39,22 @@ export default {
       },
       navList: [
         {
-          linkAddr: "/calendar",
+          linkAddr: "calendar",
           classText: "icon fa-calendar",
           text: "日历备忘"
         },
         {
-          linkAddr: "/accounting",
+          linkAddr: "accounting",
           classText: "icon fa-area-chart",
           text: "帐务信息"
         },
         {
-          linkAddr: "/s_status",
+          linkAddr: "s_status",
           classText: "icon fa-server",
           text: "服务器状态"
         },
         {
-          linkAddr: "/in_clock",
+          linkAddr: "in_clock",
           classText: "icon fa-clock-o",
           text: "国际时钟"
         }

@@ -14,6 +14,16 @@ const router = new VueRouter({
   linkActiveClass: 'active',
   routes
 });
+// 路由导航钩子
+router.beforeEach(({ meta, path }, from, next) => {
+  var { auth = true } = meta;
+  var isLogin = Boolean(""); //true用户已登录， false用户未登录
+
+  if (auth && !isLogin) {
+    return next({ path: '/login' });
+  }
+  next();
+});
 
 /* Vue2.0 的写法 */
 new Vue({
