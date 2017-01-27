@@ -1,18 +1,20 @@
 <template lang="html">
   <div id="login">
-
+    <slideshow></Slideshow>
   </div>
 </template>
 
 <script>
+import Slideshow from './Slideshow'
+
 export default {
-  data () {
+  components: {
+    Slideshow
   },
-  method() {
-
-  }
+  data () {
+    return {}
+  },
   mounted() {
-
   }
 }
 </script>

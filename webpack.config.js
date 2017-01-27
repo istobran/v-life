@@ -13,9 +13,9 @@ module.exports = {
     extensions: ['', '.js', '.vue'],
     fallback: [path.join(__dirname, '../node_modules')],
     alias: {
-      'src': path.resolve(__dirname, '../src'),
-      'assets': path.resolve(__dirname, '../src/assets'),
-      'components': path.resolve(__dirname, '../src/components')
+      'src': path.resolve(__dirname, 'src'),
+      'assets': path.resolve(__dirname, 'src/assets/'),
+      'components': path.resolve(__dirname, 'src/components')
     }
   },
   resolveLoader: {
@@ -33,10 +33,10 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.(png|jpg|gif|svg)$/,
+        test: /\.(png|jpg|gif|svg|webp)$/,
         loader: 'file',
         query: {
-          name: '[name].[ext]?[hash]'
+          name: 'images/[name].[ext]?[hash]'
         }
       },
       {
