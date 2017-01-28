@@ -116,13 +116,18 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @mixin expand-full {
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
+}
+@mixin keyframes($animationName) {
+  @keyframes #{$animationName} {
+    @content;
+  }
 }
 #slideshow {
   @include expand-full;
@@ -148,6 +153,106 @@ export default {
       opacity: 1;
     }
   }
+  &-anim {
+    &-kenburns {
+      animation: kenburns ease-out;
+      @include keyframes(kenburns) {
+        0% {
+            transform: scale(1.5)
+        }
+        100% {
+            transform: scale(1)
+        }
+      }
+    }
+    &-kenburnsDownLeft {
+      animation: kenburnsDownLeft ease-out;
+      @include keyframes(kenburnsDownLeft) {
+        0% {
+            transform: scale(1.5) translate(10%,-10%)
+        }
+        100% {
+            transform: scale(1) translate(0,0)
+        }
+      }
+    }
+    &-kenburnsDownRight {
+      animation: kenburnsDownRight ease-out;
+      @include keyframes(kenburnsDownRight) {
+        0% {
+            transform: scale(1.5) translate(-10%,-10%)
+        }
+        100% {
+            transform: scale(1) translate(0,0)
+        }
+      }
+    }
+    &-kenburnsDown {
+      animation: kenburnsDown ease-out;
+      @include keyframes(kenburnsDown) {
+        0% {
+            transform: scale(1.5) translate(0,-10%)
+        }
+        100% {
+            transform: scale(1) translate(0,0)
+        }
+      }
+    }
+    &-kenburnsLeft {
+      animation: kenburnsLeft ease-out;
+      @include keyframes(kenburnsLeft) {
+        0% {
+            transform: scale(1.5) translate(10%, 0)
+        }
+        100% {
+            transform: scale(1) translate(0, 0)
+        }
+      }
+    }
+    &-kenburnsRight {
+      animation: kenburnsRight ease-out;
+      @include keyframes(kenburnsRight) {
+        0% {
+            transform: scale(1.5) translate(-10%,0)
+        }
+        100% {
+            transform: scale(1) translate(0,0)
+        }
+      }
+    }
+    &-kenburnsUpLeft {
+      animation: kenburnsUpLeft ease-out;
+      @include keyframes(kenburnsUpLeft) {
+        0% {
+            transform: scale(1.5) translate(10%,10%)
+        }
+        100% {
+            transform: scale(1) translate(0,0)
+        }
+      }
+    }
+    &-kenburnsUpRight {
+      animation: kenburnsUpRight ease-out;
+      @include keyframes(kenburnsUpRight) {
+        0% {
+            transform: scale(1.5) translate(-10%,10%)
+        }
+        100% {
+            transform: scale(1) translate(0,0)
+        }
+      }
+    }
+    &-kenburnsUp {
+      animation: kenburnsUp ease-out;
+      @include keyframes(kenburnsUp) {
+        0% {
+            transform: scale(1.5) translate(0,10%)
+        }
+        100% {
+            transform: scale(1) translate(0,0)
+        }
+      }
+    }
+  }
 }
-
 </style>

@@ -51,9 +51,14 @@ module.exports = {
   },
   vue: {
     loaders: {
-      scss: "vue-style!css!sass"
+      scss: "vue-style!css!postcss!sass"
     }
   },
+  postcss: [
+    require('autoprefixer')({
+      browsers: ['last 7 versions']
+    })
+  ],
   devServer: {
     historyApiFallback: true,
     noInfo: true
