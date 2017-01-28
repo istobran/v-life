@@ -47,8 +47,8 @@ export default {
         right_coord = right_coord > (scnWidth - rect.width) ? scnWidth - rect.width : right_coord;
         bottom_coord = bottom_coord >= 0 ? bottom_coord : 0;
         bottom_coord = bottom_coord > (scnHeight - rect.height) ? scnHeight - rect.height : bottom_coord;
-        elem.style.right = right_coord + "px";
-        elem.style.bottom = bottom_coord + "px";
+        elem.style.right = `${right_coord}px`;
+        elem.style.bottom = `${bottom_coord}px`;
       };
       document.addEventListener("mousemove", fn, false);    // 不能绑定在elem上, 必须绑定在document上，否则会出现鼠标拖拽过快时跟丢鼠标
       document.addEventListener("mouseup", (e) => {

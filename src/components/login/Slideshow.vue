@@ -1,10 +1,14 @@
 <template lang="html">
   <div id="slideshow">
     <div v-if="firstScene.enable" :class="{ 'slide-image': true, 'slide-fade-init': true, 'slide-fade-show': firstScene.showStyle }" :style="{ transition: trSetting }">
-      <div :class="{ 'slide-image-inner': true }" :style="{ backgroundImage: 'url(' + firstScene.imgUrl + ')', animationDuration: animSetting }"></div>
+      <div ref="firstScene" :class="{ 'slide-image-inner': true }" :style="{ backgroundImage: `url(${firstScene.imgUrl})`, animationDuration: animSetting }"></div>
     </div>
     <div v-if="secondScene.enable" :class="{ 'slide-image': true, 'slide-fade-init': true, 'slide-fade-show': secondScene.showStyle }" :style="{ transition: trSetting }">
-      <div :class="{ 'slide-image-inner': true }" :style="{ backgroundImage: 'url(' + secondScene.imgUrl + ')', animationDuration: animSetting }"></div>
+      <div ref="secondScene" :class="{ 'slide-image-inner': true }" :style="{ backgroundImage: `url(${secondScene.imgUrl})`, animationDuration: animSetting }"></div>
+    </div>
+    <div class="slide-overlay" :style="{ backgroundImage: `url(${overlayUrl[choice]})` }"></div>
+    <div :class="{ 'slide-timer': true, 'slide-timer-running': timer.enable }">
+      <div class="slide-timer-progress" :style="{ transitionDuration: timer.duration }"></div>
     </div>
   </div>
 </template>
@@ -16,29 +20,54 @@ export default {
       firstScene: {
         enable: false,
         imgUrl: "",
-        showStyle: false
+        showStyle: false,
+        kenburnChoice: ""
       },
       secondScene: {
         enable: false,
         imgUrl: "",
-        showStyle: false
+        showStyle: false,
+        kenburnChoice: ""
+      },
+      timer: {
+        enable: false,
+        duration: "0ms"
       },
       trSetting: "all 8000ms",
-      animSetting: "10000ms",
+      animSetting: "8000ms",
       bgIndex: 0,
       bgNums: 11,
       choice: "",
       bgUrls: {
-        png: this.requireAll(require.context("assets/images/", true, /^\.\/bg\d+\.png$/)),
-        webp: this.requireAll(require.context("assets/optimized/", true, /^\.\/bg\d+\.webp$/))
+        png: this.requireAll(require.context("assets/images/", true, /^\.\/bg\d{2}\.png$/)),
+        webp: this.requireAll(require.context("assets/optimized/", true, /^\.\/bg\d{2}\.webp$/))
       },
-      loadedImages: []
+      overlayUrl: {
+        png: require("assets/images/grid.png"),
+        webp: require("assets/optimized/grid.webp")
+      },
+      loadedImages: [],
+      kenburnMap: [
+        "kenburns",
+        "kenburnsDownLeft",
+        "kenburnsDownRight",
+        "kenburnsDown",
+        "kenburnsLeft",
+        "kenburnsRight",
+        "kenburnsUpLeft",
+        "kenburnsUpRight",
+        "kenburnsUp"
+      ]
     }
   },
   methods: {
     // 格式化为两位整数
     zerofill(num, bit) {
       return (new Array(bit).join('0') + num).slice(-bit);
+    },
+    // 随机产生一个 kenburn 样式 class
+    rdKenburn() {
+      return `slide-anim-${this.kenburnMap[Math.floor(Math.random() * 9)]}`;
     },
     // 批量 require 背景图片
     requireAll(requireContext) {
@@ -51,17 +80,32 @@ export default {
         if (!self.secondScene.enable) {
           self.secondScene.enable = true;
         } else {
-          console.log("falsed")
           self.trSetting = "all 0ms";
           self.secondScene.showStyle = false;
           self.firstScene.imgUrl = self.secondScene.imgUrl;
+          // 在 secondScene 开启了 kenburn 特效之后，关闭 firstScene 的 kenburn 特效
+          if (self.firstScene.kenburnChoice.length > 0) {
+            self.$refs.firstScene.classList.remove(self.firstScene.kenburnChoice);
+            self.firstScene.kenburnChoice = "";
+          }
         }
+        self.timer.duration = "0ms";
+        self.timer.enable = false;
         self.bgIndex = ++self.bgIndex % self.bgNums;
         self.secondScene.imgUrl = self.loadedImages[self.bgIndex].src;
+        // 移除旧的 kenburn 特效
+        if (self.secondScene.kenburnChoice.length > 0) {
+          self.$refs.secondScene.classList.remove(self.secondScene.kenburnChoice);
+          self.secondScene.kenburnChoice = "";
+        }
         setTimeout(() => {  // 使用Timeout来防止只有一次重绘的问题
+          self.secondScene.kenburnChoice = self.rdKenburn();
+          self.$refs.secondScene.classList.add(self.secondScene.kenburnChoice);
           self.trSetting = "all 8000ms";
+          self.timer.duration = "8100ms";
+          self.timer.enable = true;
           self.secondScene.showStyle = true;
-        }, 40);
+        }, 100);
         self.startTimer(8000);
       }, timeout);
     },
@@ -100,7 +144,7 @@ export default {
     this.choice = this.isWebpAvailable() ? "webp" : "png";
     var self = this;
     // 创建自定义事件
-    var event = new Event("onBgImagesLoaded");
+    const event = new Event("onBgImagesLoaded");
     this.preloadImg(this.bgUrls[this.choice], null, (imgs) => {
       self.loadedImages = imgs;
       window.dispatchEvent(event);
@@ -109,7 +153,11 @@ export default {
     window.addEventListener("onBgImagesLoaded", () => {
       console.log("background images all loaded");
       self.firstScene.imgUrl = self.loadedImages[self.bgIndex].src;
+      self.firstScene.kenburnChoice = self.rdKenburn();
+      self.$refs.firstScene.classList.add(self.firstScene.kenburnChoice);
       self.firstScene.showStyle = true;
+      self.timer.duration = "8100ms";
+      self.timer.enable = true;
       self.startTimer(8000);
     });
   }
@@ -143,6 +191,31 @@ export default {
         position: center center;
         repeat: no-repeat;
       }
+    }
+  }
+  &-overlay {
+    @include expand-full;
+    opacity: .2;
+    background: {
+      position: center center;
+      repeat: repeat;
+    }
+  }
+  &-timer {
+    position: absolute;
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    &-progress {
+      height: 100%;
+      width: 0;
+      background-color: white;
+      transition: width ease-out;
+    }
+    &-running {
+      .slide-timer-progress { width: 100% }
     }
   }
   &-fade {
