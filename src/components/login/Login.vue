@@ -1,6 +1,6 @@
 <template lang="html">
   <div id="login">
-    <!-- <slideshow></Slideshow> -->
+    <slideshow></Slideshow>
     <div class="login-container">
       <div class="login-avatar"><i class="fa fa-user"></i></div>
       <h1 class="login-title">登录系统</h1>
@@ -33,7 +33,8 @@ export default {
 
 <style lang="scss">
 .login-container {
-  background: rgba(255, 255, 255, .7);
+  background: rgb(255, 255, 255);
+  opacity: .9;
   width: 364px;
   height: 425px;
   position: absolute;

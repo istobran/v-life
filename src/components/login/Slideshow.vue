@@ -177,8 +177,27 @@ export default {
     @content;
   }
 }
+@mixin hardAccel {
+  // 开启 CSS3 硬件加速
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+
+  // 修复 Chrome 和 Safari 中的闪烁
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  backface-visibility: hidden;
+
+  -webkit-perspective: 1000;
+  -moz-perspective: 1000;
+  -ms-perspective: 1000;
+  perspective: 1000;
+}
 #slideshow {
   @include expand-full;
+  @include hardAccel;
   background-color: black;
 }
 .slide {
