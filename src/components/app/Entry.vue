@@ -1,34 +1,22 @@
 <template lang="html">
   <div id="entry-fr">
-    <sidebar></sidebar>
+    <nav-bar></nav-bar>
+    <side-bar></side-bar>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Sidebar from './Sidebar'
+import NavBar from './NavBar';
+import SideBar from './SideBar';
 
 export default {
   components: {
-    Sidebar
+    SideBar, NavBar
   }
 }
 </script>
 
 <style lang="scss">
-#entry-fr {
-  margin-left: 375px;
-  height: 100%;
-  @media screen and (min-width: 961px) and (max-width: 1880px) {
-    margin-left: 300px;
-  }
 
-  @media screen and (min-width: 961px) and (max-width: 1320px) {
-    margin-left: 20%;
-  }
-
-  @media screen and (max-width: 960px) {
-    margin-left: 275px;
-  }
-}
 </style>

@@ -4,10 +4,13 @@ import VueResource from 'vue-resource'
 import MockData from './mock'
 import App from './App'
 import routes from './routes'
+import VueMaterial from 'vue-material'
+import 'vue-material/dist/vue-material.css'
 
 Vue.use(VueRouter);
 Vue.use(VueResource);
-Vue.use(MockData);
+Vue.use(VueMaterial);
+// Vue.use(MockData);
 
 const router = new VueRouter({
   mode: 'history',
@@ -17,7 +20,7 @@ const router = new VueRouter({
 // 路由导航钩子
 router.beforeEach(({ meta, path }, from, next) => {
   var { auth = true } = meta;
-  var isLogin = Boolean(""); //true用户已登录， false用户未登录
+  var isLogin = Boolean(true); //true用户已登录， false用户未登录
 
   if (auth && !isLogin) {
     return next({ path: '/login' });
