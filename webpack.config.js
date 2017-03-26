@@ -1,6 +1,5 @@
 var path = require('path')
 var webpack = require('webpack')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   entry: './src/main.js',
@@ -10,8 +9,16 @@ module.exports = {
     filename: 'build.js'
   },
   resolve: {
-    extensions: ['', '.js', '.vue'],
-    fallback: [path.join(__dirname, '../node_modules')],
+    extensions: [
+      '.js', '.coffee',
+      '.html', '.njk', '.vue',
+      '.css', '.scss', '.less',
+      '.json', '.yml'
+    ],
+    modules: [
+      path.resolve(__dirname, "src"),
+      "node_modules"
+    ],
     alias: {
       'src': path.resolve(__dirname, 'src'),
       'assets': path.resolve(__dirname, 'src/assets/'),
@@ -19,26 +26,26 @@ module.exports = {
     }
   },
   resolveLoader: {
-    root: path.join(__dirname, 'node_modules'),
+    modules: ['node_modules']
   },
   module: {
     loaders: [
       {
         test: /\.vue$/,
-        loader: 'vue'
+        loader: 'vue-loader'
       },
       {
         test: /\.css$/,
-        loader: 'style!css',
+        loader: "style-loader!css-loader!postcss-loader"
       },
       {
         test: /\.js$/,
-        loader: 'babel',
+        loader: 'babel-loader',
         exclude: /node_modules/
       },
       {
         test: /\.(png|jpg|gif|svg|webp)$/,
-        loader: 'url',
+        loader: 'url-loader',
         query: {
           limit: 8192,
           name: 'images/[name].[ext]?[hash]'
@@ -46,7 +53,7 @@ module.exports = {
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        loader: 'url',
+        loader: 'url-loader',
         query: {
           limit: 10000,
           name: 'fonts/[name].[hash:7].[ext]'
@@ -54,14 +61,20 @@ module.exports = {
       }
     ]
   },
-  vue: {
-    loaders: {
-      scss: "vue-style!css!postcss!sass"
-    }
-  },
-  postcss: [
-    require('autoprefixer')({
-      browsers: ['last 7 versions']
+  plugins: [
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        postcss: [
+          require('autoprefixer')({
+            browsers: ['last 7 versions']
+          })
+        ],
+        vue: {
+          loaders: {
+            scss: "vue-style-loader!css-loader!postcss-loader!sass-loader"
+          }
+        }
+      }
     })
   ],
   devServer: {

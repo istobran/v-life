@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import VueResource from 'vue-resource'
 import MockData from './mock'
 import App from './App'
 import routes from './routes'
@@ -8,7 +7,6 @@ import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.css'
 
 Vue.use(VueRouter);
-Vue.use(VueResource);
 Vue.use(VueMaterial);
 // Vue.use(MockData);
 

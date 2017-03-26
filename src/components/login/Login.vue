@@ -11,7 +11,9 @@
         <span class="login-forget"><a class="btn-findpasswd" href="#">忘记密码？</a></span>
       </div>
       <button class="login-button" type="submit" name="login">登&nbsp;&nbsp;&nbsp;录</button>
-      <div class="register-hint"><span>还没有账号？<a class="btn-register" href="#">创建新账户>></a><span></div>
+      <div class="register-hint">
+        <span>还没有账号？<a class="btn-register" href="#">创建新账户>></a></span>
+      </div>
     </div>
   </div>
 </template>
