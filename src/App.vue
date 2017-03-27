@@ -61,5 +61,12 @@ body {
   background: #e4e5e9;
   min-height: 100vh;
 }
-
+.clearfix:after {content:"\200B"; display:block; height:0; clear:both; }
+.clearfix { *zoom:1; }
+.pull-left {
+  float: left;
+}
+.pull-right {
+  float: right;
+}
 </style>

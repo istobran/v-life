@@ -11,10 +11,8 @@ export default {
       pageState: {
       },
       user: {
-
       },
       navList: [
-
       ]
     };
   },
