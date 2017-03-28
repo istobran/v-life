@@ -1,7 +1,5 @@
 <template>
-  <div id="app">
-    <router-view></router-view>
-  </div>
+  <router-view></router-view>
 </template>
 
 <script>
@@ -51,14 +49,20 @@ body, input, textarea, select {
     font-size: 14pt;
   }
 }
-#app {
-}
 html {
   height: 100%;
 }
 body {
-  background: #e4e5e9;
+  background: #F2F2F2;
   min-height: 100vh;
+  &.md-theme-default {
+    background: #F2F2F2 !important;
+  }
+}
+.prevent-select {
+  user-select: none;
+  -webkit-user-drag: none;
+  cursor: default;
 }
 .clearfix:after {content:"\200B"; display:block; height:0; clear:both; }
 .clearfix { *zoom:1; }

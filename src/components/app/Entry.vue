@@ -18,7 +18,17 @@ export default {
 </script>
 
 <style lang="scss">
-body {
-  background: #FAFAFA;
+.main-content {
+  position: absolute;
+  left: 0;
+  top: 56px;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  will-change: left;
+  transition: left .15s ease-in-out;
+  &.shrink {
+    left: 218px;
+  }
 }
 </style>

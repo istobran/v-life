@@ -1,17 +1,17 @@
 <template lang="html">
   <header class="nav-bar">
-    <div class="title-container">
+    <div class="title-container prevent-select">
       <span :class="{'btn-toggle-mnu': true, 'active': showMenu }" @click="toggleMenu"><md-icon>menu</md-icon></span>
       <span class="title">{{ title }}</span>
     </div>
-    <div class="date-selector">
+    <div class="date-selector prevent-select">
       <span class="prev"><md-icon>keyboard_arrow_left</md-icon></span>
       <span class="next"><md-icon>keyboard_arrow_right</md-icon></span>
       <span class="mid-dot">&bull;</span>
       <span class="year">{{ currYear }} 年</span>
       <span class="month">{{ currMonth }} 月</span>
     </div>
-    <div class="user-container pull-right">
+    <div class="user-container pull-right prevent-select">
       <span class="user-name">{{ user.username }}</span>
       <span class="user-avatar"><img :src="user.avatarUrl" alt=""></span>
     </div>
@@ -49,10 +49,6 @@ export default {
 
 <style lang="scss" scoped>
 $navbar-height: 56px;
-@mixin unselectable() {
-  user-select: none;
-  -webkit-user-drag: none;
-}
 .nav-bar {
   position: fixed;
   width: 100%;
@@ -65,7 +61,6 @@ $navbar-height: 56px;
     position: absolute;
     display: flex;
     height: $navbar-height;
-    @include unselectable();
     .btn-toggle-mnu {
       position: relative;
       cursor: pointer;
@@ -113,7 +108,6 @@ $navbar-height: 56px;
     height: $navbar-height;
     line-height: $navbar-height;
     padding: 0 30px;
-    @include unselectable();
     .user-name {
       margin-right: 10px;
       font-size: 14px;
@@ -131,7 +125,6 @@ $navbar-height: 56px;
     height: $navbar-height;
     line-height: $navbar-height;
     font-size: 16px;
-    @include unselectable();
     cursor: default;
     .prev, .next {
       cursor: pointer;
