@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import MockData from './mock'
 import App from './App'
 import routes from './routes'
+import { store } from './store';
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.css'
 
@@ -30,5 +31,6 @@ router.beforeEach(({ meta, path }, from, next) => {
 new Vue({
   el: 'app',
   router,
+  store,
   render: h => h(App)       // ES6 lambda表达式
 });

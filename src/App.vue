@@ -52,7 +52,6 @@ body, input, textarea, select {
   }
 }
 #app {
-
 }
 html {
   height: 100%;

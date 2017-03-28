@@ -1,7 +1,7 @@
 <template lang="html">
   <header class="nav-bar">
     <div class="title-container">
-      <span :class="{'btn-toggle-mnu': true, 'active': showMenu}" @click="toggleMenu"><md-icon>menu</md-icon></span>
+      <span :class="{'btn-toggle-mnu': true, 'active': showMenu }" @click="toggleMenu"><md-icon>menu</md-icon></span>
       <span class="title">{{ title }}</span>
     </div>
     <div class="date-selector">
@@ -19,10 +19,10 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex';
 export default {
   data() {
     return {
-      showMenu: true,
       today: new Date(),
       title: "V-LIFE",
       user: {
@@ -33,15 +33,16 @@ export default {
       currMonth: 0     // 当前正在查看的月份
     }
   },
+  computed: {
+    ...mapGetters(['showMenu'])
+  },
   created() {
     // 初始化年月
     this.currYear = this.today.getFullYear();
     this.currMonth = this.today.getMonth();
   },
   methods: {
-    toggleMenu() {
-      this.showMenu = !this.showMenu;
-    }
+    ...mapMutations(['toggleMenu'])
   }
 }
 </script>
@@ -59,6 +60,7 @@ $navbar-height: 56px;
   background: #0091EA;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26), 0 2px 10px 0 rgba(0, 0, 0, .16);
   color: #FFFFFF;
+  z-index: 99;
   .title-container {
     position: absolute;
     display: flex;
