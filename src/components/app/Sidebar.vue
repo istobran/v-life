@@ -2,71 +2,57 @@
   <aside id="sidebar" :class="{ 'show': showMenu }">
     <div class="sidebar-inner">
       <ul class="common">
-        <li v-for="item in navList.common" :class="{ 'active': false }">
+        <router-link tag="li" :to="item.link" v-for="item in navList.common" :key="item.name">
           <md-icon :style="{ 'color': item.color }" class="m0">{{ item.icon }}</md-icon>
           <span class="text">{{ item.name }}</span>
-        </li>
+        </router-link>
       </ul>
       <ul class="custom">
-        <li :class="{ 'active': false }" v-for="item in navList.custom">
+        <router-link tag="li" :to="item.link" v-for="item in navList.custom" :key="item.name">
           <md-icon :style="{ 'color': item.color }" class="m0">{{ item.icon }}</md-icon>
           <span class="text">{{ item.name }}</span>
-        </li>
-        <li>
+        </router-link>
+        <li @click="createNewCustom">
           <md-icon :style="{ 'color': '#616161' }" class="m0">add</md-icon>
           <span class="text">新建</span>
         </li>
       </ul>
       <ul class="feature">
-        <li :class="{ 'active': false }" v-for="item in navList.feature">
+        <router-link tag="li" :to="item.link" v-for="item in navList.feature" :key="item.name">
           <md-icon :style="{ 'color': item.color }" class="m0">{{ item.icon }}</md-icon>
           <span class="text">{{ item.name }}</span>
-        </li>
+        </router-link>
       </ul>
       <ul class="other">
-        <li :class="{ 'active': false }" v-for="item in navList.other">
+        <router-link tag="li" :to="item.link" v-for="item in navList.other" :key="item.name">
           <md-icon :style="{ 'color': item.color }" class="m0">{{ item.icon }}</md-icon>
           <span class="text">{{ item.name }}</span>
-        </li>
+        </router-link>
       </ul>
     </div>
   </aside>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 export default {
   data() {
     return {
       pageState: {
       },
       user: {
-      },
-      navList: {
-        common: [
-          { name: "生活", icon: "home", color: "#43A047" },
-          { name: "工作", icon: "work", color: "#1E88E5" },
-          { name: "节日", icon: "extension", color: "#FB8C00" }
-        ],
-        custom: [
-          { name: "个人日历", icon: "date_range", color: "#616161" }
-        ],
-        feature: [
-          { name: "便签", icon: "bookmark", color: "#E53935"  }
-        ],
-        other: [
-          { name: "设置", icon: "settings", color: "#616161"  },
-          { name: "帮助", icon: "help", color: "#616161"  }
-        ]
       }
     };
   },
   computed: {
-    ...mapGetters(['showMenu'])
+    ...mapGetters(['showMenu', 'navList'])
   },
   ready() {},
   attached() {},
   methods: {
+    createNewCustom() {
+
+    }
   },
   components: {}
 };
@@ -91,7 +77,6 @@ export default {
     line-height: 40px;
     color: #616161;
     ul {
-      // margin: 13px 0;
       border-bottom: 1px solid #ddd;
       box-sizing: border-box;
       list-style: none;

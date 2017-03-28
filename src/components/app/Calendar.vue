@@ -1,7 +1,7 @@
 <template lang="html">
   <div id="calendar">
     <main>
-      <header class="prevent-select">
+      <header class="dayname">
 
       </header>
       <section class="table">

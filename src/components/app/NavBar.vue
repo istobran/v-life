@@ -57,9 +57,9 @@ $navbar-height: 56px;
   position: fixed;
   width: 100%;
   height: $navbar-height;
-  background: #0091EA;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26), 0 2px 10px 0 rgba(0, 0, 0, .16);
   color: #FFFFFF;
+  background-color: #0091EA;
   z-index: 99;
   .title-container {
     position: absolute;
