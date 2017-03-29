@@ -5,8 +5,8 @@
       <span class="title">{{ title }}</span>
     </div>
     <div class="date-selector prevent-select">
-      <span class="prev"><md-icon>keyboard_arrow_left</md-icon></span>
-      <span class="next"><md-icon>keyboard_arrow_right</md-icon></span>
+      <span class="prev" @click="prevMonth"><md-icon>keyboard_arrow_left</md-icon></span>
+      <span class="next" @click="nextMonth"><md-icon>keyboard_arrow_right</md-icon></span>
       <span class="mid-dot">&bull;</span>
       <span class="year">{{ currYear }} 年</span>
       <span class="month">{{ currMonth }} 月</span>
@@ -23,26 +23,21 @@ import { mapGetters, mapMutations } from 'vuex';
 export default {
   data() {
     return {
-      today: new Date(),
       title: "V-LIFE",
       user: {
         avatarUrl: "http://en.gravatar.com/userimage/99616975/827489fdfb37acbf6ed0254f4f311417.jpg?size=48",
         username: "BangZ"
-      },
-      currYear: 0,    // 当前正在查看的年份
-      currMonth: 0     // 当前正在查看的月份
+      }
     }
   },
   computed: {
-    ...mapGetters(['showMenu'])
+    ...mapGetters(['showMenu', 'today', 'currYear', 'currMonth'])
   },
   created() {
-    // 初始化年月
-    this.currYear = this.today.getFullYear();
-    this.currMonth = this.today.getMonth();
+    this.setupCurr();
   },
   methods: {
-    ...mapMutations(['toggleMenu'])
+    ...mapMutations(['toggleMenu', 'setupCurr', 'nextMonth', 'prevMonth'])
   }
 }
 </script>

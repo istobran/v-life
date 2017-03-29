@@ -3,12 +3,19 @@ import Vuex from 'vuex';
 import mutations from './mutations';
 import getters from './getters';
 import actions from './actions';
+import moment from 'moment';
 
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   state: {
     showMenu: true,
+    today: moment(),
+    curr: {
+      moment: null,
+      year: 0,
+      month: 0
+    },
     navList: {
       common: [
         { name: "生活", icon: "home", color: "#43A047", link:"home" },

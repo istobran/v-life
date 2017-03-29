@@ -3,28 +3,33 @@
     <div class="sidebar-inner">
       <ul class="common">
         <router-link tag="li" :to="item.link" v-for="item in navList.common" :key="item.name">
+          <md-ink-ripple />
           <md-icon :style="{ 'color': item.color }" class="m0">{{ item.icon }}</md-icon>
           <span class="text">{{ item.name }}</span>
         </router-link>
       </ul>
       <ul class="custom">
         <router-link tag="li" :to="item.link" v-for="item in navList.custom" :key="item.name">
+          <md-ink-ripple />
           <md-icon :style="{ 'color': item.color }" class="m0">{{ item.icon }}</md-icon>
           <span class="text">{{ item.name }}</span>
         </router-link>
         <li @click="createNewCustom">
+          <md-ink-ripple />
           <md-icon :style="{ 'color': '#616161' }" class="m0">add</md-icon>
           <span class="text">新建</span>
         </li>
       </ul>
       <ul class="feature">
         <router-link tag="li" :to="item.link" v-for="item in navList.feature" :key="item.name">
+          <md-ink-ripple />
           <md-icon :style="{ 'color': item.color }" class="m0">{{ item.icon }}</md-icon>
           <span class="text">{{ item.name }}</span>
         </router-link>
       </ul>
       <ul class="other">
         <router-link tag="li" :to="item.link" v-for="item in navList.other" :key="item.name">
+          <md-ink-ripple />
           <md-icon :style="{ 'color': item.color }" class="m0">{{ item.icon }}</md-icon>
           <span class="text">{{ item.name }}</span>
         </router-link>
@@ -85,6 +90,7 @@ export default {
         margin-top: 0;
       }
       li {
+        position: relative;
         cursor: pointer;
         align-items: center;
         display: flex;
