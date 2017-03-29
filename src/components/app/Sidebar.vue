@@ -1,6 +1,6 @@
 <template lang="html">
   <aside id="sidebar" :class="{ 'show': showMenu }">
-    <div class="sidebar-inner">
+    <div class="sidebar-inner prevent-select">
       <ul class="common">
         <router-link tag="li" :to="item.link" v-for="item in navList.common" :key="item.name">
           <md-ink-ripple />

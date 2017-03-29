@@ -4,11 +4,16 @@
       <div class="dayname" v-for="dayname in daynames">{{ dayname }}</div>
     </header>
     <section class="day-container">
-      <div :class="{ 'day': true, 'not-this-month': !day.inThisMonth, 'today': isToday(day) }"
+      <div :class="{ 'day': true, 'not-this-month': !day.inThisMonth, 'editing': day.editFlag }"
           v-for="day in days"
-          @dblclick="day.editFlag=true">
-        <header class="day-header prevent-select"><i>{{ day.solar }}</i></header>
-        <p class="day-context" :contenteditable="day.editFlag" @blur="day.editFlag=false">{{ day.context }}</p>
+          @dblclick="startEdit(day)" @blur="endEdit(day)">
+        <header class="day-header prevent-select">
+          <i>{{ day.solar }}</i>
+          <span v-if="isToday(day)" class="tag">今天</span>
+        </header>
+        <p class="day-context" :ref="day.moment.format('YYYY-MM-DD')"
+          :contenteditable="day.editFlag"
+          @blur="endEdit(day)">{{ day.context }}</p>
       </div>
     </section>
   </main>
@@ -61,8 +66,10 @@ export default {
 
       // 获取当月第一天是星期几（从 0 开始，0 是星期天）
       const firstDay = current.clone().date(1);
+      console.log(firstDay.format("YYYY-MM-DD"), firstDay.day());
+
       // 补全日历（前）
-      if (firstDay.day() > 1) {
+      if (firstDay.day() > 1 || firstDay.day() === 0) {
         // 获取上个月的最后一天
         let temp_1 = firstDay.subtract(1, 'days');
         while (temp_1.day() !== 0) {    // 补到星期一
@@ -98,6 +105,20 @@ export default {
     },
     isToday(day) {
       return day.moment.diff(this.today, 'days') === 0;
+    },
+    startEdit(day) {
+      if (day.inThisMonth) {
+        day.editFlag = true;
+        // 这里有坑：http://stackoverflow.com/a/37162116/5160100
+        // contentEditable元素不能够直接focus，需要有timeout
+        const node = this.$refs[day.moment.format('YYYY-MM-DD')][0];
+        setTimeout(_ => node.focus(), 0);
+      }
+    },
+    endEdit(day) {
+      if (day.inThisMonth) {
+        day.editFlag = false;
+      }
     }
   }
 }
@@ -131,30 +152,52 @@ export default {
       box-sizing: border-box;
       position: relative;
       .day-header {
-        height: 1.4em;
-        line-height: 1.4em;
+        height: 16px;
+        line-height: 16px;
         font-weight: bold;
         // border: 1px solid red;
         i {
           padding-left: 5px;
         }
+        .tag {
+          margin-left: 5px;
+          background-color: #4A148C;
+          box-sizing: border-box;
+          color: #FFF;
+          font-size: 12px;
+          font-weight: bold;
+          padding: 1px 4px;
+          border-radius: 7px;
+          vertical-align: middle;
+        }
       }
       .day-context {
         position: absolute;
-        top: 1.4em;
-        bottom: 0;
-        left: 0;
-        right: 0;
+        top: 16px;
+        bottom: 2px;
+        left: 4px;
+        right: 4px;
         padding: 2px;
-        // border: 1px solid red;
+        box-sizing: border-box;
         overflow: auto;
         &:focus {
           outline: none;
         }
       }
-      &.today {
-        outline: 1px dotted #212121;
-        outline: 5px auto -webkit-focus-ring-color;
+      &.editing {
+        box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px rgba(0,0,0,.14), 0 1px 10px rgba(0,0,0,.12);
+        .day-context {
+          background-color: #FAFAFA;
+          border: 1px solid #CCCCCC;
+        }
+        .tag {
+          background-color: transparent;
+          color: inherit;
+          font-size: inherit;
+          font-weight: inherit;
+          padding: 0;
+          border-radius: 0;
+        }
       }
       &.not-this-month {
         color: #C1C1C1;
