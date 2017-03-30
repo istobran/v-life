@@ -1,11 +1,12 @@
 var path = require('path')
 var webpack = require('webpack')
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
+    publicPath: '/',
     filename: 'build.js'
   },
   resolve: {
@@ -62,6 +63,19 @@ module.exports = {
     ]
   },
   plugins: [
+    //HtmlWebpackPlugin，模板生成相关的配置，每个对应一个页面的配置，有几个写几个
+    new HtmlWebpackPlugin({ //根据模板插入css/js等生成最终HTML
+      favicon: './src/assets/favicon.ico', //favicon路径，通过webpack引入同时可以生成hash值
+      filename: './index.html', //生成的html存放路径，相对于path
+      template: './index.html', //html模板路径
+      inject: 'body', //js插入的位置，true/'head'/'body'/false
+      hash: false, //为静态资源生成hash值
+      minify: { //压缩HTML文件
+        removeComments: true, //移除HTML中的注释
+        collapseWhitespace: true //删除空白符与换行符
+      }
+    }),
+
     new webpack.LoaderOptionsPlugin({
       options: {
         postcss: [

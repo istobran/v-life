@@ -18,9 +18,9 @@ export const store = new Vuex.Store({
     },
     navList: {
       common: [
-        { name: "生活", icon: "home", color: "#43A047", link:"home" },
-        { name: "工作", icon: "work", color: "#1E88E5", link:"work" },
-        { name: "活动", icon: "extension", color: "#FB8C00", link:"activity" }
+        { name: "生活", icon: "home", color: "#43A047", link:"/app/home" },
+        { name: "工作", icon: "work", color: "#1E88E5", link:"/app/work" },
+        { name: "活动", icon: "extension", color: "#FB8C00", link:"/app/activity" }
       ],
       custom: [
         {
@@ -29,11 +29,11 @@ export const store = new Vuex.Store({
         }
       ],
       feature: [
-        { name: "便签", icon: "bookmark", color: "#E53935", link:"bookmark"  }
+        { name: "便签", icon: "bookmark", color: "#E53935", link:"/app/bookmark"  }
       ],
       other: [
-        { name: "设置", icon: "settings", color: "#616161", link:"settings" },
-        { name: "帮助", icon: "help", color: "#616161", link:"help" }
+        { name: "设置", icon: "settings", color: "#616161", link:"/app/settings" },
+        { name: "帮助", icon: "help", color: "#616161", link:"/app/help" }
       ]
     }
   },

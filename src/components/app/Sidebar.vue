@@ -17,7 +17,7 @@
         <li @click="createNewCustom">
           <md-ink-ripple />
           <md-icon :style="{ 'color': '#616161' }" class="m0">add</md-icon>
-          <span class="text">新建</span>
+          <span class="text" @click="createMenu">新建</span>
         </li>
       </ul>
       <ul class="feature">
@@ -57,6 +57,9 @@ export default {
   methods: {
     createNewCustom() {
 
+    },
+    createMenu() {
+      this.$root.$refs["createMenuDialog"].open();
     }
   },
   components: {}

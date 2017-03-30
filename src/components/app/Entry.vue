@@ -3,16 +3,18 @@
     <nav-bar></nav-bar>
     <side-bar></side-bar>
     <router-view></router-view>
+
   </div>
 </template>
 
 <script>
 import NavBar from './NavBar';
 import SideBar from './SideBar';
+import CreateMenuDialog from './dialogs/CreateMenuDialog';
 
 export default {
   components: {
-    SideBar, NavBar
+    SideBar, NavBar, CreateMenuDialog
   }
 }
 </script>

@@ -11,9 +11,13 @@
           <i>{{ day.solar }}</i>
           <span v-if="isToday(day)" class="tag">今天</span>
         </header>
-        <p class="day-context" :ref="day.moment.format('YYYY-MM-DD')"
+        <!-- <p class="day-context" :ref="day.moment.format('YYYY-MM-DD')"
           :contenteditable="day.editFlag"
-          @blur="endEdit(day)">{{ day.context }}</p>
+          @blur="endEdit(day)" @keyup="changeContext(day)">{{ day.context }}</p> -->
+        <day-context v-model="day.context"
+          :ref="day.moment.format('YYYY-MM-DD')"
+          :flag="day.editFlag"
+          @blur="endEdit(day)"></day-context>
       </div>
     </section>
   </main>
@@ -22,31 +26,43 @@
 <script>
 import { mapGetters } from 'vuex';
 import moment from 'moment';
+import DayContext from './small/DayContext';
 
 export default {
   components: {
+    DayContext
   },
   data() {
     return {
       daynames: ['星期一','星期二','星期三','星期四','星期五','星期六','星期日'],
-      days: []
+      days: [],
+      events: {}    // key: YYYY-MM-DD, value: context
     }
   },
   created() {
   },
-  beforeMount() {
+  beforeRouteEnter(to, from, next) {
+    const reqRoute = to.fullPath.replace('/app/', '').split('/');
+    next(vm => {
+      vm.reqRoute = reqRoute;
+      vm.loadEvents();
+      vm.render();
+    });
   },
   mounted() {
-    // console.log(this.currMonth.constructor);
+    // 监听月份变化
     this.$store.watch(state => { return state.curr.month }, this.render);
-    this.render();
+    // 读取本地事件数据
+    // this.loadEvents();
+    // this.render();
   },
   computed: {
     ...mapGetters(['showMenu', 'today', 'curr', 'currYear', 'currMonth'])
   },
   methods: {
+    // 渲染日历
     render() {
-      this.days = [];
+      this.days.splice(0, this.days.length);
       // 获取当前日期
       const current = this.curr;
       // 获取当月天数
@@ -60,13 +76,12 @@ export default {
           inThisMonth: true,
           editFlag: false,
           moment: current.clone().date(i),
-          context: "a"
+          context: ""
         })
       }
 
       // 获取当月第一天是星期几（从 0 开始，0 是星期天）
       const firstDay = current.clone().date(1);
-      console.log(firstDay.format("YYYY-MM-DD"), firstDay.day());
 
       // 补全日历（前）
       if (firstDay.day() > 1 || firstDay.day() === 0) {
@@ -79,7 +94,7 @@ export default {
             inThisMonth: false,
             editFlag: false,
             moment: temp_1.clone(),
-            context: "a"
+            context: ""
           });
           temp_1 = temp_1.subtract(1, 'days');
         }
@@ -97,29 +112,76 @@ export default {
             inThisMonth: false,
             editFlag: false,
             moment: temp_2.clone(),
-            context: "a"
+            context: ""
           });
           temp_2 = temp_2.add(1, 'days');
         }
       }
+
+      // 导入事件
+      this.insertEvents();
     },
+    // 将事件导入日历表
+    insertEvents() {
+      this.days.forEach(day => {
+        if (this.events[day.moment.format("YYYY-MM-DD")]) {
+          day.context = this.events[day.moment.format("YYYY-MM-DD")];
+        }
+      });
+      // 等待子组件 props 数据变化后再触发事件
+      this.$nextTick(_ => {
+        this.$emit('updateContext');
+      })
+    },
+    // 读取本地存储的事件列表
+    loadEvents() {
+      const data = window.localStorage["v-life-events-"+this.reqRoute.join('-')];
+      if (data) {
+        this.events = JSON.parse(data);
+      } else {
+        this.events = {};
+      }
+    },
+    // 保存事件列表到本地
+    saveEvents() {
+      window.localStorage["v-life-events-"+this.reqRoute.join('-')] = JSON.stringify(this.events);
+    },
+    // 判断是否为今天
     isToday(day) {
       return day.moment.diff(this.today, 'days') === 0;
     },
+    // 进入编辑日历
     startEdit(day) {
       if (day.inThisMonth) {
         day.editFlag = true;
         // 这里有坑：http://stackoverflow.com/a/37162116/5160100
         // contentEditable元素不能够直接focus，需要有timeout
-        const node = this.$refs[day.moment.format('YYYY-MM-DD')][0];
+        const node = this.$refs[day.moment.format('YYYY-MM-DD')][0].$el;
+        // console.log(node);
         setTimeout(_ => node.focus(), 0);
       }
     },
+    // 退出编辑日历
     endEdit(day) {
       if (day.inThisMonth) {
         day.editFlag = false;
+        const tempNode = document.createElement("p");
+        tempNode.innerHTML = day.context;
+        if (tempNode.innerText.trim().length === 0) {
+          day.context = "";
+          delete this.events[day.moment.format("YYYY-MM-DD")];
+        } else {
+          this.events[day.moment.format("YYYY-MM-DD")] = day.context;
+        }
+        this.saveEvents();
       }
-    }
+    },
+    // 修改日历值
+    // changeContext(day) {
+    //   const refName = day.moment.format('YYYY-MM-DD')
+    //   day.context = this.$refs[refName][0].innerHTML;
+    //   console.log(this.$refs[refName][0].innerHTML);
+    // }
   }
 }
 </script>
