@@ -1,34 +1,48 @@
 <template lang="html">
-  <md-dialog-prompt
-    :md-title="title"
-    :md-ok-text="ok"
-    :md-cancel-text="cancel"
-    ref="createMenuDialog"
-    @open="onOpen"
-    @close="onClose">
-  </md-dialog-prompt>
+  <md-dialog md-open-from="#btnCreate" md-close-to="#btnCreate" ref="createMenuDialog">
+    <md-dialog-title>新建自定义日历</md-dialog-title>
+    <md-dialog-content>
+      <form>
+        <md-input-container>
+          <label>日历名称</label>
+          <md-input></md-input>
+        </md-input-container>
+      </form>
+    </md-dialog-content>
+    <md-dialog-actions>
+      <md-button class="md-primary" @click.native="closeDialog()">取消</md-button>
+      <md-button class="md-primary" @click.native="closeDialog()">新建</md-button>
+    </md-dialog-actions>
+  </md-dialog>
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex';
+
 export default {
   data() {
     return {
-      title: 'What\'s your name?',
-      ok: 'Done',
-      cancel: 'Cancel',
-      id: 'name',
-      name: 'name',
-      placeholder: 'Type your name...',
-      maxlength: 30,
-      value: ''
+    }
+  },
+  computed: {
+    ...mapGetters({ show: 'showCreateMenuDialog' }),
+  },
+  watch: {
+    show() {
+      if (this.show) {
+        this.$refs["createMenuDialog"].open();
+      } else {
+        this.$refs["createMenuDialog"].close();
+      }
     }
   },
   methods: {
-    onOpen() {
-      console.log('Opened');
+    ...mapMutations({ close: "closeCreateMenuDialog" }),
+    closeDialog() {
+      this.close();
     },
-    onClose(type) {
-      console.log('Closed', type);
+    createMenu() {
+      this.close();
     }
   }
 }

@@ -3,7 +3,7 @@
     <nav-bar></nav-bar>
     <side-bar></side-bar>
     <router-view></router-view>
-
+    <create-menu-dialog></create-menu-dialog>
   </div>
 </template>
 

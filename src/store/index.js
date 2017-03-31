@@ -35,7 +35,8 @@ export const store = new Vuex.Store({
         { name: "设置", icon: "settings", color: "#616161", link:"/app/settings" },
         { name: "帮助", icon: "help", color: "#616161", link:"/app/help" }
       ]
-    }
+    },
+    showCreateMenuDialog: false
   },
   mutations,
   getters,

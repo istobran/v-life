@@ -16,5 +16,11 @@ export default {
     state.curr.moment.subtract(1, 'M');
     state.curr.year = state.curr.moment.year();
     state.curr.month = state.curr.moment.month();
+  },
+  openCreateMenuDialog(state) {
+    state.showCreateMenuDialog = true;
+  },
+  closeCreateMenuDialog(state) {
+    state.showCreateMenuDialog = false;
   }
 }

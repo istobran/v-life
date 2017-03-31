@@ -11,9 +11,6 @@
           <i>{{ day.solar }}</i>
           <span v-if="isToday(day)" class="tag">今天</span>
         </header>
-        <!-- <p class="day-context" :ref="day.moment.format('YYYY-MM-DD')"
-          :contenteditable="day.editFlag"
-          @blur="endEdit(day)" @keyup="changeContext(day)">{{ day.context }}</p> -->
         <day-context v-model="day.context"
           :ref="day.moment.format('YYYY-MM-DD')"
           :flag="day.editFlag"

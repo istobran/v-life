@@ -14,10 +14,10 @@
           <md-icon :style="{ 'color': item.color }" class="m0">{{ item.icon }}</md-icon>
           <span class="text">{{ item.name }}</span>
         </router-link>
-        <li @click="createNewCustom">
+        <li id="btnCreate" @click="addMenu">
           <md-ink-ripple />
           <md-icon :style="{ 'color': '#616161' }" class="m0">add</md-icon>
-          <span class="text" @click="createMenu">新建</span>
+          <span class="text">新建</span>
         </li>
       </ul>
       <ul class="feature">
@@ -55,12 +55,7 @@ export default {
   ready() {},
   attached() {},
   methods: {
-    createNewCustom() {
-
-    },
-    createMenu() {
-      this.$root.$refs["createMenuDialog"].open();
-    }
+    ...mapMutations({ addMenu: 'openCreateMenuDialog' })
   },
   components: {}
 };

@@ -16,5 +16,8 @@ export default {
   },
   currMonth(state) {
     return state.curr.month + 1;
+  },
+  showCreateMenuDialog(state) {
+    return state.showCreateMenuDialog;
   }
 }
