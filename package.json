@@ -33,6 +33,7 @@
     "vue-style-loader": "^1.0.0",
     "vue-template-compiler": "^2.2.5",
     "vuex": "^2.2.1",
+    "vuex-toast": "^0.1.1",
     "webpack": "^2.3.2",
     "webpack-dev-server": "^2.4.2"
   }

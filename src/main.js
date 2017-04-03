@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import MockData from './mock'
 import App from './App'
 import routes from './routes'
-import { store } from './store';
+import { store } from './store'
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.css'
 

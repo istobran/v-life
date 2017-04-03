@@ -3,7 +3,11 @@
 </template>
 
 <script>
-
+export default {
+  created() {   // 建立全局对象
+    window.G = {};
+  }
+}
 </script>
 
 <style lang="scss">

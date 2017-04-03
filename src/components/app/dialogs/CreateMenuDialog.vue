@@ -11,7 +11,7 @@
     </md-dialog-content>
     <md-dialog-actions>
       <md-button class="md-primary" @click.native="closeDialog">取消</md-button>
-      <md-button class="md-primary" @click.native="closeDialog">新建</md-button>
+      <md-button class="md-primary" @click.native="createMenu">新建</md-button>
     </md-dialog-actions>
   </md-dialog>
 </template>
@@ -41,6 +41,7 @@ export default {
     },
     createMenu() {
       this.$refs["createMenuDialog"].close();
+      G.successGo("新建成功!");
     }
   }
 }

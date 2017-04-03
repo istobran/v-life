@@ -22,5 +22,11 @@ export default {
   },
   closeCreateMenuDialog(state) {
     state.showCreateMenuDialog = false;
+  },
+  createCustomMenu(state, payload) {
+    // state.navList.custom.push({
+    //   name: "个人日历", icon: "date_range", color: "#616161",
+    //   link: { name: "custom", params: { cid: 1 } }
+    // });
   }
 }

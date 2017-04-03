@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { createModule } from 'vuex-toast';
 import mutations from './mutations';
 import getters from './getters';
 import actions from './actions';
@@ -40,5 +41,8 @@ export const store = new Vuex.Store({
   },
   mutations,
   getters,
-  actions
+  actions,
+  modules: {
+    toast: createModule({ dismissInterval: 8000 })
+  }
 });
