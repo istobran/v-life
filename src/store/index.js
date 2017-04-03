@@ -43,6 +43,6 @@ export const store = new Vuex.Store({
   getters,
   actions,
   modules: {
-    toast: createModule({ dismissInterval: 8000 })
+    toast: createModule({ dismissInterval: 3000 })
   }
 });

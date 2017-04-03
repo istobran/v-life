@@ -13,6 +13,7 @@ $width: 350px;
   width: 100%;
   color: #fff;
   font-size: 14px;
+  font-weight: bold;
   line-height: 14px;
   transition: 400ms cubic-bezier(0.17, 0.67, 0.17, 0.98);
   transition-property: opacity, transform;
@@ -98,42 +99,26 @@ $width: 350px;
 /**
  * Types
  */
-.toast-type-info .toast-message-text:before {
-  font-family: "Material Icons";
-  content: "info_outline";
-  font-weight: bold;
-  color: #43b4ec;
-  vertical-align: top;
-  padding-right: 5px;
-  // content: "info";
+@mixin icon-before($icon, $color) {
+  .toast-message-text:before {
+    font-family: "Material Icons";
+    content: $icon;
+    font-weight: bold;
+    color: $color;
+    vertical-align: top;
+    padding-right: 6px;
+  }
 }
-.toast-type-success .toast-message-text:before {
-  font-family: "Material Icons";
-  content: "done";
-  font-weight: bold;
-  color: #3add93;
-  vertical-align: top;
-  padding-right: 5px;
-  // content: "check_circle";
+
+.toast-type-info {
+  @include icon-before("info_outline", #43b4ec);
 }
-.toast-type-warning .toast-message-text:before {
-  font-family: "Material Icons";
-  content: "priority_high";
-  font-weight: bold;
-  color: #efd700;
-  vertical-align: top;
-  padding-right: 5px;
-  // content: "report_problem";
-  // content: "warning";
+.toast-type-success {
+  @include icon-before("done", #3add93);
 }
-.toast-type-danger .toast-message-text:before {
-  font-family: "Material Icons";
-  content: "close";
-  font-weight: bold;
-  color: #f3755e;
-  vertical-align: top;
-  padding-right: 5px;
-  // content: "remove_circle";
-  // content: "report";
-  // content: "warning";
+.toast-type-warning {
+  @include icon-before("priority_high", #efd700);
+}
+.toast-type-danger {
+  @include icon-before("close", #f3755e);
 }
