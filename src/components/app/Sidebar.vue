@@ -13,6 +13,7 @@
           <md-ink-ripple />
           <md-icon :style="{ 'color': item.color }" class="m0">{{ item.icon }}</md-icon>
           <span class="text">{{ item.name }}</span>
+          <md-icon class="btn-close" @click.prev.stop.native="delRequest(item)">clear</md-icon>
         </router-link>
         <li id="btnCreate" @click="addMenu">
           <md-ink-ripple />
@@ -35,6 +36,14 @@
         </router-link>
       </ul>
     </div>
+    <md-dialog-confirm
+      :md-title="confirm.title"
+      :md-content-html="confirm.contentHtml"
+      :md-ok-text="confirm.ok"
+      :md-cancel-text="confirm.cancel"
+      @close="onClose"
+      ref="confirm_delMenu">
+    </md-dialog-confirm>
   </aside>
 </template>
 
@@ -43,9 +52,12 @@ import { mapGetters, mapMutations } from 'vuex';
 export default {
   data() {
     return {
-      pageState: {
-      },
-      user: {
+      confirm: {
+        title: "删除日历",
+        contentHtml: "删除自定义日历会同时删除该日历下的所有数据<br>您确定要继续吗？",
+        ok: "确定",
+        cancel: "取消",
+        item: null
       }
     };
   },
@@ -55,7 +67,20 @@ export default {
   ready() {},
   attached() {},
   methods: {
-    ...mapMutations({ addMenu: 'openCreateMenuDialog' })
+    ...mapMutations({ addMenu: 'openCreateMenuDialog', delMenu: "removeCustomMenu" }),
+    delRequest(item) {
+      this.confirm.item = item;
+      this.confirm.contentHtml = `删除自定义日历 ${item.name} 会同时删除该日历下的所有数据<br>您确定要继续吗？`;
+      this.$refs['confirm_delMenu'].open();
+    },
+    onClose(action) {
+      if (action == "ok") {
+        this.delMenu({ item: this.confirm.item });
+        G.successGo("删除成功！");
+        this.$router.push("/app/home");
+      }
+      this.confirm.item = null;
+    }
   },
   components: {}
 };
@@ -102,6 +127,15 @@ export default {
         }
         .m0 {
           margin: 0;
+        }
+        .btn-close {
+          position: absolute;
+          right: 12px;
+          display: none;
+          z-index: 2;
+        }
+        &:hover .btn-close {
+          display: inherit;
         }
         .text {
           display: inline-flex;

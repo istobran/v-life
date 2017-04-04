@@ -46,6 +46,12 @@ export default {
       vm.render();
     });
   },
+  beforeRouteUpdate (to, from, next) {
+    this.reqRoute = to.fullPath.replace('/app/', '').split('/');
+    this.loadEvents();
+    this.render();
+    next();
+  },
   mounted() {
     // 监听月份变化
     this.$store.watch(state => { return state.curr.month }, this.render);

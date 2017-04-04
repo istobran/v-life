@@ -1,5 +1,5 @@
 <template lang="html">
-  <md-dialog md-open-from="#btnCreate" ref="createMenuDialog" @close="close">
+  <md-dialog ref="createMenuDialog" @close="close">
     <md-dialog-title>新建自定义日历</md-dialog-title>
     <md-dialog-content>
       <md-input-container @keyup.enter.native="createMenu">
