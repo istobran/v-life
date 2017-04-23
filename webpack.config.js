@@ -86,6 +86,7 @@ module.exports = {
         ],
         vue: {
           loaders: {
+            sass: "vue-style-loader!css-loader!postcss-loader!sass-loader?indentedSyntax",
             scss: "vue-style-loader!css-loader!postcss-loader!sass-loader"
           }
         }
