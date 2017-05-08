@@ -23,6 +23,12 @@ export default {
   closeCreateMenuDialog(state) {
     state.showCreateMenuDialog = false;
   },
+  openBookmarkDialog(state) {
+    state.showBookmarkDialog = true;
+  },
+  closeBookmarkDialog(state) {
+    state.showBookmarkDialog = false;
+  },
   createCustomMenu(state, payload) {
     // 获取当前数组中最大的ID值
     let len = state.navList.custom.length - 1;

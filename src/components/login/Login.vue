@@ -88,7 +88,7 @@ export default {
     margin: 15px auto 0;
   }
   .login-option {
-    margin: 5px auto 0;
+    margin: 20px auto;
     width: 283px;
     font-size: 14px;
     overflow: auto;

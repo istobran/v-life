@@ -11,6 +11,12 @@
       <span class="year">{{ currYear }} 年</span>
       <span class="month">{{ currMonth }} 月</span>
     </div>
+    <div class="search-bar-area">
+      <div :class="{ 'search-bar': true, 'focus': searchFocus }">
+        <span class="icon"><md-icon>search</md-icon></span>
+        <input type="text" v-model="search" @change="searchChanged" @focus="focusStyle" @blur="blurStyle">
+      </div>
+    </div>
     <div class="user-container pull-right prevent-select">
       <span class="user-name">{{ user.username }}</span>
       <span class="user-avatar"><img :src="user.avatarUrl" alt=""></span>
@@ -24,6 +30,8 @@ export default {
   data() {
     return {
       title: "V-LIFE",
+      search: "",     // 搜索栏
+      searchFocus: false,   // 焦点是否在搜索栏上
       user: {
         avatarUrl: "http://en.gravatar.com/userimage/99616975/827489fdfb37acbf6ed0254f4f311417.jpg?size=48",
         username: "BangZ"
@@ -37,7 +45,16 @@ export default {
     this.setupCurr();
   },
   methods: {
-    ...mapMutations(['toggleMenu', 'setupCurr', 'nextMonth', 'prevMonth'])
+    ...mapMutations(['toggleMenu', 'setupCurr', 'nextMonth', 'prevMonth']),
+    searchChanged() {   // 搜索栏变更
+      console.log(this.search);
+    },
+    focusStyle() {
+      this.searchFocus = true;
+    },
+    blurStyle() {
+      this.searchFocus = false;
+    }
   }
 }
 </script>
@@ -126,6 +143,37 @@ $navbar-height: 56px;
     }
     .year {
       margin-left: 5px;
+    }
+  }
+  .search-bar-area {
+    position: absolute;
+    left: 450px;
+    width: 600px;
+    height: 56px;
+    padding: 10px 0;
+    .search-bar {
+      border-radius: 4px;
+      line-height: 36px;
+      background-color: rgba(0, 0, 0, .1);
+      .icon {
+        margin-left: 10px;
+        opacity: .6;
+        transition: opacity .15s ease-out;
+      }
+      input {
+        background-color: transparent;
+        color: #FFFFFF;
+        font-size: 14px;
+        display: inline-block;
+        width: 550px;
+        border: none;
+        outline: none;
+      }
+      &.focus {
+        .icon {
+          opacity: 1;
+        }
+      }
     }
   }
 }
