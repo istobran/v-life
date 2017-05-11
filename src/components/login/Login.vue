@@ -7,10 +7,10 @@
       <input type="text" name="name" value="" placeholder="请输入用户名"><br/>
       <input type="password" name="name" value="" placeholder="请输入密码"><br/>
       <div class="login-option">
-        <span class="login-remember"><input type="checkbox" class="cb_rem" id="remember" name="remember" value=""><label class="lb_rem" for="remember">记住我</label></span>
+        <span class="login-remember"><input type="checkbox" class="cb_rem" id="remember" name="remember" v-model="rememberLogin"><label class="lb_rem" for="remember">记住我</label></span>
         <span class="login-forget"><a class="btn-findpasswd" href="#">忘记密码？</a></span>
       </div>
-      <button class="login-button" type="submit" name="login">登&nbsp;&nbsp;&nbsp;录</button>
+      <button class="login-button" name="login" @click="login">登&nbsp;&nbsp;&nbsp;录</button>
       <div class="register-hint">
         <span>还没有账号？<a class="btn-register" href="#">创建新账户>></a></span>
       </div>
@@ -26,9 +26,32 @@ export default {
     Slideshow
   },
   data () {
-    return {}
+    return {
+      rememberLogin: false
+    }
+  },
+  created() {
+    let isLogin = Boolean(sessionStorage.getItem("isLogin"));
+    if (isLogin) {
+      this.$router.push({ path: "/app" });
+    } else {
+      var localStatus = Boolean(localStorage.getItem("isLogin"));
+      if (localStatus) {
+        sessionStorage.setItem("isLogin", localStatus);
+        this.$router.push({ path: "/app" })
+      }
+    }
   },
   mounted() {
+  },
+  methods: {
+    login() {
+      sessionStorage.setItem("isLogin", true);
+      if (this.rememberLogin) {
+        localStorage.setItem("isLogin", true);
+      }
+      this.$router.push({ path: "/app" });
+    }
   }
 }
 </script>

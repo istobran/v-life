@@ -7,6 +7,7 @@ import LoginPage from './components/login/Login'
 export default [
   { path: '/', redirect: '/app/home' },
   { path: '/app', component: AppEntry,
+    redirect: "/app/home",
     children: [
       { path: 'home', component: Calendar },
       { path: 'work', component: Calendar },

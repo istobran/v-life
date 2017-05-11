@@ -19,7 +19,7 @@ const router = new VueRouter({
 // 路由导航钩子
 router.beforeEach(({ meta, path }, from, next) => {
   var { auth = true } = meta;
-  var isLogin = Boolean(true); //true用户已登录， false用户未登录
+  var isLogin = Boolean(sessionStorage.getItem("isLogin")); //true用户已登录， false用户未登录
 
   if (auth && !isLogin) {
     return next({ path: '/login' });

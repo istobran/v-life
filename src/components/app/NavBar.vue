@@ -17,10 +17,15 @@
         <input type="text" v-model="search" @change="searchChanged" @focus="focusStyle" @blur="blurStyle">
       </div>
     </div>
-    <div class="user-container pull-right prevent-select">
-      <span class="user-name">{{ user.username }}</span>
-      <span class="user-avatar"><img :src="user.avatarUrl" alt=""></span>
-    </div>
+    <md-menu md-align-trigger class="user-container prevent-select pull-right">
+      <md-button md-menu-trigger>
+        <span class="user-name">{{ user.username }}</span>
+        <span class="user-avatar"><img :src="user.avatarUrl" alt=""></span>
+      </md-button>
+      <md-menu-content>
+        <md-menu-item @click.native="logout">退出登录</md-menu-item>
+      </md-menu-content>
+    </md-menu>
   </header>
 </template>
 
@@ -54,6 +59,11 @@ export default {
     },
     blurStyle() {
       this.searchFocus = false;
+    },
+    logout() {
+      delete sessionStorage["isLogin"];
+      delete localStorage["isLogin"];
+      this.$router.push({ path: "/login" });
     }
   }
 }
@@ -117,18 +127,22 @@ $navbar-height: 56px;
   .user-container {
     position: absolute;
     right: 0;
-    height: $navbar-height;
     line-height: $navbar-height;
-    padding: 0 30px;
-    .user-name {
-      margin-right: 10px;
-      font-size: 14px;
-      cursor: default;
-    }
-    .user-avatar img {
-      width: 39px;
-      height: 39px;
-      border-radius: 50%;
+    height: $navbar-height;
+    .md-button {
+      margin: 8px 10px;
+      padding: 0 10px;
+      text-transform: none;
+      .user-name {
+        margin-right: 10px;
+        font-size: 14px;
+        cursor: default;
+      }
+      .user-avatar img {
+        width: 39px;
+        height: 39px;
+        border-radius: 50%;
+      }
     }
   }
   .date-selector {
@@ -176,5 +190,8 @@ $navbar-height: 56px;
       }
     }
   }
+}
+.md-menu-content {
+  z-index: 100;
 }
 </style>
