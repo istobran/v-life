@@ -34,7 +34,7 @@ export const store = new Vuex.Store({
       ],
       other: [
         { name: "设置", icon: "settings", color: "#616161", link:"/app/settings" },
-        { name: "帮助", icon: "help", color: "#616161", link:"/app/help" }
+        { name: "帮助", icon: "help", color: "#616161", link:"/app/support" }
       ]
     },
     showCreateMenuDialog: false,

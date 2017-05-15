@@ -31,6 +31,8 @@ export default {
     }
   },
   created() {
+  },
+  mounted() {
     let isLogin = Boolean(sessionStorage.getItem("isLogin"));
     if (isLogin) {
       this.$router.push({ path: "/app" });
@@ -41,8 +43,6 @@ export default {
         this.$router.push({ path: "/app" })
       }
     }
-  },
-  mounted() {
   },
   methods: {
     login() {

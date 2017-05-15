@@ -19,5 +19,8 @@ export default {
   },
   showCreateMenuDialog(state) {
     return state.showCreateMenuDialog;
+  },
+  showBookmarkDialog(state) {
+    return state.showBookmarkDialog;
   }
 }

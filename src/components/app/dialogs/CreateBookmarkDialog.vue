@@ -35,7 +35,7 @@ import { mapGetters, mapMutations } from 'vuex';
 export default {
   data() {
     return {
-
+      inputValue: "",
     }
   },
   computed: {
@@ -46,6 +46,17 @@ export default {
       if (this.show) {
         this.$refs["createBookmarkDialog"].open();
       }
+    }
+  },
+  methods: {
+    closeDialog() {
+
+    },
+    createMenu() {
+
+    },
+    close() {
+
     }
   }
 }
