@@ -3,23 +3,28 @@
     <div class="op-container">
       <md-button @click.native="openAddBookmark"><md-icon>add</md-icon> 新增便签</md-button>
     </div>
-    <div class="bookmark-container grid">
-      <md-whiteframe md-elevation="4" class="bookmark-instance" type="todo" >
+    <waterfall :line-gap="220" :watch="stickers">
+      <waterfall-slot
+        v-for="(sticker, index) in stickers"
+        :width="sticker.width"
+        :height="sticker.height"
+        :order="index"
+        :key="sticker.id"
+      >
+      <div class="bookmark-instance" type="todo" v-if="sticker.type ==='todo'">
         <ul>
-          <li v-for="n in 5">
-            <md-checkbox class="md-primary">任务事项{{ n }}</md-checkbox>
+          <li v-for="it in sticker.content">
+            <md-checkbox class="md-primary" v-model="it.checked">{{ it.desc }}</md-checkbox>
           </li>
         </ul>
-      </md-whiteframe>
-      <md-whiteframe md-elevation="4" class="bookmark-instance" type="text">
-        <p>Lorem ipsum dolor sit amet, doming noster at quo, nostrud lucilius rationibus ea duo. Vim no mucius dolores. No bonorum voluptatum vis, has iudicabit consectetuer ne. Nullam sensibus vim id, et quo graeci perpetua.</p>
-        <p>Lorem ipsum dolor sit amet, doming noster at quo, nostrud lucilius rationibus ea duo. Vim no mucius dolores. No bonorum voluptatum vis, has iudicabit consectetuer ne. Nullam sensibus vim id, et quo graeci perpetua.</p>
-      </md-whiteframe>
-      <md-whiteframe md-elevation="4" class="bookmark-instance" type="draw">
-        <p>Lorem ipsum dolor sit amet, doming noster at quo, nostrud lucilius rationibus ea duo. Vim no mucius dolores. No bonorum voluptatum vis, has iudicabit consectetuer ne. Nullam sensibus vim id, et quo graeci perpetua.</p>
-        <p>Lorem ipsum dolor sit amet, doming noster at quo, nostrud lucilius rationibus ea duo. Vim no mucius dolores. No bonorum voluptatum vis, has iudicabit consectetuer ne. Nullam sensibus vim id, et quo graeci perpetua.</p>
-      </md-whiteframe>
-    </div>
+      </div>
+      <div class="bookmark-instance" type="text" v-if="sticker.type ==='text'" v-html="sticker.content">
+      </div>
+      <div class="bookmark-instance" type="draw" v-if="sticker.type ==='draw'">
+        <img src="sticker.content">
+      </div>
+      </waterfall-slot>
+    </waterfall>
     <create-bookmark-dialog></create-bookmark-dialog>
   </main>
 </template>
@@ -27,40 +32,45 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex';
 import CreateBookmarkDialog from './dialogs/CreateBookmarkDialog';
-import VueGridLayout from 'vue-grid-layout';
-const GridLayout = VueGridLayout.GridLayout;
-const GridItem = VueGridLayout.GridItem;
+import Waterfall from 'vue-waterfall';
 
 export default {
   components: {
     CreateBookmarkDialog,
-    GridLayout,
-    GridItem
+    'waterfall': Waterfall.waterfall,
+    'waterfall-slot': Waterfall.waterfallSlot
   },
   data() {
     return {
-      layout: [
-  	    {"x":0,"y":0,"w":2,"h":2,"i":"0"},
-  	    {"x":2,"y":0,"w":2,"h":4,"i":"1"},
-  	    {"x":4,"y":0,"w":2,"h":5,"i":"2"},
-  	    {"x":6,"y":0,"w":2,"h":3,"i":"3"},
-  	    {"x":8,"y":0,"w":2,"h":3,"i":"4"},
-  	    {"x":10,"y":0,"w":2,"h":3,"i":"5"},
-  	    {"x":0,"y":5,"w":2,"h":5,"i":"6"},
-  	    {"x":2,"y":5,"w":2,"h":5,"i":"7"},
-  	    {"x":4,"y":5,"w":2,"h":5,"i":"8"},
-  	    {"x":6,"y":4,"w":2,"h":4,"i":"9"},
-  	    {"x":8,"y":4,"w":2,"h":4,"i":"10"},
-  	    {"x":10,"y":4,"w":2,"h":4,"i":"11"},
-  	    {"x":0,"y":10,"w":2,"h":5,"i":"12"},
-  	    {"x":2,"y":10,"w":2,"h":5,"i":"13"},
-  	    {"x":4,"y":8,"w":2,"h":4,"i":"14"},
-  	    {"x":6,"y":8,"w":2,"h":4,"i":"15"},
-  	    {"x":8,"y":10,"w":2,"h":5,"i":"16"},
-  	    {"x":10,"y":4,"w":2,"h":2,"i":"17"},
-  	    {"x":0,"y":9,"w":2,"h":3,"i":"18"},
-  	    {"x":2,"y":6,"w":2,"h":2,"i":"19"}
-    	]
+      stickers: [
+        {
+          id: 1,
+          type: "draw",
+          content: null,
+          width: 220,
+          height: 220
+        },
+        {
+          id: 2,
+          type: "todo",
+          content: [
+            { checked: false, desc: "任务事项 1" },
+            { checked: false, desc: "任务事项 2" },
+            { checked: true, desc: "任务事项 3" },
+            { checked: false, desc: "任务事项 4" },
+            { checked: false, desc: "任务事项 5" }
+          ],
+          width: 220,
+          height: 220
+        },
+        {
+          id: 3,
+          type: "text",
+          content: "<p>Lorem ipsum dolor sit amet</p>",
+          width: 220,
+          height: 220
+        }
+      ]
     }
   },
   computed: {
@@ -68,9 +78,6 @@ export default {
   },
   methods: {
     ...mapMutations({ openAddBookmark: 'openBookmarkDialog' }),
-    // openAddBookmark() {
-    //   console.log("qwq")
-    // }
   }
 }
 </script>
@@ -81,18 +88,22 @@ export default {
   .md-button
     margin: 10px 26px 0 0
     color: #328AFB
-.bookmark-container
-  padding: 20px
-  .bookmark-instance
-    width: 200px
+.bookmark-instance
+  position: absolute
+  top: 8px
+  left: 8px
+  right: 8px
+  bottom: 8px
+  box-shadow: 0 1px 5px rgba(0,0,0,.2), 0 2px 2px rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12)
+  box-sizing: border-box
+  background-color: #FFFFFF
+  overflow: scroll
+  &[type=todo]
+    display: block
     padding: 20px
-    background-color: #FFFFFF
-    max-height: 200px
-    overflow: scroll
-    &[type=todo]
-      display: block
-    &[type=text]
-      display: block
-    &[type=draw]
-      display: block
+  &[type=text]
+    display: block
+    padding: 20px
+  &[type=draw]
+    display: block
 </style>

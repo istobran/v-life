@@ -85,7 +85,8 @@ export default {
           self.firstScene.imgUrl = self.secondScene.imgUrl;
           // 在 secondScene 开启了 kenburn 特效之后，关闭 firstScene 的 kenburn 特效
           if (self.firstScene.kenburnChoice.length > 0) {
-            self.$refs.firstScene.classList.remove(self.firstScene.kenburnChoice);
+            self.$refs.firstScene.classList
+            && self.$refs.firstScene.classList.remove(self.firstScene.kenburnChoice);
             self.firstScene.kenburnChoice = "";
           }
         }
@@ -95,12 +96,14 @@ export default {
         self.secondScene.imgUrl = self.loadedImages[self.bgIndex].src;
         // 移除旧的 kenburn 特效
         if (self.secondScene.kenburnChoice.length > 0) {
-          self.$refs.secondScene.classList.remove(self.secondScene.kenburnChoice);
+          self.$refs.secondScene.classList
+          && self.$refs.secondScene.classList.remove(self.secondScene.kenburnChoice);
           self.secondScene.kenburnChoice = "";
         }
         setTimeout(() => {  // 使用Timeout来防止只有一次重绘的问题
           self.secondScene.kenburnChoice = self.rdKenburn();
-          self.$refs.secondScene.classList.add(self.secondScene.kenburnChoice);
+          self.$refs.secondScene.classList
+          && self.$refs.secondScene.classList.add(self.secondScene.kenburnChoice);
           self.trSetting = "all 8000ms";
           self.timer.duration = "8100ms";
           self.timer.enable = true;
@@ -154,7 +157,8 @@ export default {
       console.log("background images all loaded");
       self.firstScene.imgUrl = self.loadedImages[self.bgIndex].src;
       self.firstScene.kenburnChoice = self.rdKenburn();
-      self.$refs.firstScene.classList.add(self.firstScene.kenburnChoice);
+      self.$refs.firstScene.classList
+      && self.$refs.firstScene.classList.add(self.firstScene.kenburnChoice);
       self.firstScene.showStyle = true;
       self.timer.duration = "8100ms";
       self.timer.enable = true;
