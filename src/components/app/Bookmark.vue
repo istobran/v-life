@@ -21,7 +21,7 @@
       <div class="bookmark-instance" type="text" v-if="sticker.type ==='text'" v-html="sticker.content">
       </div>
       <div class="bookmark-instance" type="draw" v-if="sticker.type ==='draw'">
-        <img src="sticker.content">
+        <img :src="sticker.content">
       </div>
       </waterfall-slot>
     </waterfall>
