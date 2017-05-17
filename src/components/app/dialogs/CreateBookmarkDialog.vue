@@ -31,7 +31,10 @@
       </md-input-container>
     </md-dialog-content>
     <md-dialog-content v-show="currentType === type.DRAW" type="draw">
-      <canvas ref="board" width="500" height="410" :state="drawPane.state"></canvas>
+      <canvas ref="board" width="500" height="410"
+        :state="drawPane.state"
+        :style="{ 'background-color': drawPane.bgColor }"
+      ></canvas>
     </md-dialog-content>
     <md-dialog-actions>
       <div class="draw-tool-bar" v-show="currentType === type.DRAW">
@@ -41,12 +44,12 @@
         <md-button class="draw-tool" @click.native="toggleTool(tool.ERASER)">
           <img src="~assets/images/eraser.svg" class="svg md-icon md-theme-default">
         </md-button>
-        <md-button class="draw-tool">
+        <md-button class="draw-tool" @click.native="showPalette">
           <img src="~assets/images/palette.svg" class="svg md-icon md-theme-default">
         </md-button>
       </div>
       <md-button class="md-primary" @click.native="closeDialog">取消</md-button>
-      <md-button class="md-primary" @click.native="createMenu">新建</md-button>
+      <md-button class="md-primary" @click.native="createBookmark">新建</md-button>
     </md-dialog-actions>
   </md-dialog>
 </template>
@@ -73,16 +76,17 @@ export default {
       },
       todoPane: {
         todoList: [
-          { checked: false, desc: "任务事项 1" },
-          { checked: false, desc: "任务事项 2" },
-          { checked: true, desc: "任务事项 3" },
-          { checked: false, desc: "任务事项 4" },
-          { checked: false, desc: "任务事项 5" }
+          // { checked: false, desc: "任务事项 1" },
+          // { checked: false, desc: "任务事项 2" },
+          // { checked: true, desc: "任务事项 3" },
+          // { checked: false, desc: "任务事项 4" },
+          // { checked: false, desc: "任务事项 5" }
         ],
         input: ""
       },
       drawPane: {
         state: tool.PEN,
+        bgColor: "#FFFFFF",
         input: ""
       }
     }
@@ -101,21 +105,31 @@ export default {
     this.initDrawing();
   },
   methods: {
+    ...mapMutations({ close: "closeBookmarkDialog" }),
     /**
      * 初始化 canvas 绘图
      */
     initDrawing() {
       const drawboard = this.$refs["board"];
-      const pen = drawboard.getContext("2d");
+      const _self = this;
+      const penWeight = 8;
+      const eraserWeight = penWeight + 4;
       // 监听绘制线条
       drawboard.onmousedown = function(e) {
         // 初始化 pen
-        pen.strokeStyle = "#000";
-        pen.lineWidth = "8";
-        pen.lineCap = "round";
-        pen.lineJoin = "round";
-        pen.beginPath();
-        pen.moveTo(e.offsetX, e.offsetY);
+        const pen = drawboard.getContext("2d");
+        if (_self.drawPane.state === tool.PEN) {
+          pen.strokeStyle = "#000";
+          pen.lineWidth = penWeight;
+          pen.lineCap = "round";
+          pen.lineJoin = "round";
+          pen.beginPath();
+          pen.moveTo(e.offsetX, e.offsetY);
+          pen.lineTo(e.offsetX, e.offsetY);
+          pen.stroke();
+        } else if (_self.drawPane.state === tool.ERASER) {
+          pen.clearRect(e.offsetX - eraserWeight/2, e.offsetY - eraserWeight/2, eraserWeight, eraserWeight);
+        }
         // 获取整个 canvas 的宽高
         const computedBoard = getComputedStyle(drawboard);
         var width = parseInt(computedBoard.getPropertyValue("width"));
@@ -135,8 +149,12 @@ export default {
             window.removeEventListener("mouseup", handleMouseUp, false);
             return;
           }
-          pen.lineTo(e.offsetX, e.offsetY);
-          pen.stroke();
+          if (_self.drawPane.state === tool.PEN) {
+            pen.lineTo(e.offsetX, e.offsetY);
+            pen.stroke();
+          } else if (_self.drawPane.state === tool.ERASER) {
+            pen.clearRect(e.offsetX - eraserWeight/2, e.offsetY - eraserWeight/2, eraserWeight, eraserWeight);
+          }
           const handleMouseUp = function(e) {
             // 取消移动事件的监听
             window.removeEventListener("mousemove", handleMouseMove, false);
@@ -179,13 +197,13 @@ export default {
     delTodo(index) {
       this.todoPane.todoList.splice(index, 1);
     },
+    showPalette() {
+
+    },
     closeDialog() {
-
+      this.$refs["createBookmarkDialog"].close();
     },
-    createMenu() {
-
-    },
-    close() {
+    createBookmark() {
 
     }
   }
