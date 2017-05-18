@@ -129,6 +129,11 @@ export default {
       this.days.forEach(day => {
         if (this.events[day.moment.format("YYYY-MM-DD")]) {
           day.context = this.events[day.moment.format("YYYY-MM-DD")];
+          if (this.isToday(day)) {
+            var vnode = document.createElement("span");
+            vnode.innerHTML = day.context;
+            G.notify("今日任务", vnode.innerText);
+          }
         }
       });
       // 等待子组件 props 数据变化后再触发事件

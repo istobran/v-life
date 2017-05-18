@@ -153,11 +153,11 @@ export default {
      * @param  {String} action 用户所点击的操作
      */
     onClose(action) {
-     if (action == "ok") {
+      if (action == "ok") {
        this.stickers.splice(this.confirm.itemIndex, 1);
        G.successGo("删除成功！");
-     }
-     this.confirm.itemIndex = null;
+      }
+      this.confirm.itemIndex = null;
     }
   }
 }
