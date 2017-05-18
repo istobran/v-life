@@ -12,20 +12,36 @@
         :key="sticker.id"
       >
       <div class="bookmark-instance" type="todo" v-if="sticker.type ==='todo'">
+        <md-icon class="btn-del" @click.native="delBookmark(index)">close</md-icon>
         <ul>
           <li v-for="it in sticker.content">
             <md-checkbox class="md-primary" v-model="it.checked">{{ it.desc }}</md-checkbox>
           </li>
         </ul>
       </div>
-      <div class="bookmark-instance" type="text" v-if="sticker.type ==='text'" v-html="sticker.content">
+      <div class="bookmark-instance" type="text" v-if="sticker.type ==='text'">
+        <md-icon class="btn-del" @click.native="delBookmark(index)">close</md-icon>
+        {{ sticker.content }}
       </div>
       <div class="bookmark-instance" type="draw" v-if="sticker.type ==='draw'">
+        <md-icon class="btn-del" @click.native="delBookmark(index)">close</md-icon>
         <img :src="sticker.content">
       </div>
       </waterfall-slot>
     </waterfall>
-    <create-bookmark-dialog></create-bookmark-dialog>
+    <create-bookmark-dialog
+      @addText="addText"
+      @addTodo="addTodo"
+      @addDraw="addDraw"
+    ></create-bookmark-dialog>
+    <md-dialog-confirm
+      :md-title="confirm.title"
+      :md-content-html="confirm.contentHtml"
+      :md-ok-text="confirm.ok"
+      :md-cancel-text="confirm.cancel"
+      @close="onClose"
+      ref="confirm_delMenu">
+    </md-dialog-confirm>
   </main>
 </template>
 
@@ -42,6 +58,13 @@ export default {
   },
   data() {
     return {
+      confirm: {
+        title: "删除便签",
+        contentHtml: "此操作将不可恢复，您确定要删除此便签吗？",
+        ok: "确定",
+        cancel: "取消",
+        itemIndex: null
+      },
       stickers: [
         {
           id: 1,
@@ -78,6 +101,64 @@ export default {
   },
   methods: {
     ...mapMutations({ openAddBookmark: 'openBookmarkDialog' }),
+    /**
+     * 添加文本便签
+     * @param {Object} textPane 文本便签数据对象
+     */
+    addText(textPane) {
+      this.stickers.push({
+        id: this.stickers.length,
+        type: "text",
+        content: textPane.input,
+        width: 220,
+        height: 220
+      });
+    },
+    /**
+     * 添加待完成列表便签
+     * @param {Object} todoPane 待完成列表数据对象
+     */
+    addTodo(todoPane) {
+      this.stickers.push({
+        id: this.stickers.length,
+        type: "todo",
+        content: todoPane.todoList,
+        width: 220,
+        height: 220
+      });
+    },
+    /**
+     * 添加画板便签
+     * @param {Object} drawPane 画板数据对象
+     */
+    addDraw(drawPane) {
+      this.stickers.push({
+        id: this.stickers.length,
+        type: "draw",
+        content: drawPane.input,
+        width: 220,
+        height: 220
+      });
+    },
+    /**
+     * 删除便签
+     * @param  {Number} index 被删除便签的 index
+     */
+    delBookmark(index) {
+      this.confirm.itemIndex = index;
+      this.$refs['confirm_delMenu'].open();
+    },
+    /**
+     * 删除确认对话框关闭
+     * @param  {String} action 用户所点击的操作
+     */
+    onClose(action) {
+     if (action == "ok") {
+       this.stickers.splice(this.confirm.itemIndex, 1);
+       G.successGo("删除成功！");
+     }
+     this.confirm.itemIndex = null;
+    }
   }
 }
 </script>
@@ -98,6 +179,15 @@ export default {
   box-sizing: border-box
   background-color: #FFFFFF
   overflow: scroll
+  &:hover
+    .btn-del
+      display: inline-flex
+  .btn-del
+    position: absolute
+    right: 2px
+    top: 2px
+    cursor: pointer
+    display: none
   &[type=todo]
     display: block
     padding: 20px

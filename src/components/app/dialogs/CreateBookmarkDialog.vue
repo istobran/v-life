@@ -283,8 +283,14 @@ export default {
      */
     createBookmark() {
       if (this.currentType === type.TEXT) {
-        
+        this.$emit("addText", this.textPane);
+      } else if (this.currentType === type.TODO) {
+        this.$emit("addTodo", this.todoPane);
+      } else {
+        this.drawPane.input = this.$refs.board.toDataURL();
+        this.$emit("addDraw", this.drawPane);
       }
+      this.$refs["createBookmarkDialog"].close();
     }
   }
 }
