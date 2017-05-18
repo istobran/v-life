@@ -47,6 +47,36 @@
         <md-button class="draw-tool" @click.native="showPalette">
           <img src="~assets/images/palette.svg" class="svg md-icon md-theme-default">
         </md-button>
+        <md-whiteframe class="palette" v-show="drawPane.showPalette" ref="palette">
+          <div class="color-row clearfix">
+            <div class="color-block pull-left" @click="selectBgColor(0)">
+              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[0] }"></i>
+            </div>
+            <div class="color-block pull-left" @click="selectBgColor(1)">
+              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[1] }"></i>
+            </div>
+            <div class="color-block pull-left" @click="selectBgColor(2)">
+              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[2] }"></i>
+            </div>
+            <div class="color-block pull-left" @click="selectBgColor(3)">
+              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[3] }"></i>
+            </div>
+          </div>
+          <div class="color-row clearfix">
+            <div class="color-block pull-left" @click="selectBgColor(4)">
+              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[4] }"></i>
+            </div>
+            <div class="color-block pull-left" @click="selectBgColor(5)">
+              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[5] }"></i>
+            </div>
+            <div class="color-block pull-left" @click="selectBgColor(6)">
+              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[6] }"></i>
+            </div>
+            <div class="color-block pull-left" @click="selectBgColor(7)">
+              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[7] }"></i>
+            </div>
+          </div>
+        </md-whiteframe>
       </div>
       <md-button class="md-primary" @click.native="closeDialog">取消</md-button>
       <md-button class="md-primary" @click.native="createBookmark">新建</md-button>
@@ -87,7 +117,18 @@ export default {
       drawPane: {
         state: tool.PEN,
         bgColor: "#FFFFFF",
-        input: ""
+        showPalette: false,
+        input: "",
+        availColor: [
+          "rgb(255, 255, 255)",
+          "rgb(255, 138, 128)",
+          "rgb(255, 209, 128)",
+          "rgb(255, 255, 141)",
+          "rgb(207, 216, 220)",
+          "rgb(128, 216, 255)",
+          "rgb(167, 255, 235)",
+          "rgb(204, 255, 144)"
+        ]
       }
     }
   },
@@ -98,6 +139,26 @@ export default {
     show() {
       if (this.show) {
         this.$refs["createBookmarkDialog"].open();
+      }
+    },
+    ["drawPane.showPalette"](value) {
+      const _self = this;
+      const handleClickOuter = function(e) {
+        var rect = _self.$refs.palette.$el.getBoundingClientRect();
+        if (_self.drawPane.showPalette === false)
+          removeEventListener("click", handleClickOuter, false);
+        if (e.clientX < rect.left || e.clientX > rect.right ||
+            e.clientY < rect.top || e.clientY > rect.bottom) {
+          _self.drawPane.showPalette = false;
+          removeEventListener("click", handleClickOuter, false);
+        }
+      };
+      if (value === true) {
+        setTimeout(_ => {
+          addEventListener("click", handleClickOuter, false);
+        }, 10);
+      } else {
+        removeEventListener("click", handleClickOuter, false);
       }
     }
   },
@@ -197,14 +258,33 @@ export default {
     delTodo(index) {
       this.todoPane.todoList.splice(index, 1);
     },
+    /**
+     * 初始化调色板
+     */
     showPalette() {
-
+      this.drawPane.showPalette = true;
     },
+    /**
+     * 用户选择了背景颜色
+     * @param  {Number} index 被选中背景颜色在颜色数组中的 index
+     */
+    selectBgColor(index) {
+      this.drawPane.bgColor = this.drawPane.availColor[index];
+      this.drawPane.showPalette = false;
+    },
+    /**
+     * 取消新建便签
+     */
     closeDialog() {
       this.$refs["createBookmarkDialog"].close();
     },
+    /**
+     * 确认新建便签
+     */
     createBookmark() {
-
+      if (this.currentType === type.TEXT) {
+        
+      }
     }
   }
 }
@@ -265,12 +345,14 @@ export default {
       padding: 0
       box-shadow: inset 0 -8px 6px -6px rgba(0, 0, 0, .3)
       canvas
+        z-index: 10
         &[state=pen]
           cursor: url("~assets/images/cursor_pen.png") 8 8, auto
         &[state=eraser]
           cursor: url("~assets/images/cursor_eraser.png") 8 8, auto
 .draw-tool-bar
   margin-right: auto
+  position: relative
   .draw-tool.md-button
     min-width: 36px
     width: 36px
@@ -279,4 +361,28 @@ export default {
       min-height: 20px
       width: 20px
       height: 20px
+  .palette
+    position: absolute
+    z-index: 11
+    top: -80px
+    left: 100px
+    background-color: #FFFFFF
+    .color-row
+      width: 160px
+      .color-block
+        width: 40px
+        height: 40px
+        cursor: pointer
+        text-align: center
+        line-height: 40px
+        &:hover
+          .color-fill
+            border-color: rgb(100, 100, 100)
+        .color-fill
+          margin: 5px auto
+          width: 30px
+          height: 30px
+          border-radius: 50%
+          border: 1px solid rgb(200, 200, 200)
+          display: block
 </style>
