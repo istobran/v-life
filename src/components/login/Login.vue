@@ -4,8 +4,8 @@
     <div class="login-container">
       <div class="login-avatar"><i class="fa fa-user"></i></div>
       <h1 class="login-title">登录系统</h1>
-      <input type="text" name="name" value="" placeholder="请输入用户名"><br/>
-      <input type="password" name="name" value="" placeholder="请输入密码"><br/>
+      <input type="text" v-model="username" placeholder="请输入用户名"><br/>
+      <input type="password" v-model="password" placeholder="请输入密码"><br/>
       <div class="login-option">
         <span class="login-remember"><input type="checkbox" class="cb_rem" id="remember" name="remember" v-model="rememberLogin"><label class="lb_rem" for="remember">记住我</label></span>
         <span class="login-forget"><a class="btn-findpasswd" href="#">忘记密码？</a></span>
@@ -27,7 +27,9 @@ export default {
   },
   data () {
     return {
-      rememberLogin: false
+      rememberLogin: false,
+      username: "",
+      password: ""
     }
   },
   created() {
@@ -46,11 +48,13 @@ export default {
   },
   methods: {
     login() {
-      sessionStorage.setItem("isLogin", true);
-      if (this.rememberLogin) {
-        localStorage.setItem("isLogin", true);
-      }
-      this.$router.push({ path: "/app" });
+      // sessionStorage.setItem("isLogin", true);
+      // if (this.rememberLogin) {
+      //   localStorage.setItem("isLogin", true);
+      // }
+      // this.$router.push({ path: "/app" });
+      console.log(this.password);
+      console.log(Tool.hash(this.password));
     }
   }
 }

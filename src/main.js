@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import MockData from './mock'
+import CommonFn from './commonFn'
+// import MockData from './mock'
 import App from './App'
 import routes from './routes'
 import { store } from './store'
