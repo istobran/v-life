@@ -1,13 +1,17 @@
 <template lang="html">
   <div id="login">
-    <slideshow></Slideshow>
+    <!-- <slideshow></Slideshow> -->
     <div class="login-container">
       <div class="login-avatar"><i class="fa fa-user"></i></div>
       <h1 class="login-title">登录系统</h1>
+      <p class="login-error"><span v-show="err.visible">{{ err.text }}</span></p>
       <input type="text" v-model="username" placeholder="请输入用户名"><br/>
-      <input type="password" v-model="password" placeholder="请输入密码"><br/>
+      <input type="password" v-model="password" placeholder="请输入密码" @keyup.enter="login"><br/>
       <div class="login-option">
-        <span class="login-remember"><input type="checkbox" class="cb_rem" id="remember" name="remember" v-model="rememberLogin"><label class="lb_rem" for="remember">记住我</label></span>
+        <span class="login-remember">
+          <input type="checkbox" class="cb_rem" id="remember" name="remember" v-model="rememberLogin">
+          <label class="lb_rem" for="remember">记住我</label>
+        </span>
         <span class="login-forget"><a class="btn-findpasswd" href="#">忘记密码？</a></span>
       </div>
       <button class="login-button" name="login" @click="login">登&nbsp;&nbsp;&nbsp;录</button>
@@ -29,7 +33,19 @@ export default {
     return {
       rememberLogin: false,
       username: "",
-      password: ""
+      password: "",
+      err: {
+        visible: false,
+        text: ""
+      }
+    }
+  },
+  watch: {
+    username(value) {
+      this.clearErr();
+    },
+    password(value) {
+      this.clearErr();
     }
   },
   created() {
@@ -47,14 +63,30 @@ export default {
     }
   },
   methods: {
+    clearErr() {
+      this.err.visible = false;
+      this.err.text = "";
+    },
     login() {
-      // sessionStorage.setItem("isLogin", true);
-      // if (this.rememberLogin) {
-      //   localStorage.setItem("isLogin", true);
-      // }
-      // this.$router.push({ path: "/app" });
-      console.log(this.password);
-      console.log(Tool.hash(this.password));
+      axios.post('/user/login', {
+        username: this.username,
+        password: Tool.hash(this.password)
+      }).then(resp => {
+        const data = resp.data;
+        if (data.errno === 1000) {
+          this.err.text = data.errmsg;
+          this.err.visible = true;
+        } else if (data.errno === 0) {
+          sessionStorage.setItem("stoken", data.data);
+          if (this.rememberLogin) {
+            localStorage.setItem("stoken", data.data);
+          }
+          this.$router.push({ path: "/app" });
+        } else {
+          this.err.text = "网络出错";
+          this.err.visible = true;
+        }
+      });
     }
   }
 }
@@ -92,12 +124,21 @@ export default {
     font-size: 2em;
   }
   .login-title {
-    margin: 35px auto 0;
+    margin: 25px auto 0;
     font-size: 36px;
+    line-height: 36px;
     color: #666666;
     display: block;
     width: 152px;
     text-align: center;
+  }
+  .login-error {
+    color: #FF0000;
+    height: 30px;
+    font-size: 14px;
+    span {
+      line-height: 30px;
+    }
   }
   input[type="text"], input[type="password"] {
     background: #D8D8D8;
@@ -109,7 +150,7 @@ export default {
     box-sizing: border-box;
   }
   input[type="text"] {
-    margin: 30px auto 0;
+    margin: 0 auto;
   }
   input[type="password"] {
     margin: 15px auto 0;
