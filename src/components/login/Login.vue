@@ -4,7 +4,6 @@
     <div class="login-container">
       <div class="login-avatar"><i class="fa fa-user"></i></div>
       <h1 class="login-title">登录系统</h1>
-      <p class="login-error"><span v-show="err.visible">{{ err.text }}</span></p>
       <input type="text" v-model="username" placeholder="请输入用户名"><br/>
       <input type="password" v-model="password" placeholder="请输入密码" @keyup.enter="login"><br/>
       <div class="login-option">
@@ -19,15 +18,17 @@
         <span>还没有账号？<a class="btn-register" href="#">创建新账户>></a></span>
       </div>
     </div>
+    <modal v-if="err.show" @close="err.show=false" :title="err.title" :text="err.text"></modal>
   </div>
 </template>
 
 <script>
 import Slideshow from './Slideshow'
+import Modal from './Modal'
 
 export default {
   components: {
-    Slideshow
+    Slideshow, Modal
   },
   data () {
     return {
@@ -35,17 +36,10 @@ export default {
       username: "",
       password: "",
       err: {
-        visible: false,
+        show: false,
+        title: "登录失败",
         text: ""
       }
-    }
-  },
-  watch: {
-    username(value) {
-      this.clearErr();
-    },
-    password(value) {
-      this.clearErr();
     }
   },
   created() {
@@ -63,28 +57,27 @@ export default {
     }
   },
   methods: {
-    clearErr() {
-      this.err.visible = false;
-      this.err.text = "";
+    showMsg(text, title="登录失败") {
+      this.err.text = text;
+      this.err.title = title;
+      this.err.show = true;
     },
     login() {
       axios.post('/user/login', {
         username: this.username,
         password: Tool.hash(this.password)
       }).then(resp => {
-        const data = resp.data;
-        if (data.errno === 1000) {
-          this.err.text = data.errmsg;
-          this.err.visible = true;
-        } else if (data.errno === 0) {
-          sessionStorage.setItem("stoken", data.data);
+        const result = resp.data;
+        if (result.errno === 1000) {
+          this.showMsg(result.errmsg);
+        } else if (result.errno === 0) {
+          sessionStorage.setItem("stoken", result.data);
           if (this.rememberLogin) {
-            localStorage.setItem("stoken", data.data);
+            localStorage.setItem("stoken", result.data);
           }
           this.$router.push({ path: "/app" });
         } else {
-          this.err.text = "网络出错";
-          this.err.visible = true;
+          this.showMsg("网络出错");
         }
       });
     }
@@ -124,21 +117,13 @@ export default {
     font-size: 2em;
   }
   .login-title {
-    margin: 25px auto 0;
+    margin: 25px auto 30px;
     font-size: 36px;
     line-height: 36px;
     color: #666666;
     display: block;
     width: 152px;
     text-align: center;
-  }
-  .login-error {
-    color: #FF0000;
-    height: 30px;
-    font-size: 14px;
-    span {
-      line-height: 30px;
-    }
   }
   input[type="text"], input[type="password"] {
     background: #D8D8D8;
