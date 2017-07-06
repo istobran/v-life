@@ -15,7 +15,7 @@
       </div>
       <button class="login-button" name="login" @click="login">登&nbsp;&nbsp;&nbsp;录</button>
       <div class="register-hint">
-        <span>还没有账号？<a class="btn-register" href="#">创建新账户>></a></span>
+        <span>还没有账号？<router-link class="btn-register" to="/register">创建新账户>></router-link></span>
       </div>
     </div>
     <modal v-if="err.show" @close="err.show=false" :title="err.title" :text="err.text"></modal>
@@ -63,13 +63,30 @@ export default {
       this.err.show = true;
     },
     login() {
+      // 验证表单
+      this.username = this.username.trim();
+      if (!this.username) {
+        this.showMsg("请输入用户名！", "提示");
+        return;
+      }
+      this.password = this.password.trim();
+      if (!this.password) {
+        this.showMsg("请输入密码！", "提示");
+        return;
+      }
+      // 提交请求
       axios.post('/user/login', {
         username: this.username,
         password: Tool.hash(this.password)
       }).then(resp => {
         const result = resp.data;
         if (result.errno === 1000) {
-          this.showMsg(result.errmsg);
+          if (result.data) {
+            var str = result.data[Object.keys(result.data)[0]];
+            this.showMsg(str, result.errmsg);
+          } else {
+            this.showMsg(result.errmsg);
+          }
         } else if (result.errno === 0) {
           sessionStorage.setItem("stoken", result.data);
           if (this.rememberLogin) {
@@ -90,10 +107,10 @@ export default {
   background: rgb(255, 255, 255);
   opacity: .9;
   width: 364px;
-  height: 425px;
   position: absolute;
   top: 50%;
   left: 50%;
+  padding-bottom: 20px;
   transform: translate(-50%, -50%);
   text-align: center;
   a {
@@ -122,7 +139,6 @@ export default {
     line-height: 36px;
     color: #666666;
     display: block;
-    width: 152px;
     text-align: center;
   }
   input[type="text"], input[type="password"] {

@@ -4,6 +4,7 @@ import Setting from './components/app/Setting'
 import Support from './components/app/Support'
 import AppEntry from './components/app/Entry'
 import LoginPage from './components/login/Login'
+import RegisterPage from './components/login/Register'
 
 export default [
   { path: '/', redirect: '/app/home' },
@@ -20,5 +21,6 @@ export default [
     ]
   },
   { path: '/login', meta: { auth: false }, component: LoginPage },
+  { path: '/register', meta: { auth: false }, component: RegisterPage },
   { path: '*', redirect: '/' }
 ]

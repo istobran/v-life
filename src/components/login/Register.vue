@@ -1,0 +1,225 @@
+<template lang="html">
+  <div id="login">
+    <!-- <slideshow></Slideshow> -->
+    <div class="register-container">
+      <div class="register-avatar"><i class="fa fa-user"></i></div>
+      <h1 class="register-title">新用户注册</h1>
+      <input type="email" v-model="email" placeholder="请输入邮箱"><br/>
+      <span data-tip="用户名需以字母开头，且仅由数字和字母组成"><input type="text" v-model="username" placeholder="请输入用户名"></span><br/>
+      <span data-tip="密码需至少 6 位"><input type="password" v-model="password" placeholder="请输入密码"></span><br/>
+      <input type="password" v-model="cpassword" placeholder="请再次输入密码" @keyup.enter="register"><br/>
+      <button class="register-button" name="register" @click="register">注&nbsp;&nbsp;&nbsp;册</button>
+      <div class="login-hint">
+        <span>已拥有账号？<router-link class="btn-login" to="/login">去登录>></router-link></span>
+      </div>
+    </div>
+    <modal v-if="err.show" @close="err.show=false" :title="err.title" :text="err.text"></modal>
+  </div>
+</template>
+
+<script>
+import Slideshow from './Slideshow'
+import Modal from './Modal'
+
+export default {
+  components: {
+    Slideshow, Modal
+  },
+  data () {
+    return {
+      email: "",
+      username: "",
+      password: "",
+      cpassword: "",
+      err: {
+        show: false,
+        title: "登录失败",
+        text: ""
+      }
+    }
+  },
+  created() {
+  },
+  mounted() {
+  },
+  methods: {
+    showMsg(text, title="注册失败") {
+      this.err.text = text;
+      this.err.title = title;
+      this.err.show = true;
+    },
+    register() {
+      var mediumRegex = new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
+      /**
+       * 至少6位
+       * 或者至少一个小写字母和大写字母
+       * 或者至少一个小写字母和数字的组合
+       * 或者至少一个大写字母和数字的组合
+       *
+       */
+      // 验证表单
+      this.email = this.email.trim();
+      if (!this.email) {
+        this.showMsg("请输入邮箱！", "提示");
+        return;
+      }
+      this.username = this.username.trim();
+      if (!this.username) {
+        this.showMsg("请输入用户名！", "提示");
+        return;
+      } else if (!/^[A-Za-z][A-Za-z0-9]+$/.test(this.username)) {
+        this.showMsg("用户名需以字母开头，且仅由数字和字母组成", "用户名不合规则");
+        return;
+      }
+      this.password = this.password.trim();
+      if (!this.password) {
+        this.showMsg("请输入密码！", "提示");
+        return;
+      } else if (this.password.length < 6) {
+        this.showMsg("密码需至少 6 位", "密码强度不足");
+        return;
+      }
+      this.cpassword = this.cpassword.trim();
+      if (!this.cpassword) {
+        this.showMsg("请再次输入确认密码", "提示");
+        return;
+      }
+      if (this.password !== this.cpassword) {
+        this.showMsg("两次输入的密码不一致！", "提示");
+        return;
+      }
+      // 提交请求
+      axios.post("/user/register", {
+        username: this.username,
+        password: Tool.hash(this.password),
+        email: this.email
+      }).then(resp => {
+        const result = resp.data;
+        if (result.errno === 1000) {
+          if (result.data) {
+            var str = result.data[Object.keys(result.data)[0]];
+            this.showMsg(str, result.errmsg);
+          } else {
+            this.showMsg(result.errmsg);
+          }
+        } else if (result.errno === 0) {
+          this.showMsg("激活邮件已经发送到您的邮箱，请到邮箱中点击链接激活您的账号，账号激活后便可正常登录", "注册成功");
+        } else {
+          this.showMsg("网络出错");
+        }
+      });
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+[data-tip] {
+	position:relative;
+}
+[data-tip]:before {
+	content:'';
+	/* hides the tooltip when not hovered */
+	display:none;
+	content:'';
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-bottom: 5px solid #1a1a1a;
+	position:absolute;
+	top:30px;
+	left:35px;
+	z-index:8;
+	font-size:0;
+	line-height:0;
+	width:0;
+	height:0;
+}
+[data-tip]:after {
+	display:none;
+	content:attr(data-tip);
+	position:absolute;
+	top:35px;
+	left:0px;
+	padding:5px 8px;
+	background:#1a1a1a;
+	color:#fff;
+	z-index:9;
+	font-size: 0.75em;
+	height:18px;
+  box-sizing: content-box;
+	line-height:18px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	white-space:nowrap;
+	word-wrap:normal;
+}
+[data-tip]:hover:before,
+[data-tip]:hover:after {
+	display:block;
+}
+.register-container {
+  background: rgb(255, 255, 255);
+  opacity: .9;
+  width: 364px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding-bottom: 20px;
+  text-align: center;
+  a {
+    text-decoration: none;
+    color: #004670;
+    &:hover {
+      color: #46B9FE;
+    }
+  }
+  .register-avatar {
+    background: #22B13D;
+    width: 100px;
+    height: 100px;
+    margin: -50px auto 0;
+    text-align: center;
+    border: 3px solid white;
+    border-radius: 50%;
+    box-sizing: border-box;
+    line-height: 100px;
+    color: white;
+    font-size: 2em;
+  }
+  .register-title {
+    margin: 25px auto 30px;
+    font-size: 30px;
+    line-height: 30px;
+    color: #666666;
+    display: block;
+    text-align: center;
+  }
+  input[type="email"], input[type="text"], input[type="password"] {
+    background: #D8D8D8;
+    border: none;
+    padding: 5px 15px;
+    font-size: 18px;
+    width: 283px;
+    height: 42px;
+    box-sizing: border-box;
+    margin: 0 auto 15px;
+  }
+  .register-button {
+    margin: 5px auto 0;
+    background: #30B248;
+    color: #FFFFFF;
+    width: 283px;
+    height: 50px;
+    font-size: 22px;
+    line-height: 50px;
+  }
+  .login-hint {
+    font-size: 14px;
+    text-align: right;
+    width: 283px;
+    margin: 15px auto 0;
+  }
+}
+</style>
