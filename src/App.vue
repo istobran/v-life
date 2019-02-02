@@ -1,79 +1,29 @@
 <template>
-  <router-view></router-view>
+  <div id="app">
+    <div id="nav">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link>
+    </div>
+    <router-view/>
+  </div>
 </template>
 
-<script>
-export default {
-  created() {   // 建立全局对象
-    window.G = {};
-  }
-}
-</script>
-
 <style lang="scss">
-$fa-font-path: "~font-awesome/fonts";
-@import "~font-awesome/scss/font-awesome";
-
-html, body {
-  height: 100%;
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
 }
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
-}
-ol, ul {
-  list-style: none;
-}
-input, button, submit {
-  border: none;
-  outline: none;
-}
-body {
-  font-family: 'Source Sans Pro', sans-serif;
-  font-size: 19pt;
-  font-weight: 300;
-  line-height: 1.75em;
-  color: #888;
-}
-body, input, textarea, select {
-  @media screen and (min-width: 961px) and (max-width: 1880px) {
-    font-size: 17pt;
+#nav {
+  padding: 30px;
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+    &.router-link-exact-active {
+      color: #42b983;
+    }
   }
-  @media screen and (min-width: 961px) and (max-width: 1320px) {
-    font-size: 16pt;
-  }
-  @media screen and (max-width: 960px) {
-    font-size: 16pt;
-  }
-  @media screen and (max-width: 736px) {
-    font-size: 14pt;
-  }
-}
-html {
-  height: 100%;
-}
-body {
-  background: #F2F2F2;
-  min-height: 100vh;
-  &.md-theme-default {
-    background: #F2F2F2 !important;
-  }
-}
-.prevent-select {
-  user-select: none;
-  -webkit-user-drag: none;
-  cursor: default;
-}
-.clearfix:after {content:"\200B"; display:block; height:0; clear:both; }
-.clearfix { *zoom:1; }
-.pull-left {
-  float: left;
-}
-.pull-right {
-  float: right;
 }
 </style>

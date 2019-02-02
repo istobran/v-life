@@ -18,38 +18,38 @@
 </template>
 
 <script>
-import Slideshow from './Slideshow'
-import Modal from './Modal'
+import Slideshow from './Slideshow';
+import Modal from './Modal';
 
 export default {
   components: {
-    Slideshow, Modal
+    Slideshow, Modal,
   },
-  data () {
+  data() {
     return {
-      email: "",
-      username: "",
-      password: "",
-      cpassword: "",
+      email: '',
+      username: '',
+      password: '',
+      cpassword: '',
       err: {
         show: false,
-        title: "登录失败",
-        text: ""
-      }
-    }
+        title: '登录失败',
+        text: '',
+      },
+    };
   },
   created() {
   },
   mounted() {
   },
   methods: {
-    showMsg(text, title="注册失败") {
+    showMsg(text, title = '注册失败') {
       this.err.text = text;
       this.err.title = title;
       this.err.show = true;
     },
     register() {
-      var mediumRegex = new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
+      const mediumRegex = new RegExp('^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})');
       /**
        * 至少6位
        * 或者至少一个小写字母和大写字母
@@ -60,57 +60,57 @@ export default {
       // 验证表单
       this.email = this.email.trim();
       if (!this.email) {
-        this.showMsg("请输入邮箱！", "提示");
+        this.showMsg('请输入邮箱！', '提示');
         return;
       }
       this.username = this.username.trim();
       if (!this.username) {
-        this.showMsg("请输入用户名！", "提示");
+        this.showMsg('请输入用户名！', '提示');
         return;
-      } else if (!/^[A-Za-z][A-Za-z0-9]+$/.test(this.username)) {
-        this.showMsg("用户名需以字母开头，且仅由数字和字母组成", "用户名不合规则");
+      } if (!/^[A-Za-z][A-Za-z0-9]+$/.test(this.username)) {
+        this.showMsg('用户名需以字母开头，且仅由数字和字母组成', '用户名不合规则');
         return;
       }
       this.password = this.password.trim();
       if (!this.password) {
-        this.showMsg("请输入密码！", "提示");
+        this.showMsg('请输入密码！', '提示');
         return;
-      } else if (this.password.length < 6) {
-        this.showMsg("密码需至少 6 位", "密码强度不足");
+      } if (this.password.length < 6) {
+        this.showMsg('密码需至少 6 位', '密码强度不足');
         return;
       }
       this.cpassword = this.cpassword.trim();
       if (!this.cpassword) {
-        this.showMsg("请再次输入确认密码", "提示");
+        this.showMsg('请再次输入确认密码', '提示');
         return;
       }
       if (this.password !== this.cpassword) {
-        this.showMsg("两次输入的密码不一致！", "提示");
+        this.showMsg('两次输入的密码不一致！', '提示');
         return;
       }
       // 提交请求
-      axios.post("/user/register", {
+      axios.post('/user/register', {
         username: this.username,
         password: Tool.hash(this.password),
-        email: this.email
-      }).then(resp => {
+        email: this.email,
+      }).then((resp) => {
         const result = resp.data;
         if (result.errno === 1000) {
           if (result.data) {
-            var str = result.data[Object.keys(result.data)[0]];
+            const str = result.data[Object.keys(result.data)[0]];
             this.showMsg(str, result.errmsg);
           } else {
             this.showMsg(result.errmsg);
           }
         } else if (result.errno === 0) {
-          this.showMsg("激活邮件已经发送到您的邮箱，请到邮箱中点击链接激活您的账号，账号激活后便可正常登录", "注册成功");
+          this.showMsg('激活邮件已经发送到您的邮箱，请到邮箱中点击链接激活您的账号，账号激活后便可正常登录', '注册成功');
         } else {
-          this.showMsg("网络出错");
+          this.showMsg('网络出错');
         }
       });
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss">

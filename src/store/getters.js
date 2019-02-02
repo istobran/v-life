@@ -22,5 +22,5 @@ export default {
   },
   showBookmarkDialog(state) {
     return state.showBookmarkDialog;
-  }
-}
+  },
+};

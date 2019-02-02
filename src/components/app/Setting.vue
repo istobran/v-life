@@ -45,22 +45,23 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
+
 export default {
   data() {
     return {
       checked1: true,
       checked2: true,
       user: {
-        avatarUrl: "http://en.gravatar.com/userimage/99616975/827489fdfb37acbf6ed0254f4f311417.jpg?size=48",
-        username: "BangZ",
-        email: "i@bangz.me"
-      }
-    }
+        avatarUrl: 'http://en.gravatar.com/userimage/99616975/827489fdfb37acbf6ed0254f4f311417.jpg?size=48',
+        username: 'BangZ',
+        email: 'i@bangz.me',
+      },
+    };
   },
   computed: {
     ...mapGetters(['showMenu']),
-  }
-}
+  },
+};
 </script>
 <style lang="sass">
 #setting

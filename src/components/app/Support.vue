@@ -14,8 +14,8 @@ import { mapGetters } from 'vuex';
 export default {
   computed: {
     ...mapGetters(['showMenu']),
-  }
-}
+  },
+};
 </script>
 
 <style lang="sass">

@@ -47,54 +47,54 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
-import CreateBookmarkDialog from './dialogs/CreateBookmarkDialog';
 import Waterfall from 'vue-waterfall';
+import CreateBookmarkDialog from './dialogs/CreateBookmarkDialog';
 
 export default {
   components: {
     CreateBookmarkDialog,
-    'waterfall': Waterfall.waterfall,
-    'waterfall-slot': Waterfall.waterfallSlot
+    waterfall: Waterfall.waterfall,
+    'waterfall-slot': Waterfall.waterfallSlot,
   },
   data() {
     return {
       confirm: {
-        title: "删除便签",
-        contentHtml: "此操作将不可恢复，您确定要删除此便签吗？",
-        ok: "确定",
-        cancel: "取消",
-        itemIndex: null
+        title: '删除便签',
+        contentHtml: '此操作将不可恢复，您确定要删除此便签吗？',
+        ok: '确定',
+        cancel: '取消',
+        itemIndex: null,
       },
       stickers: [
         {
           id: 1,
-          type: "draw",
+          type: 'draw',
           content: null,
           width: 220,
-          height: 220
+          height: 220,
         },
         {
           id: 2,
-          type: "todo",
+          type: 'todo',
           content: [
-            { checked: false, desc: "任务事项 1" },
-            { checked: false, desc: "任务事项 2" },
-            { checked: true, desc: "任务事项 3" },
-            { checked: false, desc: "任务事项 4" },
-            { checked: false, desc: "任务事项 5" }
+            { checked: false, desc: '任务事项 1' },
+            { checked: false, desc: '任务事项 2' },
+            { checked: true, desc: '任务事项 3' },
+            { checked: false, desc: '任务事项 4' },
+            { checked: false, desc: '任务事项 5' },
           ],
           width: 220,
-          height: 220
+          height: 220,
         },
         {
           id: 3,
-          type: "text",
-          content: "<p>Lorem ipsum dolor sit amet</p>",
+          type: 'text',
+          content: '<p>Lorem ipsum dolor sit amet</p>',
           width: 220,
-          height: 220
-        }
-      ]
-    }
+          height: 220,
+        },
+      ],
+    };
   },
   computed: {
     ...mapGetters(['showMenu']),
@@ -108,10 +108,10 @@ export default {
     addText(textPane) {
       this.stickers.push({
         id: this.stickers.length,
-        type: "text",
+        type: 'text',
         content: textPane.input,
         width: 220,
-        height: 220
+        height: 220,
       });
     },
     /**
@@ -121,10 +121,10 @@ export default {
     addTodo(todoPane) {
       this.stickers.push({
         id: this.stickers.length,
-        type: "todo",
+        type: 'todo',
         content: todoPane.todoList,
         width: 220,
-        height: 220
+        height: 220,
       });
     },
     /**
@@ -134,10 +134,10 @@ export default {
     addDraw(drawPane) {
       this.stickers.push({
         id: this.stickers.length,
-        type: "draw",
+        type: 'draw',
         content: drawPane.input,
         width: 220,
-        height: 220
+        height: 220,
       });
     },
     /**
@@ -146,21 +146,21 @@ export default {
      */
     delBookmark(index) {
       this.confirm.itemIndex = index;
-      this.$refs['confirm_delMenu'].open();
+      this.$refs.confirm_delMenu.open();
     },
     /**
      * 删除确认对话框关闭
      * @param  {String} action 用户所点击的操作
      */
     onClose(action) {
-      if (action == "ok") {
-       this.stickers.splice(this.confirm.itemIndex, 1);
-       G.successGo("删除成功！");
+      if (action == 'ok') {
+        this.stickers.splice(this.confirm.itemIndex, 1);
+        G.successGo('删除成功！');
       }
       this.confirm.itemIndex = null;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="sass">

@@ -1,5 +1,5 @@
-import calendarItems from './calendar/items'
+import calendarItems from './calendar/items';
 
 export default {
-  calendarItems
-}
+  calendarItems,
+};

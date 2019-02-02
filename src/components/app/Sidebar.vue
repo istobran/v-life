@@ -49,40 +49,41 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
+
 export default {
   data() {
     return {
       confirm: {
-        title: "删除日历",
-        contentHtml: "删除自定义日历会同时删除该日历下的所有数据<br>您确定要继续吗？",
-        ok: "确定",
-        cancel: "取消",
-        item: null
-      }
+        title: '删除日历',
+        contentHtml: '删除自定义日历会同时删除该日历下的所有数据<br>您确定要继续吗？',
+        ok: '确定',
+        cancel: '取消',
+        item: null,
+      },
     };
   },
   computed: {
-    ...mapGetters(['showMenu', 'navList'])
+    ...mapGetters(['showMenu', 'navList']),
   },
   ready() {},
   attached() {},
   methods: {
-    ...mapMutations({ addMenu: 'openCreateMenuDialog', delMenu: "removeCustomMenu" }),
+    ...mapMutations({ addMenu: 'openCreateMenuDialog', delMenu: 'removeCustomMenu' }),
     delRequest(item) {
       this.confirm.item = item;
       this.confirm.contentHtml = `删除自定义日历 ${item.name} 会同时删除该日历下的所有数据<br>您确定要继续吗？`;
-      this.$refs['confirm_delMenu'].open();
+      this.$refs.confirm_delMenu.open();
     },
     onClose(action) {
-      if (action == "ok") {
+      if (action == 'ok') {
         this.delMenu({ item: this.confirm.item });
-        G.successGo("删除成功！");
-        this.$router.push("/app/home");
+        G.successGo('删除成功！');
+        this.$router.push('/app/home');
       }
       this.confirm.item = null;
-    }
+    },
   },
-  components: {}
+  components: {},
 };
 </script>
 

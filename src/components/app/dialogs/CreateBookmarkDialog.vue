@@ -39,13 +39,13 @@
     <md-dialog-actions>
       <div class="draw-tool-bar" v-show="currentType === type.DRAW">
         <md-button class="draw-tool" @click.native="toggleTool(tool.PEN)">
-          <img src="~assets/images/pen.svg" class="svg md-icon md-theme-default">
+          <img src="~Images/pen.svg" class="svg md-icon md-theme-default">
         </md-button>
         <md-button class="draw-tool" @click.native="toggleTool(tool.ERASER)">
-          <img src="~assets/images/eraser.svg" class="svg md-icon md-theme-default">
+          <img src="~Images/eraser.svg" class="svg md-icon md-theme-default">
         </md-button>
         <md-button class="draw-tool" @click.native="showPalette">
-          <img src="~assets/images/palette.svg" class="svg md-icon md-theme-default">
+          <img src="~Images/palette.svg" class="svg md-icon md-theme-default">
         </md-button>
         <md-whiteframe class="palette" v-show="drawPane.showPalette" ref="palette">
           <div class="color-row clearfix">
@@ -86,14 +86,15 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
+
 const type = {
   TEXT: Symbol(),
   TODO: Symbol(),
-  DRAW: Symbol()
+  DRAW: Symbol(),
 };
 const tool = {
-  PEN: "pen",
-  ERASER: "eraser"
+  PEN: 'pen',
+  ERASER: 'eraser',
 };
 export default {
   data() {
@@ -102,7 +103,7 @@ export default {
       tool,
       currentType: type.TEXT,
       textPane: {
-        input: ""
+        input: '',
       },
       todoPane: {
         todoList: [
@@ -112,120 +113,118 @@ export default {
           // { checked: false, desc: "任务事项 4" },
           // { checked: false, desc: "任务事项 5" }
         ],
-        input: ""
+        input: '',
       },
       drawPane: {
         state: tool.PEN,
-        bgColor: "#FFFFFF",
+        bgColor: '#FFFFFF',
         showPalette: false,
-        input: "",
+        input: '',
         availColor: [
-          "rgb(255, 255, 255)",
-          "rgb(255, 138, 128)",
-          "rgb(255, 209, 128)",
-          "rgb(255, 255, 141)",
-          "rgb(207, 216, 220)",
-          "rgb(128, 216, 255)",
-          "rgb(167, 255, 235)",
-          "rgb(204, 255, 144)"
-        ]
-      }
-    }
+          'rgb(255, 255, 255)',
+          'rgb(255, 138, 128)',
+          'rgb(255, 209, 128)',
+          'rgb(255, 255, 141)',
+          'rgb(207, 216, 220)',
+          'rgb(128, 216, 255)',
+          'rgb(167, 255, 235)',
+          'rgb(204, 255, 144)',
+        ],
+      },
+    };
   },
   computed: {
-    ...mapGetters({ show: 'showBookmarkDialog' })
+    ...mapGetters({ show: 'showBookmarkDialog' }),
   },
   watch: {
     show() {
       if (this.show) {
-        this.$refs["createBookmarkDialog"].open();
+        this.$refs.createBookmarkDialog.open();
       }
     },
-    ["drawPane.showPalette"](value) {
+    'drawPane.showPalette': function (value) {
       const _self = this;
-      const handleClickOuter = function(e) {
-        var rect = _self.$refs.palette.$el.getBoundingClientRect();
-        if (_self.drawPane.showPalette === false)
-          removeEventListener("click", handleClickOuter, false);
-        if (e.clientX < rect.left || e.clientX > rect.right ||
-            e.clientY < rect.top || e.clientY > rect.bottom) {
+      const handleClickOuter = function (e) {
+        const rect = _self.$refs.palette.$el.getBoundingClientRect();
+        if (_self.drawPane.showPalette === false) removeEventListener('click', handleClickOuter, false);
+        if (e.clientX < rect.left || e.clientX > rect.right
+            || e.clientY < rect.top || e.clientY > rect.bottom) {
           _self.drawPane.showPalette = false;
-          removeEventListener("click", handleClickOuter, false);
+          removeEventListener('click', handleClickOuter, false);
         }
       };
       if (value === true) {
-        setTimeout(_ => {
-          addEventListener("click", handleClickOuter, false);
+        setTimeout((_) => {
+          addEventListener('click', handleClickOuter, false);
         }, 10);
       } else {
-        removeEventListener("click", handleClickOuter, false);
+        removeEventListener('click', handleClickOuter, false);
       }
-    }
+    },
   },
   mounted() {
     this.initDrawing();
   },
   methods: {
-    ...mapMutations({ close: "closeBookmarkDialog" }),
+    ...mapMutations({ close: 'closeBookmarkDialog' }),
     /**
      * 初始化 canvas 绘图
      */
     initDrawing() {
-      const drawboard = this.$refs["board"];
+      const drawboard = this.$refs.board;
       const _self = this;
       const penWeight = 8;
       const eraserWeight = penWeight + 4;
       // 监听绘制线条
-      drawboard.onmousedown = function(e) {
+      drawboard.onmousedown = function (e) {
         // 初始化 pen
-        const pen = drawboard.getContext("2d");
+        const pen = drawboard.getContext('2d');
         if (_self.drawPane.state === tool.PEN) {
-          pen.strokeStyle = "#000";
+          pen.strokeStyle = '#000';
           pen.lineWidth = penWeight;
-          pen.lineCap = "round";
-          pen.lineJoin = "round";
+          pen.lineCap = 'round';
+          pen.lineJoin = 'round';
           pen.beginPath();
           pen.moveTo(e.offsetX, e.offsetY);
           pen.lineTo(e.offsetX, e.offsetY);
           pen.stroke();
         } else if (_self.drawPane.state === tool.ERASER) {
-          pen.clearRect(e.offsetX - eraserWeight/2, e.offsetY - eraserWeight/2, eraserWeight, eraserWeight);
+          pen.clearRect(e.offsetX - eraserWeight / 2, e.offsetY - eraserWeight / 2, eraserWeight, eraserWeight);
         }
         // 获取整个 canvas 的宽高
         const computedBoard = getComputedStyle(drawboard);
-        var width = parseInt(computedBoard.getPropertyValue("width"));
-        var height = parseInt(computedBoard.getPropertyValue("height"));
+        const width = parseInt(computedBoard.getPropertyValue('width'));
+        const height = parseInt(computedBoard.getPropertyValue('height'));
         // 获取 canvas 在屏幕上的 X 和 Y 坐标
         const rect = drawboard.getBoundingClientRect();
-        var offsetLeft = rect.left;
-        var offsetTop = rect.top;
+        const offsetLeft = rect.left;
+        const offsetTop = rect.top;
         // 监听鼠标移动
-        const handleMouseMove = function(e) {
+        const handleMouseMove = function (e) {
           // 计算鼠标相对 canvas 的位置
-          var mouseOffsetX = e.clientX - offsetLeft;
-          var mouseOffsetY = e.clientY - offsetTop;
-          var cond = mouseOffsetX < 0 || mouseOffsetX > width || mouseOffsetY < 0 || mouseOffsetY > height;
+          const mouseOffsetX = e.clientX - offsetLeft;
+          const mouseOffsetY = e.clientY - offsetTop;
+          const cond = mouseOffsetX < 0 || mouseOffsetX > width || mouseOffsetY < 0 || mouseOffsetY > height;
           if (cond) {
-            window.removeEventListener("mousemove", handleMouseMove, false);
-            window.removeEventListener("mouseup", handleMouseUp, false);
+            window.removeEventListener('mousemove', handleMouseMove, false);
+            window.removeEventListener('mouseup', handleMouseUp, false);
             return;
           }
           if (_self.drawPane.state === tool.PEN) {
             pen.lineTo(e.offsetX, e.offsetY);
             pen.stroke();
           } else if (_self.drawPane.state === tool.ERASER) {
-            pen.clearRect(e.offsetX - eraserWeight/2, e.offsetY - eraserWeight/2, eraserWeight, eraserWeight);
+            pen.clearRect(e.offsetX - eraserWeight / 2, e.offsetY - eraserWeight / 2, eraserWeight, eraserWeight);
           }
-          const handleMouseUp = function(e) {
+          const handleMouseUp = function (e) {
             // 取消移动事件的监听
-            window.removeEventListener("mousemove", handleMouseMove, false);
-            window.removeEventListener("mouseup", handleMouseUp, false);
-            return;
-          }
-          window.addEventListener("mouseup", handleMouseUp, false);
-        }
-        window.addEventListener("mousemove", handleMouseMove, false);
-      }
+            window.removeEventListener('mousemove', handleMouseMove, false);
+            window.removeEventListener('mouseup', handleMouseUp, false);
+          };
+          window.addEventListener('mouseup', handleMouseUp, false);
+        };
+        window.addEventListener('mousemove', handleMouseMove, false);
+      };
     },
     /**
      * 切换便签类型
@@ -245,11 +244,11 @@ export default {
      * 添加待完成任务项
      */
     addTodo() {
-      let input = this.todoPane.input;
+      const input = this.todoPane.input;
       if (input) {
-        this.todoPane.todoList.push({ checked: false, desc: input })
+        this.todoPane.todoList.push({ checked: false, desc: input });
       }
-      this.todoPane.input = "";
+      this.todoPane.input = '';
     },
     /**
      * 删除待完成任务项
@@ -276,24 +275,24 @@ export default {
      * 取消新建便签
      */
     closeDialog() {
-      this.$refs["createBookmarkDialog"].close();
+      this.$refs.createBookmarkDialog.close();
     },
     /**
      * 确认新建便签
      */
     createBookmark() {
       if (this.currentType === type.TEXT) {
-        this.$emit("addText", this.textPane);
+        this.$emit('addText', this.textPane);
       } else if (this.currentType === type.TODO) {
-        this.$emit("addTodo", this.todoPane);
+        this.$emit('addTodo', this.todoPane);
       } else {
         this.drawPane.input = this.$refs.board.toDataURL();
-        this.$emit("addDraw", this.drawPane);
+        this.$emit('addDraw', this.drawPane);
       }
-      this.$refs["createBookmarkDialog"].close();
-    }
-  }
-}
+      this.$refs.createBookmarkDialog.close();
+    },
+  },
+};
 </script>
 
 <style lang="sass">
@@ -353,9 +352,9 @@ export default {
       canvas
         z-index: 10
         &[state=pen]
-          cursor: url("~assets/images/cursor_pen.png") 8 8, auto
+          cursor: url("~Images/cursor_pen.png") 8 8, auto
         &[state=eraser]
-          cursor: url("~assets/images/cursor_eraser.png") 8 8, auto
+          cursor: url("~Images/cursor_eraser.png") 8 8, auto
 .draw-tool-bar
   margin-right: auto
   position: relative

@@ -39,17 +39,19 @@ export default {
       }
     }
     state.navList.custom.push({
-      name: payload.name, icon: "date_range", color: "#616161",
-      link: { name: "custom", params: { cid: ++max } }
+      name: payload.name,
+      icon: 'date_range',
+      color: '#616161',
+      link: { name: 'custom', params: { cid: ++max } },
     });
     // 更新 localStorage
-    window.localStorage.setItem("v-life-custom", JSON.stringify(state.navList.custom));
+    window.localStorage.setItem('v-life-custom', JSON.stringify(state.navList.custom));
   },
   removeCustomMenu(state, payload) {
     const index = state.navList.custom.indexOf(payload.item);
     state.navList.custom.splice(index, 1);
     // 更新 localStorage
     window.localStorage.removeItem(`v-life-events-custom-${payload.item.link.params.cid}`);
-    window.localStorage.setItem("v-life-custom", JSON.stringify(state.navList.custom));
-  }
-}
+    window.localStorage.setItem('v-life-custom', JSON.stringify(state.navList.custom));
+  },
+};

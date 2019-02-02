@@ -31,27 +31,28 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
+
 export default {
   data() {
     return {
-      title: "V-LIFE",
-      search: "",     // 搜索栏
-      searchFocus: false,   // 焦点是否在搜索栏上
+      title: 'V-LIFE',
+      search: '', // 搜索栏
+      searchFocus: false, // 焦点是否在搜索栏上
       user: {
-        avatarUrl: "http://en.gravatar.com/userimage/99616975/827489fdfb37acbf6ed0254f4f311417.jpg?size=48",
-        username: "BangZ"
-      }
-    }
+        avatarUrl: 'http://en.gravatar.com/userimage/99616975/827489fdfb37acbf6ed0254f4f311417.jpg?size=48',
+        username: 'BangZ',
+      },
+    };
   },
   computed: {
-    ...mapGetters(['showMenu', 'today', 'currYear', 'currMonth'])
+    ...mapGetters(['showMenu', 'today', 'currYear', 'currMonth']),
   },
   created() {
     this.setupCurr();
   },
   methods: {
     ...mapMutations(['toggleMenu', 'setupCurr', 'nextMonth', 'prevMonth']),
-    searchChanged() {   // 搜索栏变更
+    searchChanged() { // 搜索栏变更
       console.log(this.search);
     },
     focusStyle() {
@@ -61,12 +62,12 @@ export default {
       this.searchFocus = false;
     },
     logout() {
-      delete sessionStorage["isLogin"];
-      delete localStorage["isLogin"];
-      this.$router.push({ path: "/login" });
-    }
-  }
-}
+      delete sessionStorage.isLogin;
+      delete localStorage.isLogin;
+      this.$router.push({ path: '/login' });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

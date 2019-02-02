@@ -20,8 +20,8 @@ import { mapGetters, mapMutations } from 'vuex';
 export default {
   data() {
     return {
-      inputValue: ""
-    }
+      inputValue: '',
+    };
   },
   computed: {
     ...mapGetters({ show: 'showCreateMenuDialog', navList: 'navList' }),
@@ -29,34 +29,32 @@ export default {
   watch: {
     show() {
       if (this.show) {
-        this.$refs["createMenuDialog"].open();
+        this.$refs.createMenuDialog.open();
       }
-    }
+    },
   },
   methods: {
-    ...mapMutations({ close: "closeCreateMenuDialog", add: "createCustomMenu" }),
+    ...mapMutations({ close: 'closeCreateMenuDialog', add: 'createCustomMenu' }),
     closeDialog() {
-      this.$refs["createMenuDialog"].close();
+      this.$refs.createMenuDialog.close();
     },
     createMenu() {
       this.inputValue = this.inputValue.trim();
-      let inputValue = this.inputValue;
+      const inputValue = this.inputValue;
       if (inputValue) {
-        let exist = this.navList.custom.find(item => {
-          return item.name == inputValue;
-        });
+        const exist = this.navList.custom.find(item => item.name == inputValue);
         if (!exist) {
           this.add({ name: inputValue });
-          G.successGo("新建成功！");
+          G.successGo('新建成功！');
         } else {
-          G.warningGo("日历已存在！");
+          G.warningGo('日历已存在！');
         }
-        this.inputValue = "";
+        this.inputValue = '';
       }
-      this.$refs["createMenuDialog"].close();
-    }
-  }
-}
+      this.$refs.createMenuDialog.close();
+    },
+  },
+};
 </script>
 
 <style lang="css">

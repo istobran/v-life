@@ -19,46 +19,44 @@ export default {
     return {
       firstScene: {
         enable: false,
-        imgUrl: "",
+        imgUrl: '',
         showStyle: false,
-        kenburnChoice: ""
+        kenburnChoice: '',
       },
       secondScene: {
         enable: false,
-        imgUrl: "",
+        imgUrl: '',
         showStyle: false,
-        kenburnChoice: ""
+        kenburnChoice: '',
       },
       timer: {
         enable: false,
-        duration: "0ms"
+        duration: '0ms',
       },
-      trSetting: "all 8000ms",
-      animSetting: "8000ms",
+      trSetting: 'all 8000ms',
+      animSetting: '8000ms',
       bgIndex: 0,
       bgNums: 11,
-      choice: "",
+      choice: '',
       bgUrls: {
-        png: this.requireAll(require.context("assets/images/", true, /^\.\/bg\d{2}\.png$/)),
-        webp: this.requireAll(require.context("assets/optimized/", true, /^\.\/bg\d{2}\.webp$/))
+        png: this.requireAll(require.context('Images/', true, /^\.\/bg\d{2}\.png$/)),
       },
       overlayUrl: {
-        png: require("assets/images/grid.png"),
-        webp: require("assets/optimized/grid.webp")
+        png: require('Images/grid.png'),
       },
       loadedImages: [],
       kenburnMap: [
-        "kenburns",
-        "kenburnsDownLeft",
-        "kenburnsDownRight",
-        "kenburnsDown",
-        "kenburnsLeft",
-        "kenburnsRight",
-        "kenburnsUpLeft",
-        "kenburnsUpRight",
-        "kenburnsUp"
-      ]
-    }
+        'kenburns',
+        'kenburnsDownLeft',
+        'kenburnsDownRight',
+        'kenburnsDown',
+        'kenburnsLeft',
+        'kenburnsRight',
+        'kenburnsUpLeft',
+        'kenburnsUpRight',
+        'kenburnsUp',
+      ],
+    };
   },
   methods: {
     // 格式化为两位整数
@@ -75,22 +73,22 @@ export default {
     },
     startTimer(timeout) {
       // 黑屏是因为图片未preload的问题
-      var self = this;
+      const self = this;
       setTimeout(() => {
         if (!self.secondScene.enable) {
           self.secondScene.enable = true;
         } else {
-          self.trSetting = "all 0ms";
+          self.trSetting = 'all 0ms';
           self.secondScene.showStyle = false;
           self.firstScene.imgUrl = self.secondScene.imgUrl;
           // 在 secondScene 开启了 kenburn 特效之后，关闭 firstScene 的 kenburn 特效
           if (self.firstScene.kenburnChoice.length > 0) {
             self.$refs.firstScene.classList
             && self.$refs.firstScene.classList.remove(self.firstScene.kenburnChoice);
-            self.firstScene.kenburnChoice = "";
+            self.firstScene.kenburnChoice = '';
           }
         }
-        self.timer.duration = "0ms";
+        self.timer.duration = '0ms';
         self.timer.enable = false;
         self.bgIndex = ++self.bgIndex % self.bgNums;
         self.secondScene.imgUrl = self.loadedImages[self.bgIndex].src;
@@ -98,74 +96,67 @@ export default {
         if (self.secondScene.kenburnChoice.length > 0) {
           self.$refs.secondScene.classList
           && self.$refs.secondScene.classList.remove(self.secondScene.kenburnChoice);
-          self.secondScene.kenburnChoice = "";
+          self.secondScene.kenburnChoice = '';
         }
-        setTimeout(() => {  // 使用Timeout来防止只有一次重绘的问题
+        setTimeout(() => { // 使用Timeout来防止只有一次重绘的问题
           self.secondScene.kenburnChoice = self.rdKenburn();
           self.$refs.secondScene.classList
           && self.$refs.secondScene.classList.add(self.secondScene.kenburnChoice);
-          self.trSetting = "all 8000ms";
-          self.timer.duration = "8100ms";
+          self.trSetting = 'all 8000ms';
+          self.timer.duration = '8100ms';
           self.timer.enable = true;
           self.secondScene.showStyle = true;
         }, 100);
         self.startTimer(8000);
       }, timeout);
     },
-    // 判断是否支持webp
-    isWebpAvailable() {
-      var elem = document.createElement('canvas');
-      if (!!(elem.getContext && elem.getContext('2d'))) {
-        return elem.toDataURL('image/webp').indexOf('data:image/webp') === 0;
-      } else {
-        return false;
-      }
-    },
     // 预加载所有图片（递归写法）
     preloadImg(list, imgs, cb) {
-      var imgs = imgs || [],    //用于存储预加载好的图片资源
-        fn = this.preloadImg;
-      if(list.length == 0) {
+      var imgs = imgs || [];
+      // 用于存储预加载好的图片资源
+
+      const fn = this.preloadImg;
+      if (list.length == 0) {
         cb.call(this, imgs);
       }
-      var img = new Image();
+      const img = new Image();
       img.src = list[0];
-      if(img.complete) {
+      if (img.complete) {
         imgs.push(img);
         list.shift();
         fn(list, imgs, cb);
       } else {
-        img.onload = function() {
+        img.onload = function () {
           imgs.push(img);
           list.shift();
           fn(list, imgs, cb);
         };
       }
-    }
+    },
   },
   mounted() {
-    this.choice = this.isWebpAvailable() ? "webp" : "png";
-    var self = this;
+    this.choice = 'png';
+    const self = this;
     // 创建自定义事件
-    const event = new Event("onBgImagesLoaded");
+    const event = new Event('onBgImagesLoaded');
     this.preloadImg(this.bgUrls[this.choice], null, (imgs) => {
       self.loadedImages = imgs;
       window.dispatchEvent(event);
     });
     self.firstScene.enable = true;
-    window.addEventListener("onBgImagesLoaded", () => {
-      console.log("background images all loaded");
+    window.addEventListener('onBgImagesLoaded', () => {
+      console.log('background images all loaded');
       self.firstScene.imgUrl = self.loadedImages[self.bgIndex].src;
       self.firstScene.kenburnChoice = self.rdKenburn();
       self.$refs.firstScene.classList
       && self.$refs.firstScene.classList.add(self.firstScene.kenburnChoice);
       self.firstScene.showStyle = true;
-      self.timer.duration = "8100ms";
+      self.timer.duration = '8100ms';
       self.timer.enable = true;
       self.startTimer(8000);
     });
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss">

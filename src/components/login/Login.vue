@@ -23,41 +23,41 @@
 </template>
 
 <script>
-import Slideshow from './Slideshow'
-import Modal from './Modal'
+import Slideshow from './Slideshow';
+import Modal from './Modal';
 
 export default {
   components: {
-    Slideshow, Modal
+    Slideshow, Modal,
   },
-  data () {
+  data() {
     return {
       rememberLogin: false,
-      username: "",
-      password: "",
+      username: '',
+      password: '',
       err: {
         show: false,
-        title: "登录失败",
-        text: ""
-      }
-    }
+        title: '登录失败',
+        text: '',
+      },
+    };
   },
   created() {
   },
   mounted() {
-    let isLogin = Boolean(sessionStorage.getItem("isLogin"));
+    const isLogin = Boolean(sessionStorage.getItem('isLogin'));
     if (isLogin) {
-      this.$router.push({ path: "/app" });
+      this.$router.push({ path: '/app' });
     } else {
-      var localStatus = Boolean(localStorage.getItem("isLogin"));
+      const localStatus = Boolean(localStorage.getItem('isLogin'));
       if (localStatus) {
-        sessionStorage.setItem("isLogin", localStatus);
-        this.$router.push({ path: "/app" })
+        sessionStorage.setItem('isLogin', localStatus);
+        this.$router.push({ path: '/app' });
       }
     }
   },
   methods: {
-    showMsg(text, title="登录失败") {
+    showMsg(text, title = '登录失败') {
       this.err.text = text;
       this.err.title = title;
       this.err.show = true;
@@ -66,40 +66,40 @@ export default {
       // 验证表单
       this.username = this.username.trim();
       if (!this.username) {
-        this.showMsg("请输入用户名！", "提示");
+        this.showMsg('请输入用户名！', '提示');
         return;
       }
       this.password = this.password.trim();
       if (!this.password) {
-        this.showMsg("请输入密码！", "提示");
+        this.showMsg('请输入密码！', '提示');
         return;
       }
       // 提交请求
       axios.post('/user/login', {
         username: this.username,
-        password: Tool.hash(this.password)
-      }).then(resp => {
+        password: Tool.hash(this.password),
+      }).then((resp) => {
         const result = resp.data;
         if (result.errno === 1000) {
           if (result.data) {
-            var str = result.data[Object.keys(result.data)[0]];
+            const str = result.data[Object.keys(result.data)[0]];
             this.showMsg(str, result.errmsg);
           } else {
             this.showMsg(result.errmsg);
           }
         } else if (result.errno === 0) {
-          sessionStorage.setItem("stoken", result.data);
+          sessionStorage.setItem('stoken', result.data);
           if (this.rememberLogin) {
-            localStorage.setItem("stoken", result.data);
+            localStorage.setItem('stoken', result.data);
           }
-          this.$router.push({ path: "/app" });
+          this.$router.push({ path: '/app' });
         } else {
-          this.showMsg("网络出错");
+          this.showMsg('网络出错');
         }
       });
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss">
@@ -192,7 +192,7 @@ export default {
         background-position: 0 -15px !important;
       }
       label {
-        background-image:url(../../assets/images/checkbox.png);
+        background-image:url(~Images/checkbox.png);
         user-select: none;
       }
     }
