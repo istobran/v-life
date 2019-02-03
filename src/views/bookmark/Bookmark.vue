@@ -40,7 +40,7 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex';
 import Waterfall from 'vue-waterfall';
-import CreateBookmarkDialog from './dialogs/CreateBookmarkDialog.vue';
+import CreateBookmarkDialog from './CreateBookmarkDialog.vue';
 
 export default {
   components: {

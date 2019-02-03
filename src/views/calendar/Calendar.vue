@@ -23,7 +23,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import DayContext from './small/DayContext.vue';
+import DayContext from './DayContext.vue';
 
 export default {
   components: {

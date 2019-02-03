@@ -1,5 +1,5 @@
 <template lang="html">
-  <v-toolbar class="nav-bar">
+  <v-toolbar class="nav-bar primary" dark>
     <v-toolbar-side-icon @click="toggleMenu"></v-toolbar-side-icon>
     <v-toolbar-title>{{ title }}</v-toolbar-title>
     <div class="date-selector prevent-select">

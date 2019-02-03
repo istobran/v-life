@@ -1,6 +1,6 @@
 <template lang="html">
-  <aside id="sidebar" :class="{ 'show': showMenu }">
-    <div class="sidebar-inner prevent-select">
+  <aside id="sidebar" class="secondary" :class="{ 'show': showMenu }">
+    <div class="sidebar-inner grey--text darken-2 prevent-select">
       <ul class="common">
         <router-link tag="li" :to="item.link" v-ripple
           v-for="item in navList.common" :key="item.name">
@@ -80,7 +80,6 @@ export default {
   width: 218px;
   transform: translateX(-228px);
   transition: transform .15s ease-in-out;
-  background-color: #F2F2F2;
   z-index: 1;
   &.show {
     transform: translateX(0);
@@ -88,7 +87,6 @@ export default {
   .sidebar-inner {
     padding: 12px 8px 52px;
     line-height: 40px;
-    color: #616161;
     ul {
       border-bottom: 1px solid #ddd;
       box-sizing: border-box;
