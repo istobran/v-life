@@ -2,48 +2,32 @@
   <aside id="sidebar" :class="{ 'show': showMenu }">
     <div class="sidebar-inner prevent-select">
       <ul class="common">
-        <router-link tag="li" :to="item.link" v-for="item in navList.common" :key="item.name">
-          <md-ink-ripple />
-          <md-icon :style="{ 'color': item.color }" class="m0">{{ item.icon }}</md-icon>
+        <router-link tag="li" :to="item.link" v-ripple
+          v-for="item in navList.common" :key="item.name">
+          <v-icon :style="{ 'color': item.color }" class="m0">{{ item.icon }}</v-icon>
           <span class="text">{{ item.name }}</span>
         </router-link>
       </ul>
       <ul class="custom">
-        <router-link tag="li" :to="item.link" v-for="item in navList.custom" :key="item.name">
-          <md-ink-ripple />
-          <md-icon :style="{ 'color': item.color }" class="m0">{{ item.icon }}</md-icon>
+        <router-link tag="li" :to="item.link" v-ripple
+          v-for="item in navList.custom" :key="item.name">
+          <v-icon :style="{ 'color': item.color }" class="m0">{{ item.icon }}</v-icon>
           <span class="text">{{ item.name }}</span>
-          <md-icon class="btn-close" @click.prev.stop.native="delRequest(item)">clear</md-icon>
+          <v-icon class="btn-close" @click.prevent.stop.native="delRequest(item)">clear</v-icon>
         </router-link>
-        <li id="btnCreate" @click="addMenu">
-          <md-ink-ripple />
-          <md-icon :style="{ 'color': '#616161' }" class="m0">add</md-icon>
+        <li id="btnCreate" @click="addMenu" v-ripple>
+          <v-icon :style="{ 'color': '#616161' }" class="m0">add</v-icon>
           <span class="text">新建</span>
         </li>
       </ul>
       <ul class="feature">
-        <router-link tag="li" :to="item.link" v-for="item in navList.feature" :key="item.name">
-          <md-ink-ripple />
-          <md-icon :style="{ 'color': item.color }" class="m0">{{ item.icon }}</md-icon>
-          <span class="text">{{ item.name }}</span>
-        </router-link>
-      </ul>
-      <ul class="other">
-        <router-link tag="li" :to="item.link" v-for="item in navList.other" :key="item.name">
-          <md-ink-ripple />
-          <md-icon :style="{ 'color': item.color }" class="m0">{{ item.icon }}</md-icon>
+        <router-link tag="li" :to="item.link" v-ripple
+          v-for="item in navList.feature" :key="item.name">
+          <v-icon :style="{ 'color': item.color }" class="m0">{{ item.icon }}</v-icon>
           <span class="text">{{ item.name }}</span>
         </router-link>
       </ul>
     </div>
-    <md-dialog-confirm
-      :md-title="confirm.title"
-      :md-content-html="confirm.contentHtml"
-      :md-ok-text="confirm.ok"
-      :md-cancel-text="confirm.cancel"
-      @close="onClose"
-      ref="confirm_delMenu">
-    </md-dialog-confirm>
   </aside>
 </template>
 
@@ -53,12 +37,12 @@ import { mapGetters, mapMutations } from 'vuex';
 export default {
   data() {
     return {
+      delItem: null,
       confirm: {
         title: '删除日历',
         contentHtml: '删除自定义日历会同时删除该日历下的所有数据<br>您确定要继续吗？',
         ok: '确定',
         cancel: '取消',
-        item: null,
       },
     };
   },
@@ -70,17 +54,17 @@ export default {
   methods: {
     ...mapMutations({ addMenu: 'openCreateMenuDialog', delMenu: 'removeCustomMenu' }),
     delRequest(item) {
-      this.confirm.item = item;
-      this.confirm.contentHtml = `删除自定义日历 ${item.name} 会同时删除该日历下的所有数据<br>您确定要继续吗？`;
-      this.$refs.confirm_delMenu.open();
+      this.delItem.item = item;
+      this.$confirm(`删除自定义日历 ${item.name} 会同时删除该日历下的所有数据<br>您确定要继续吗？`)
+        .then(this.onClose);
     },
     onClose(action) {
-      if (action == 'ok') {
-        this.delMenu({ item: this.confirm.item });
-        G.successGo('删除成功！');
+      if (action === 'ok') {
+        this.delMenu({ item: this.delItem });
+        this.$message.success('删除成功！');
         this.$router.push('/app/home');
       }
-      this.confirm.item = null;
+      this.delItem = null;
     },
   },
   components: {},

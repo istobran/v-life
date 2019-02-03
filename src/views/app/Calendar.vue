@@ -1,11 +1,12 @@
 <template lang="html">
   <main id="calendar" :class="{ 'main-content': true, 'shrink': showMenu }">
     <header class="dayname-container prevent-select">
-      <div class="dayname" v-for="dayname in daynames">{{ dayname }}</div>
+      <div class="dayname" v-for="dayname in daynames" :key="dayname">{{ dayname }}</div>
     </header>
     <section class="day-container">
       <div :class="{ 'day': true, 'not-this-month': !day.inThisMonth, 'editing': day.editFlag }"
-          v-for="day in days"
+          v-for="(day, index) in days"
+          :key="index"
           @dblclick="startEdit(day)" @blur="endEdit(day)">
         <header class="day-header prevent-select">
           <i>{{ day.solar }}</i>
@@ -22,8 +23,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import moment from 'moment';
-import DayContext from './small/DayContext';
+import DayContext from './small/DayContext.vue';
 
 export default {
   components: {
@@ -40,7 +40,7 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     const reqRoute = to.fullPath.replace('/app/', '').split('/');
-    next((vm) => {
+    next(vm => {
       vm.reqRoute = reqRoute;
       vm.loadEvents();
       vm.render();
@@ -89,17 +89,17 @@ export default {
       // 补全日历（前）
       if (firstDay.day() > 1 || firstDay.day() === 0) {
         // 获取上个月的最后一天
-        let temp_1 = firstDay.subtract(1, 'days');
-        while (temp_1.day() !== 0) { // 补到星期一
+        let temp1 = firstDay.subtract(1, 'days');
+        while (temp1.day() !== 0) { // 补到星期一
           this.days.unshift({
-            solar: temp_1.date(), // 公历
-            lunar: temp_1.date(), // 农历
+            solar: temp1.date(), // 公历
+            lunar: temp1.date(), // 农历
             inThisMonth: false,
             editFlag: false,
-            moment: temp_1.clone(),
+            moment: temp1.clone(),
             context: '',
           });
-          temp_1 = temp_1.subtract(1, 'days');
+          temp1 = temp1.subtract(1, 'days');
         }
       }
 
@@ -107,17 +107,17 @@ export default {
       const lastDay = current.clone().date(monthDays);
       // 补全日历（后）
       if (lastDay.day() <= 6) {
-        let temp_2 = lastDay.add(1, 'days');
-        while (temp_2.day() !== 1) { // 补到星期天
+        let temp2 = lastDay.add(1, 'days');
+        while (temp2.day() !== 1) { // 补到星期天
           this.days.push({
-            solar: temp_2.date(), // 公历
-            lunar: temp_2.date(), // 农历
+            solar: temp2.date(), // 公历
+            lunar: temp2.date(), // 农历
             inThisMonth: false,
             editFlag: false,
-            moment: temp_2.clone(),
+            moment: temp2.clone(),
             context: '',
           });
-          temp_2 = temp_2.add(1, 'days');
+          temp2 = temp2.add(1, 'days');
         }
       }
 
@@ -126,18 +126,18 @@ export default {
     },
     // 将事件导入日历表
     insertEvents() {
-      this.days.forEach((day) => {
+      this.days.forEach(day => {
         if (this.events[day.moment.format('YYYY-MM-DD')]) {
           day.context = this.events[day.moment.format('YYYY-MM-DD')];
           if (this.isToday(day)) {
             const vnode = document.createElement('span');
             vnode.innerHTML = day.context;
-            G.notify('今日任务', vnode.innerText);
+            this.$notify('今日任务', vnode.innerText);
           }
         }
       });
       // 等待子组件 props 数据变化后再触发事件
-      this.$nextTick((_) => {
+      this.$nextTick(() => {
         this.$emit('updateContext');
       });
     },
@@ -166,7 +166,7 @@ export default {
         // contentEditable元素不能够直接focus，需要有timeout
         const node = this.$refs[day.moment.format('YYYY-MM-DD')][0].$el;
         // console.log(node);
-        setTimeout(_ => node.focus(), 0);
+        setTimeout(() => node.focus(), 0);
       }
     },
     // 退出编辑日历
@@ -228,6 +228,7 @@ export default {
         // border: 1px solid red;
         i {
           padding-left: 5px;
+          font-style: normal
         }
         .tag {
           margin-left: 5px;
@@ -255,7 +256,9 @@ export default {
         }
       }
       &.editing {
-        box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px rgba(0,0,0,.14), 0 1px 10px rgba(0,0,0,.12);
+        box-shadow: 0 2px 4px -1px rgba(0,0,0,.2),
+          0 4px 5px rgba(0,0,0,.14),
+          0 1px 10px rgba(0,0,0,.12);
         .day-context {
           background-color: #FAFAFA;
           border: 1px solid #CCCCCC;

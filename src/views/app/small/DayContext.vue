@@ -14,7 +14,7 @@ export default {
   },
   mounted() {
     this.$el.innerHTML = this.innerText;
-    this.$parent.$on('updateContext', (_) => {
+    this.$parent.$on('updateContext', () => {
       this.innerText = this.value;
       this.$el.innerHTML = this.innerText;
     });

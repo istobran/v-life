@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { createModule } from 'vuex-toast';
 import moment from 'moment';
 import mutations from './mutations';
 import getters from './getters';
@@ -43,14 +42,6 @@ export default new Vuex.Store({
           name: '便签', icon: 'bookmark', color: '#E53935', link: '/app/bookmark',
         },
       ],
-      other: [
-        {
-          name: '设置', icon: 'settings', color: '#616161', link: '/app/settings',
-        },
-        {
-          name: '帮助', icon: 'help', color: '#616161', link: '/app/support',
-        },
-      ],
     },
     showCreateMenuDialog: false,
     showBookmarkDialog: false,
@@ -58,7 +49,4 @@ export default new Vuex.Store({
   mutations,
   getters,
   actions,
-  modules: {
-    toast: createModule({ dismissInterval: 3000 }),
-  },
 });

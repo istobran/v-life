@@ -5,11 +5,11 @@
       <div class="spliter"></div>
       <p class="clearfix">
         <span class="pull-left">同步到云端</span>
-        <md-switch v-model="checked1" class="md-primary pull-right"></md-switch>
+        <v-switch v-model="checked1" class="pull-right"></v-switch>
       </p>
       <p class="clearfix">
         <span class="pull-left">同步到谷歌日历</span>
-        <md-switch v-model="checked2" class="md-primary pull-right"></md-switch>
+        <v-switch v-model="checked2" class="pull-right"></v-switch>
       </p>
     </div>
     <div class="personal-setting pull-left">
@@ -21,24 +21,15 @@
       </p>
       <p class="clearfix">
         <span class="pull-left">绑定邮箱：</span>
-        <md-input-container md-inline class="pull-right">
-          <label>请输入绑定邮箱</label>
-          <md-input type="email"></md-input>
-        </md-input-container>
+        <v-input type="email" class="pull-right" label="请输入绑定邮箱"></v-input>
       </p>
       <p class="clearfix">
         <span class="pull-left">修改密码：</span>
-        <md-input-container md-inline class="pull-right">
-          <label>请输入新密码</label>
-          <md-input type="password"></md-input>
-        </md-input-container>
+        <v-input type="password" class="pull-right" label="请输入新密码"></v-input>
       </p>
       <p class="clearfix">
         <span class="pull-left">确认密码：</span>
-        <md-input-container md-inline class="pull-right">
-          <label>请再次确认新密码</label>
-          <md-input type="password"></md-input>
-        </md-input-container>
+        <v-input type="password" class="pull-right" label="请再次确认新密码"></v-input>
       </p>
     </div>
   </main>

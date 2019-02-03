@@ -1,45 +1,41 @@
 <template lang="html">
   <div id="login">
-    <!-- <slideshow></Slideshow> -->
+    <slideshow></slideshow>
     <div class="login-container">
       <div class="login-avatar"><i class="fa fa-user"></i></div>
-      <h1 class="login-title">登录系统</h1>
+      <h1 class="login-title display-1">登录系统</h1>
       <input type="text" v-model="username" placeholder="请输入用户名"><br/>
       <input type="password" v-model="password" placeholder="请输入密码" @keyup.enter="login"><br/>
       <div class="login-option">
         <span class="login-remember">
-          <input type="checkbox" class="cb_rem" id="remember" name="remember" v-model="rememberLogin">
+          <input type="checkbox" class="cb_rem" id="remember"
+            name="remember" v-model="rememberLogin">
           <label class="lb_rem" for="remember">记住我</label>
         </span>
         <span class="login-forget"><a class="btn-findpasswd" href="#">忘记密码？</a></span>
       </div>
-      <button class="login-button" name="login" @click="login">登&nbsp;&nbsp;&nbsp;录</button>
+      <button class="login-button" @click="login">登&nbsp;&nbsp;&nbsp;录</button>
       <div class="register-hint">
         <span>还没有账号？<router-link class="btn-register" to="/register">创建新账户>></router-link></span>
       </div>
     </div>
-    <modal v-if="err.show" @close="err.show=false" :title="err.title" :text="err.text"></modal>
   </div>
 </template>
 
 <script>
-import Slideshow from './Slideshow';
-import Modal from './Modal';
+import MD5 from 'js-md5';
+import { UserService, successFilter, errToast } from 'Apis';
+import Slideshow from './Slideshow.vue';
 
 export default {
   components: {
-    Slideshow, Modal,
+    Slideshow,
   },
   data() {
     return {
       rememberLogin: false,
       username: '',
       password: '',
-      err: {
-        show: false,
-        title: '登录失败',
-        text: '',
-      },
     };
   },
   created() {
@@ -57,46 +53,30 @@ export default {
     }
   },
   methods: {
-    showMsg(text, title = '登录失败') {
-      this.err.text = text;
-      this.err.title = title;
-      this.err.show = true;
-    },
     login() {
       // 验证表单
       this.username = this.username.trim();
       if (!this.username) {
-        this.showMsg('请输入用户名！', '提示');
+        this.$message.error('请输入用户名！');
         return;
       }
       this.password = this.password.trim();
       if (!this.password) {
-        this.showMsg('请输入密码！', '提示');
+        this.$message.error('请输入密码！');
         return;
       }
-      // 提交请求
-      axios.post('/user/login', {
+      UserService.login({
         username: this.username,
-        password: Tool.hash(this.password),
-      }).then((resp) => {
-        const result = resp.data;
-        if (result.errno === 1000) {
-          if (result.data) {
-            const str = result.data[Object.keys(result.data)[0]];
-            this.showMsg(str, result.errmsg);
-          } else {
-            this.showMsg(result.errmsg);
-          }
-        } else if (result.errno === 0) {
-          sessionStorage.setItem('stoken', result.data);
+        password: MD5.hex(this.password),
+      }).then(successFilter)
+        .then(resp => {
+          sessionStorage.setItem('stoken', resp.data);
           if (this.rememberLogin) {
-            localStorage.setItem('stoken', result.data);
+            localStorage.setItem('stoken', resp.data);
           }
           this.$router.push({ path: '/app' });
-        } else {
-          this.showMsg('网络出错');
-        }
-      });
+        })
+        .catch(errToast);
     },
   },
 };

@@ -1,7 +1,7 @@
 <template lang="html">
   <main id="bookmark" :class="{ 'main-content': true, 'shrink': showMenu }">
     <div class="op-container">
-      <md-button @click.native="openAddBookmark"><md-icon>add</md-icon> 新增便签</md-button>
+      <v-btn @click="openAddBookmark"><v-icon>add</v-icon> 新增便签</v-btn>
     </div>
     <waterfall :line-gap="220" :watch="stickers">
       <waterfall-slot
@@ -12,19 +12,19 @@
         :key="sticker.id"
       >
       <div class="bookmark-instance" type="todo" v-if="sticker.type ==='todo'">
-        <md-icon class="btn-del" @click.native="delBookmark(index)">close</md-icon>
+        <v-icon class="btn-del" @click.native="delBookmark(index)">close</v-icon>
         <ul>
-          <li v-for="it in sticker.content">
-            <md-checkbox class="md-primary" v-model="it.checked">{{ it.desc }}</md-checkbox>
+          <li v-for="it in sticker.content" :key="it.id">
+            <v-checkbox v-model="it.checked" :label="it.desc"></v-checkbox>
           </li>
         </ul>
       </div>
       <div class="bookmark-instance" type="text" v-if="sticker.type ==='text'">
-        <md-icon class="btn-del" @click.native="delBookmark(index)">close</md-icon>
+        <v-icon class="btn-del" @click.native="delBookmark(index)">close</v-icon>
         {{ sticker.content }}
       </div>
       <div class="bookmark-instance" type="draw" v-if="sticker.type ==='draw'">
-        <md-icon class="btn-del" @click.native="delBookmark(index)">close</md-icon>
+        <v-icon class="btn-del" @click.native="delBookmark(index)">close</v-icon>
         <img :src="sticker.content">
       </div>
       </waterfall-slot>
@@ -34,21 +34,13 @@
       @addTodo="addTodo"
       @addDraw="addDraw"
     ></create-bookmark-dialog>
-    <md-dialog-confirm
-      :md-title="confirm.title"
-      :md-content-html="confirm.contentHtml"
-      :md-ok-text="confirm.ok"
-      :md-cancel-text="confirm.cancel"
-      @close="onClose"
-      ref="confirm_delMenu">
-    </md-dialog-confirm>
   </main>
 </template>
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
 import Waterfall from 'vue-waterfall';
-import CreateBookmarkDialog from './dialogs/CreateBookmarkDialog';
+import CreateBookmarkDialog from './dialogs/CreateBookmarkDialog.vue';
 
 export default {
   components: {
@@ -58,13 +50,7 @@ export default {
   },
   data() {
     return {
-      confirm: {
-        title: '删除便签',
-        contentHtml: '此操作将不可恢复，您确定要删除此便签吗？',
-        ok: '确定',
-        cancel: '取消',
-        itemIndex: null,
-      },
+      delIndex: null,
       stickers: [
         {
           id: 1,
@@ -145,19 +131,20 @@ export default {
      * @param  {Number} index 被删除便签的 index
      */
     delBookmark(index) {
-      this.confirm.itemIndex = index;
-      this.$refs.confirm_delMenu.open();
+      this.delIndex = index;
+      this.$confirm('此操作将不可恢复，您确定要删除此便签吗？')
+        .then(this.onClose);
     },
     /**
      * 删除确认对话框关闭
      * @param  {String} action 用户所点击的操作
      */
     onClose(action) {
-      if (action == 'ok') {
-        this.stickers.splice(this.confirm.itemIndex, 1);
-        G.successGo('删除成功！');
+      if (action === 'ok') {
+        this.stickers.splice(this.delIndex, 1);
+        this.$message.success('删除成功！');
       }
-      this.confirm.itemIndex = null;
+      this.delIndex = null;
     },
   },
 };

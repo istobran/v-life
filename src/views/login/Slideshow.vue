@@ -1,12 +1,27 @@
 <template lang="html">
   <div id="slideshow">
-    <div v-if="firstScene.enable" :class="{ 'slide-image': true, 'slide-fade-init': true, 'slide-fade-show': firstScene.showStyle }" :style="{ transition: trSetting }">
-      <div ref="firstScene" :class="{ 'slide-image-inner': true }" :style="{ backgroundImage: `url(${firstScene.imgUrl})`, animationDuration: animSetting }"></div>
+    <div v-if="firstScene.enable"
+      :class="{ 'slide-image': true,
+        'slide-fade-init': true,
+        'slide-fade-show': firstScene.showStyle }"
+      :style="{ transition: trSetting }">
+      <div ref="firstScene"
+        :class="{ 'slide-image-inner': true }"
+        :style="{ backgroundImage: `url(${firstScene.imgUrl})`,
+          animationDuration: animSetting }"></div>
     </div>
-    <div v-if="secondScene.enable" :class="{ 'slide-image': true, 'slide-fade-init': true, 'slide-fade-show': secondScene.showStyle }" :style="{ transition: trSetting }">
-      <div ref="secondScene" :class="{ 'slide-image-inner': true }" :style="{ backgroundImage: `url(${secondScene.imgUrl})`, animationDuration: animSetting }"></div>
+    <div v-if="secondScene.enable"
+      :class="{ 'slide-image': true,
+        'slide-fade-init': true,
+        'slide-fade-show': secondScene.showStyle }"
+      :style="{ transition: trSetting }">
+      <div ref="secondScene"
+        :class="{ 'slide-image-inner': true }"
+        :style="{ backgroundImage: `url(${secondScene.imgUrl})`,
+          animationDuration: animSetting }"></div>
     </div>
-    <div class="slide-overlay" :style="{ backgroundImage: `url(${overlayUrl[choice]})` }"></div>
+    <div class="slide-overlay"
+      :style="{ backgroundImage: `url(${overlayUrl})` }"></div>
     <div :class="{ 'slide-timer': true, 'slide-timer-running': timer.enable }">
       <div class="slide-timer-progress" :style="{ transitionDuration: timer.duration }"></div>
     </div>
@@ -41,9 +56,7 @@ export default {
       bgUrls: {
         png: this.requireAll(require.context('Images/', true, /^\.\/bg\d{2}\.png$/)),
       },
-      overlayUrl: {
-        png: require('Images/grid.png'),
-      },
+      overlayUrl: import('Images/grid.png'),
       loadedImages: [],
       kenburnMap: [
         'kenburns',
@@ -111,12 +124,10 @@ export default {
       }, timeout);
     },
     // 预加载所有图片（递归写法）
-    preloadImg(list, imgs, cb) {
-      var imgs = imgs || [];
+    preloadImg(list, imgs = [], cb) {
       // 用于存储预加载好的图片资源
-
       const fn = this.preloadImg;
-      if (list.length == 0) {
+      if (list.length === 0) {
         cb.call(this, imgs);
       }
       const img = new Image();
@@ -139,7 +150,7 @@ export default {
     const self = this;
     // 创建自定义事件
     const event = new Event('onBgImagesLoaded');
-    this.preloadImg(this.bgUrls[this.choice], null, (imgs) => {
+    this.preloadImg(this.bgUrls[this.choice], null, imgs => {
       self.loadedImages = imgs;
       window.dispatchEvent(event);
     });
