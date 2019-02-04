@@ -4,6 +4,7 @@ module.exports = {
     node: true,
   },
   extends: [
+    'vuetify',
     'plugin:vue/essential',
     '@vue/airbnb',
   ],
@@ -20,6 +21,15 @@ module.exports = {
     'prefer-destructuring': ['error', {
       VariableDeclarator: { array: true, object: true },
       AssignmentExpression: { array: false, object: false },
+    }],
+    'vue/script-indent': ['error', 2, { baseIndent: 0 }],
+    'space-before-function-paren': ['error', 'never'],
+    'vue/max-attributes-per-line': ['error', {
+      singleline: 3,
+      multiline: {
+        max: 1,
+        allowFirstLine: true,
+      },
     }],
   },
   parserOptions: {

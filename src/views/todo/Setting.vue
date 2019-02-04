@@ -1,35 +1,53 @@
 <template lang="html">
-  <main id="setting" :class="{ 'main-content': true, 'shrink': showMenu, 'clearfix': true }">
+  <main id="setting" class="clearfix">
     <div class="system-setting pull-left">
-      <h1 class="md-title">系统设置</h1>
-      <div class="spliter"></div>
+      <h1 class="md-title">
+        系统设置
+      </h1>
+      <div class="spliter" />
       <p class="clearfix">
-        <span class="pull-left">同步到云端</span>
-        <v-switch v-model="checked1" class="pull-right"></v-switch>
+        <span class="pull-left">
+          同步到云端
+        </span>
+        <v-switch v-model="checked1" class="pull-right" />
       </p>
       <p class="clearfix">
-        <span class="pull-left">同步到谷歌日历</span>
-        <v-switch v-model="checked2" class="pull-right"></v-switch>
+        <span class="pull-left">
+          同步到谷歌日历
+        </span>
+        <v-switch v-model="checked2" class="pull-right" />
       </p>
     </div>
     <div class="personal-setting pull-left">
-      <h1 class="md-title">个人设置</h1>
-      <div class="spliter"></div>
+      <h1 class="md-title">
+        个人设置
+      </h1>
+      <div class="spliter" />
       <p class="clearfix">
-        <span class="pull-left">用户名：</span>
-        <span class="pull-right">{{ user.username }}</span>
+        <span class="pull-left">
+          用户名：
+        </span>
+        <span class="pull-right">
+          {{ user.username }}
+        </span>
       </p>
       <p class="clearfix">
-        <span class="pull-left">绑定邮箱：</span>
-        <v-input type="email" class="pull-right" label="请输入绑定邮箱"></v-input>
+        <span class="pull-left">
+          绑定邮箱：
+        </span>
+        <v-input type="email" class="pull-right" label="请输入绑定邮箱" />
       </p>
       <p class="clearfix">
-        <span class="pull-left">修改密码：</span>
-        <v-input type="password" class="pull-right" label="请输入新密码"></v-input>
+        <span class="pull-left">
+          修改密码：
+        </span>
+        <v-input type="password" class="pull-right" label="请输入新密码" />
       </p>
       <p class="clearfix">
-        <span class="pull-left">确认密码：</span>
-        <v-input type="password" class="pull-right" label="请再次确认新密码"></v-input>
+        <span class="pull-left">
+          确认密码：
+        </span>
+        <v-input type="password" class="pull-right" label="请再次确认新密码" />
       </p>
     </div>
   </main>

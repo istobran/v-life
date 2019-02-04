@@ -15,7 +15,9 @@
       v-if="icon.length"
       dark
       left
-    >{{ icon }}</v-icon>
+    >
+      {{ icon }}
+    </v-icon>
     {{ text }}
   </v-snackbar>
 </template>

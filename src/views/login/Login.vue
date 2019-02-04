@@ -1,22 +1,46 @@
 <template lang="html">
   <div id="login">
-    <slideshow></slideshow>
+    <slideshow />
     <div class="login-container">
-      <div class="login-avatar"><i class="fa fa-user"></i></div>
-      <h1 class="login-title display-1">登录系统</h1>
-      <input type="text" v-model="username" placeholder="请输入用户名"><br/>
-      <input type="password" v-model="password" placeholder="请输入密码" @keyup.enter="login"><br/>
+      <div class="login-avatar">
+        <i class="fa fa-user" />
+      </div>
+      <h1 class="login-title display-1">
+        登录系统
+      </h1>
+      <input v-model="username" type="text" placeholder="请输入用户名"><br>
+      <input v-model="password"
+             type="password"
+             placeholder="请输入密码"
+             @keyup.enter="login"
+      ><br>
       <div class="login-option">
         <span class="login-remember">
-          <input type="checkbox" class="cb_rem" id="remember"
-            name="remember" v-model="rememberLogin">
-          <label class="lb_rem" for="remember">记住我</label>
+          <input id="remember"
+                 v-model="rememberLogin"
+                 type="checkbox"
+                 class="cb_rem"
+                 name="remember"
+          >
+          <label class="lb_rem" for="remember">
+            记住我
+          </label>
         </span>
-        <span class="login-forget"><a class="btn-findpasswd" href="#">忘记密码？</a></span>
+        <span class="login-forget">
+          <a class="btn-findpasswd" href="#">
+            忘记密码？
+          </a>
+        </span>
       </div>
-      <button class="login-button" @click="login">登&nbsp;&nbsp;&nbsp;录</button>
+      <button class="login-button" @click="login">
+        登&nbsp;&nbsp;&nbsp;录
+      </button>
       <div class="register-hint">
-        <span>还没有账号？<router-link class="btn-register" to="/register">创建新账户>></router-link></span>
+        <span>
+          还没有账号？<router-link class="btn-register" to="/register">
+            创建新账户>>
+          </router-link>
+        </span>
       </div>
     </div>
   </div>

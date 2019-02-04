@@ -17,17 +17,6 @@ export default new Vuex.Store({
       month: 0,
     },
     navList: {
-      common: [
-        {
-          name: '生活', icon: 'home', color: '#43A047', link: '/app/home',
-        },
-        {
-          name: '工作', icon: 'work', color: '#1E88E5', link: '/app/work',
-        },
-        {
-          name: '活动', icon: 'extension', color: '#FB8C00', link: '/app/activity',
-        },
-      ],
       custom: window.localStorage['v-life-custom']
         ? JSON.parse(window.localStorage['v-life-custom'])
         : [{
@@ -37,11 +26,6 @@ export default new Vuex.Store({
           link: { name: 'custom', params: { cid: 1 } },
         },
         ],
-      feature: [
-        {
-          name: '便签', icon: 'bookmark', color: '#E53935', link: '/app/bookmark',
-        },
-      ],
     },
     showCreateMenuDialog: false,
     showBookmarkDialog: false,

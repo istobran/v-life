@@ -1,18 +1,24 @@
 <template lang="html">
   <v-dialog v-model="show" @close="close">
     <v-card>
-      <v-card-title class="headline">新建自定义日历</v-card-title>
+      <v-card-title class="headline">
+        新建自定义日历
+      </v-card-title>
       <v-card-text>
         <v-text-field
           v-model="inputValue"
           label="日历名称"
           @keyup.enter.native="createMenu"
-        ></v-text-field>
+        />
       </v-card-text>
       <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="green darken-1" flat @click="show=false">取消</v-btn>
-        <v-btn color="green darken-1" flat @click="createMenu">新建</v-btn>
+        <v-spacer />
+        <v-btn color="green darken-1" flat @click="show=false">
+          取消
+        </v-btn>
+        <v-btn color="green darken-1" flat @click="createMenu">
+          新建
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

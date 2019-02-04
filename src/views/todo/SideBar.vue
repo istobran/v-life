@@ -1,31 +1,31 @@
 <template lang="html">
   <aside id="sidebar" class="secondary" :class="{ 'show': showMenu }">
     <div class="sidebar-inner grey--text darken-2 prevent-select">
-      <ul class="common">
-        <router-link tag="li" :to="item.link" v-ripple
-          v-for="item in navList.common" :key="item.name">
-          <v-icon :style="{ 'color': item.color }" class="m0">{{ item.icon }}</v-icon>
-          <span class="text">{{ item.name }}</span>
-        </router-link>
-      </ul>
       <ul class="custom">
-        <router-link tag="li" :to="item.link" v-ripple
-          v-for="item in navList.custom" :key="item.name">
-          <v-icon :style="{ 'color': item.color }" class="m0">{{ item.icon }}</v-icon>
-          <span class="text">{{ item.name }}</span>
-          <v-icon class="btn-close" @click.prevent.stop.native="delRequest(item)">clear</v-icon>
+        <router-link v-for="item in navList.custom"
+                     :key="item.name"
+                     v-ripple
+                     tag="li"
+                     :to="item.link"
+        >
+          <v-icon :style="{ 'color': item.color }" class="m0">
+            {{ item.icon }}
+          </v-icon>
+          <span class="text">
+            {{ item.name }}
+          </span>
+          <v-icon class="btn-close" @click.prevent.stop.native="delRequest(item)">
+            clear
+          </v-icon>
         </router-link>
-        <li id="btnCreate" @click="addMenu" v-ripple>
-          <v-icon :style="{ 'color': '#616161' }" class="m0">add</v-icon>
-          <span class="text">新建</span>
+        <li id="btnCreate" v-ripple @click="addMenu">
+          <v-icon :style="{ 'color': '#616161' }" class="m0">
+            add
+          </v-icon>
+          <span class="text">
+            新建
+          </span>
         </li>
-      </ul>
-      <ul class="feature">
-        <router-link tag="li" :to="item.link" v-ripple
-          v-for="item in navList.feature" :key="item.name">
-          <v-icon :style="{ 'color': item.color }" class="m0">{{ item.icon }}</v-icon>
-          <span class="text">{{ item.name }}</span>
-        </router-link>
       </ul>
     </div>
   </aside>
@@ -67,7 +67,6 @@ export default {
       this.delItem = null;
     },
   },
-  components: {},
 };
 </script>
 

@@ -2,7 +2,9 @@
   <v-dialog v-model="show" class="ab-dialog prevent-select" @close="close">
     <v-card>
       <v-card-title class="ab-title headline grey lighten-2" primary-title>
-        <span class="v-mid">新建便签</span>
+        <span class="v-mid">
+          新建便签
+        </span>
         <v-btn class="v-icon-button" @click="toggleTab(type.TEXT)">
           <v-icon>title</v-icon>
         </v-btn>
@@ -15,13 +17,17 @@
       </v-card-title>
     </v-card>
     <v-card-text v-show="currentType === type.TEXT">
-      <textarea name="name" rows="20" cols="60"
-        placeholder="请在这里输入便签内容" v-model="textPane.input"></textarea>
+      <textarea v-model="textPane.input"
+                name="name"
+                rows="20"
+                cols="60"
+                placeholder="请在这里输入便签内容"
+      />
     </v-card-text>
     <v-card-text v-show="currentType === type.TODO" type="todo">
       <ul>
         <li v-for="(todo, index) in todoPane.todoList" :key="index" class="clearfix">
-          <v-checkbox v-model="todo.checked" :label="todo.desc"></v-checkbox>
+          <v-checkbox v-model="todo.checked" :label="todo.desc" />
           <v-btn class="v-icon-button pull-right" @click="delTodo(index)">
             <v-icon>cancel</v-icon>
           </v-btn>
@@ -32,16 +38,18 @@
         label="输入要完成的任务"
         prepend-icon="add"
         @keyup.enter.native="addTodo"
-      ></v-input>
+      />
     </v-card-text>
     <v-card-text v-show="currentType === type.DRAW" type="draw">
-      <canvas ref="board" width="500" height="410"
-        :state="drawPane.state"
-        :style="{ 'background-color': drawPane.bgColor }"
-      ></canvas>
+      <canvas ref="board"
+              width="500"
+              height="410"
+              :state="drawPane.state"
+              :style="{ 'background-color': drawPane.bgColor }"
+      />
     </v-card-text>
     <v-card-actions>
-      <div class="draw-tool-bar" v-show="currentType === type.DRAW">
+      <div v-show="currentType === type.DRAW" class="draw-tool-bar">
         <v-btn class="draw-tool" @click="toggleTool(tool.PEN)">
           <img src="~Images/pen.svg" class="svg v-icon md-theme-default">
         </v-btn>
@@ -51,39 +59,43 @@
         <v-btn class="draw-tool" @click="showPalette">
           <img src="~Images/palette.svg" class="svg v-icon md-theme-default">
         </v-btn>
-        <div class="palette" v-show="drawPane.showPalette" ref="palette">
+        <div v-show="drawPane.showPalette" ref="palette" class="palette">
           <div class="color-row clearfix">
             <div class="color-block pull-left" @click="selectBgColor(0)">
-              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[0] }"></i>
+              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[0] }" />
             </div>
             <div class="color-block pull-left" @click="selectBgColor(1)">
-              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[1] }"></i>
+              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[1] }" />
             </div>
             <div class="color-block pull-left" @click="selectBgColor(2)">
-              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[2] }"></i>
+              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[2] }" />
             </div>
             <div class="color-block pull-left" @click="selectBgColor(3)">
-              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[3] }"></i>
+              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[3] }" />
             </div>
           </div>
           <div class="color-row clearfix">
             <div class="color-block pull-left" @click="selectBgColor(4)">
-              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[4] }"></i>
+              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[4] }" />
             </div>
             <div class="color-block pull-left" @click="selectBgColor(5)">
-              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[5] }"></i>
+              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[5] }" />
             </div>
             <div class="color-block pull-left" @click="selectBgColor(6)">
-              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[6] }"></i>
+              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[6] }" />
             </div>
             <div class="color-block pull-left" @click="selectBgColor(7)">
-              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[7] }"></i>
+              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[7] }" />
             </div>
           </div>
         </div>
       </div>
-      <v-btn @click="show=false">取消</v-btn>
-      <v-btn @click="createBookmark">新建</v-btn>
+      <v-btn @click="show=false">
+        取消
+      </v-btn>
+      <v-btn @click="createBookmark">
+        新建
+      </v-btn>
     </v-card-actions>
   </v-dialog>
 </template>
@@ -141,13 +153,13 @@ export default {
     ...mapGetters({ show: 'showBookmarkDialog' }),
   },
   watch: {
-    'drawPane.showPalette': function (value) {
+    'drawPane.showPalette': function(value) {
       const self = this;
-      const handleClickOuter = function (e) {
+      const handleClickOuter = function(e) {
         const rect = self.$refs.palette.$el.getBoundingClientRect();
         if (self.drawPane.showPalette === false) removeEventListener('click', handleClickOuter, false);
         if (e.clientX < rect.left || e.clientX > rect.right
-            || e.clientY < rect.top || e.clientY > rect.bottom) {
+          || e.clientY < rect.top || e.clientY > rect.bottom) {
           self.drawPane.showPalette = false;
           removeEventListener('click', handleClickOuter, false);
         }
@@ -175,7 +187,7 @@ export default {
       const penWeight = 8;
       const eraserWeight = penWeight + 4;
       // 监听绘制线条
-      drawboard.onmousedown = function (mouseDownEvent) {
+      drawboard.onmousedown = function(mouseDownEvent) {
         // 初始化 pen
         const pen = drawboard.getContext('2d');
         if (self.drawPane.state === tool.PEN) {
@@ -203,7 +215,7 @@ export default {
         const offsetLeft = rect.left;
         const offsetTop = rect.top;
         // 监听鼠标移动
-        const handleMouseMove = function (mouseMoveEvent) {
+        const handleMouseMove = function(mouseMoveEvent) {
           // 计算鼠标相对 canvas 的位置
           const mouseOffsetX = mouseMoveEvent.clientX - offsetLeft;
           const mouseOffsetY = mouseMoveEvent.clientY - offsetTop;
@@ -211,7 +223,7 @@ export default {
             || mouseOffsetX > width
             || mouseOffsetY < 0
             || mouseOffsetY > height;
-          const handleMouseUp = function () {
+          const handleMouseUp = function() {
             // 取消移动事件的监听
             window.removeEventListener('mousemove', handleMouseMove, false);
             window.removeEventListener('mouseup', handleMouseUp, false);

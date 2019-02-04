@@ -1,8 +1,9 @@
 <template>
   <p class="day-context"
-   :contenteditable="flag"
-   @input="changeText"
-   @blur="loseFocus"></p>
+     :contenteditable="flag"
+     @input="changeText"
+     @blur="loseFocus"
+  />
 </template>
 <script>
 export default {

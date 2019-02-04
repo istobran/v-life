@@ -1,21 +1,28 @@
 <template lang="html">
-  <main id="calendar" :class="{ 'main-content': true, 'shrink': showMenu }">
+  <main id="calendar">
     <header class="dayname-container prevent-select">
-      <div class="dayname" v-for="dayname in daynames" :key="dayname">{{ dayname }}</div>
+      <div v-for="dayname in daynames" :key="dayname" class="dayname">
+        {{ dayname }}
+      </div>
     </header>
     <section class="day-container">
-      <div :class="{ 'day': true, 'not-this-month': !day.inThisMonth, 'editing': day.editFlag }"
-          v-for="(day, index) in days"
-          :key="index"
-          @dblclick="startEdit(day)" @blur="endEdit(day)">
+      <div v-for="(day, index) in days"
+           :key="index"
+           :class="{ 'day': true, 'not-this-month': !day.inThisMonth, 'editing': day.editFlag }"
+           @dblclick="startEdit(day)"
+           @blur="endEdit(day)"
+      >
         <header class="day-header prevent-select">
           <i>{{ day.solar }}</i>
-          <span v-if="isToday(day)" class="tag">今天</span>
+          <span v-if="isToday(day)" class="tag">
+            今天
+          </span>
         </header>
-        <day-context v-model="day.context"
-          :ref="day.moment.format('YYYY-MM-DD')"
-          :flag="day.editFlag"
-          @blur="endEdit(day)"></day-context>
+        <day-context :ref="day.moment.format('YYYY-MM-DD')"
+                     v-model="day.context"
+                     :flag="day.editFlag"
+                     @blur="endEdit(day)"
+        />
       </div>
     </section>
   </main>
@@ -31,7 +38,7 @@ export default {
   },
   data() {
     return {
-      daynames: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
+      daynames: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
       days: [],
       events: {}, // key: YYYY-MM-DD, value: context
     };

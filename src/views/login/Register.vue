@@ -1,21 +1,37 @@
 <template lang="html">
   <div id="login">
-    <slideshow></slideshow>
+    <slideshow />
     <div class="register-container">
-      <div class="register-avatar"><i class="fa fa-user"></i></div>
-      <h1 class="register-title">新用户注册</h1>
-      <input type="email" v-model="email" placeholder="请输入邮箱"><br/>
+      <div class="register-avatar">
+        <i class="fa fa-user" />
+      </div>
+      <h1 class="register-title">
+        新用户注册
+      </h1>
+      <input v-model="email" type="email" placeholder="请输入邮箱"><br>
       <span data-tip="用户名需以字母开头，且仅由数字和字母组成">
-        <input type="text" v-model="username" placeholder="请输入用户名">
-      </span><br/>
+        <input v-model="username" type="text" placeholder="请输入用户名">
+      </span><br>
       <span data-tip="密码需至少 6 位">
-        <input type="password" v-model="password" placeholder="请输入密码">
-      </span><br/>
-      <input type="password" v-model="cpassword" placeholder="请再次输入密码" @keyup.enter="register"><br/>
-      <button class="register-button" name="register"
-        @click="register">注&nbsp;&nbsp;&nbsp;册</button>
+        <input v-model="password" type="password" placeholder="请输入密码">
+      </span><br>
+      <input v-model="cpassword"
+             type="password"
+             placeholder="请再次输入密码"
+             @keyup.enter="register"
+      ><br>
+      <button class="register-button"
+              name="register"
+              @click="register"
+      >
+        注&nbsp;&nbsp;&nbsp;册
+      </button>
       <div class="login-hint">
-        <span>已拥有账号？<router-link class="btn-login" to="/login">去登录>></router-link></span>
+        <span>
+          已拥有账号？<router-link class="btn-login" to="/login">
+            去登录>>
+          </router-link>
+        </span>
       </div>
     </div>
   </div>

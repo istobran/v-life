@@ -1,39 +1,47 @@
 <template lang="html">
   <main id="bookmark" :class="{ 'main-content': true, 'shrink': showMenu }">
     <div class="op-container">
-      <v-btn @click="openAddBookmark"><v-icon>add</v-icon> 新增便签</v-btn>
+      <v-btn @click="openAddBookmark">
+        <v-icon>add</v-icon> 新增便签
+      </v-btn>
     </div>
     <waterfall :line-gap="220" :watch="stickers">
       <waterfall-slot
         v-for="(sticker, index) in stickers"
+        :key="sticker.id"
         :width="sticker.width"
         :height="sticker.height"
         :order="index"
-        :key="sticker.id"
       >
-      <div class="bookmark-instance" type="todo" v-if="sticker.type ==='todo'">
-        <v-icon class="btn-del" @click.native="delBookmark(index)">close</v-icon>
-        <ul>
-          <li v-for="it in sticker.content" :key="it.id">
-            <v-checkbox v-model="it.checked" :label="it.desc"></v-checkbox>
-          </li>
-        </ul>
-      </div>
-      <div class="bookmark-instance" type="text" v-if="sticker.type ==='text'">
-        <v-icon class="btn-del" @click.native="delBookmark(index)">close</v-icon>
-        {{ sticker.content }}
-      </div>
-      <div class="bookmark-instance" type="draw" v-if="sticker.type ==='draw'">
-        <v-icon class="btn-del" @click.native="delBookmark(index)">close</v-icon>
-        <img :src="sticker.content">
-      </div>
+        <div v-if="sticker.type ==='todo'" class="bookmark-instance" type="todo">
+          <v-icon class="btn-del" @click.native="delBookmark(index)">
+            close
+          </v-icon>
+          <ul>
+            <li v-for="it in sticker.content" :key="it.id">
+              <v-checkbox v-model="it.checked" :label="it.desc" />
+            </li>
+          </ul>
+        </div>
+        <div v-if="sticker.type ==='text'" class="bookmark-instance" type="text">
+          <v-icon class="btn-del" @click.native="delBookmark(index)">
+            close
+          </v-icon>
+          {{ sticker.content }}
+        </div>
+        <div v-if="sticker.type ==='draw'" class="bookmark-instance" type="draw">
+          <v-icon class="btn-del" @click.native="delBookmark(index)">
+            close
+          </v-icon>
+          <img :src="sticker.content">
+        </div>
       </waterfall-slot>
     </waterfall>
     <create-bookmark-dialog
       @addText="addText"
       @addTodo="addTodo"
       @addDraw="addDraw"
-    ></create-bookmark-dialog>
+    />
   </main>
 </template>
 
