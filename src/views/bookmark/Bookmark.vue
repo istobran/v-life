@@ -24,13 +24,13 @@
           </ul>
         </div>
         <div v-if="sticker.type ==='text'" class="bookmark-instance" type="text">
-          <v-icon class="btn-del" @click.native="delBookmark(index)">
+          <v-icon class="btn-del" @click="delBookmark(index)">
             close
           </v-icon>
           {{ sticker.content }}
         </div>
         <div v-if="sticker.type ==='draw'" class="bookmark-instance" type="draw">
-          <v-icon class="btn-del" @click.native="delBookmark(index)">
+          <v-icon class="btn-del" @click="delBookmark(index)">
             close
           </v-icon>
           <img :src="sticker.content">

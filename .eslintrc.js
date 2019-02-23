@@ -31,6 +31,7 @@ module.exports = {
         allowFirstLine: true,
       },
     }],
+    'vue/require-default-prop': 'off',
   },
   parserOptions: {
     parser: 'babel-eslint',

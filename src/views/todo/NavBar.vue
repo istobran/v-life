@@ -3,13 +3,22 @@
     <v-toolbar-side-icon @click="toggleMenu" />
     <v-toolbar-title>{{ title }}</v-toolbar-title>
     <month-selector v-if="$route.name === 'calendar'" />
+    <task-info v-if="$route.name === 'tasklist'" />
     <v-spacer />
-    <v-btn flat icon>
+    <router-link is="v-btn"
+                 to="/todo/tasklist"
+                 flat
+                 icon
+    >
       <v-icon>list</v-icon>
-    </v-btn>
-    <v-btn flat icon>
+    </router-link>
+    <router-link is="v-btn"
+                 to="/todo/calendar"
+                 flat
+                 icon
+    >
       <v-icon>today</v-icon>
-    </v-btn>
+    </router-link>
     <v-toolbar-items class="hidden-sm-and-down">
       <v-menu class="user-container prevent-select" offset-y>
         <v-btn slot="activator" flat>
@@ -44,9 +53,10 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex';
 import MonthSelector from './calendar/MonthSelector.vue';
+import TaskInfo from './tasklist/TaskInfo.vue';
 
 export default {
-  components: { MonthSelector },
+  components: { MonthSelector, TaskInfo },
   data() {
     return {
       title: 'V-LIFE',

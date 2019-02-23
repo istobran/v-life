@@ -6,7 +6,7 @@ import Vuetify from 'vuetify/lib';
 import VuetifyMessage from 'Plugins/message';
 import VuetifyConfirm from 'Plugins/confirm';
 import Notify from 'Plugins/notification';
-import Colors from 'vuetify/es5/util/colors';
+import Colors from 'vuetify/lib/util/colors';
 import App from './App.vue';
 import router from './router';
 import store from './store';

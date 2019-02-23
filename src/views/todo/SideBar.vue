@@ -14,7 +14,7 @@
           <span class="text">
             {{ item.name }}
           </span>
-          <v-icon class="btn-close" @click.prevent.stop.native="delRequest(item)">
+          <v-icon class="btn-close" @click.prevent.stop="delRequest(item)">
             clear
           </v-icon>
         </router-link>
