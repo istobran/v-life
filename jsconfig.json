@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "allowSyntheticDefaultImports": false,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      "Assets/*": ["src/assets/*"],
+      "Components/*": ["src/components/*"],
+      "Styles/*": ["src/assets/styles/*"],
+      "Images/*": ["src/assets/images/*"],
+      "Fonts/*": ["src/assets/fonts/*"],
+      "Apis/*": ["src/apis/*"],
+      "Utils/*": ["src/utils/*"],
+      "Plugins/*": ["src/plugins/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist"]
+}
