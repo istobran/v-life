@@ -1,25 +1,43 @@
 <template lang="html">
-  <aside id="sidebar" class="secondary" :class="{ 'show': showMenu }">
+  <aside
+    id="sidebar"
+    class="secondary"
+    :class="{ 'show': showMenu }"
+  >
     <div class="sidebar-inner grey--text darken-2 prevent-select">
       <ul class="custom">
-        <router-link v-for="item in navList.custom"
-                     :key="item.name"
-                     v-ripple
-                     tag="li"
-                     :to="item.link"
+        <router-link
+          v-for="item in navList.custom"
+          :key="item.name"
+          v-ripple
+          tag="li"
+          :to="item.link"
         >
-          <v-icon :style="{ 'color': item.color }" class="m0">
+          <v-icon
+            :style="{ 'color': item.color }"
+            class="m0"
+          >
             {{ item.icon }}
           </v-icon>
           <span class="text">
             {{ item.name }}
           </span>
-          <v-icon class="btn-close" @click.prevent.stop="delRequest(item)">
+          <v-icon
+            class="btn-close"
+            @click.prevent.stop="delRequest(item)"
+          >
             clear
           </v-icon>
         </router-link>
-        <li id="btnCreate" v-ripple @click="addMenu">
-          <v-icon :style="{ 'color': '#616161' }" class="m0">
+        <li
+          id="btnCreate"
+          v-ripple
+          @click="addMenu"
+        >
+          <v-icon
+            :style="{ 'color': '#616161' }"
+            class="m0"
+          >
             add
           </v-icon>
           <span class="text">
@@ -32,42 +50,42 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
-  data() {
+  data () {
     return {
       delItem: null,
       confirm: {
         title: '删除日历',
         contentHtml: '删除自定义日历会同时删除该日历下的所有数据<br>您确定要继续吗？',
         ok: '确定',
-        cancel: '取消',
-      },
-    };
+        cancel: '取消'
+      }
+    }
   },
   computed: {
-    ...mapGetters(['showMenu', 'navList']),
+    ...mapGetters(['showMenu', 'navList'])
   },
-  ready() {},
-  attached() {},
+  ready () {},
+  attached () {},
   methods: {
     ...mapMutations({ addMenu: 'openCreateMenuDialog', delMenu: 'removeCustomMenu' }),
-    delRequest(item) {
-      this.delItem.item = item;
+    delRequest (item) {
+      this.delItem.item = item
       this.$confirm(`删除自定义日历 ${item.name} 会同时删除该日历下的所有数据<br>您确定要继续吗？`)
-        .then(this.onClose);
+        .then(this.onClose)
     },
-    onClose(action) {
+    onClose (action) {
       if (action === 'ok') {
-        this.delMenu({ item: this.delItem });
-        this.$message.success('删除成功！');
-        this.$router.push('/app/home');
+        this.delMenu({ item: this.delItem })
+        this.$message.success('删除成功！')
+        this.$router.push('/app/home')
       }
-      this.delItem = null;
-    },
-  },
-};
+      this.delItem = null
+    }
+  }
+}
 </script>
 
 <style lang="scss">

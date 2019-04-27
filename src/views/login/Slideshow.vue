@@ -1,57 +1,65 @@
 <template lang="html">
   <div id="slideshow">
-    <div v-if="firstScene.enable"
-         :class="{ 'slide-image': true,
-                   'slide-fade-init': true,
-                   'slide-fade-show': firstScene.showStyle }"
-         :style="{ transition: trSetting }"
+    <div
+      v-if="firstScene.enable"
+      :class="{ 'slide-image': true,
+                'slide-fade-init': true,
+                'slide-fade-show': firstScene.showStyle }"
+      :style="{ transition: trSetting }"
     >
-      <div ref="firstScene"
-           :class="{ 'slide-image-inner': true }"
-           :style="{ backgroundImage: `url(${firstScene.imgUrl})`,
-                     animationDuration: animSetting }"
+      <div
+        ref="firstScene"
+        :class="{ 'slide-image-inner': true }"
+        :style="{ backgroundImage: `url(${firstScene.imgUrl})`,
+                  animationDuration: animSetting }"
       />
     </div>
-    <div v-if="secondScene.enable"
-         :class="{ 'slide-image': true,
-                   'slide-fade-init': true,
-                   'slide-fade-show': secondScene.showStyle }"
-         :style="{ transition: trSetting }"
+    <div
+      v-if="secondScene.enable"
+      :class="{ 'slide-image': true,
+                'slide-fade-init': true,
+                'slide-fade-show': secondScene.showStyle }"
+      :style="{ transition: trSetting }"
     >
-      <div ref="secondScene"
-           :class="{ 'slide-image-inner': true }"
-           :style="{ backgroundImage: `url(${secondScene.imgUrl})`,
-                     animationDuration: animSetting }"
+      <div
+        ref="secondScene"
+        :class="{ 'slide-image-inner': true }"
+        :style="{ backgroundImage: `url(${secondScene.imgUrl})`,
+                  animationDuration: animSetting }"
       />
     </div>
-    <div class="slide-overlay"
-         :style="{ backgroundImage: `url(${overlayUrl})` }"
+    <div
+      class="slide-overlay"
+      :style="{ backgroundImage: `url(${overlayUrl})` }"
     />
     <div :class="{ 'slide-timer': true, 'slide-timer-running': timer.enable }">
-      <div class="slide-timer-progress" :style="{ transitionDuration: timer.duration }" />
+      <div
+        class="slide-timer-progress"
+        :style="{ transitionDuration: timer.duration }"
+      />
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       firstScene: {
         enable: false,
         imgUrl: '',
         showStyle: false,
-        kenburnChoice: '',
+        kenburnChoice: ''
       },
       secondScene: {
         enable: false,
         imgUrl: '',
         showStyle: false,
-        kenburnChoice: '',
+        kenburnChoice: ''
       },
       timer: {
         enable: false,
-        duration: '0ms',
+        duration: '0ms'
       },
       trSetting: 'all 8000ms',
       animSetting: '8000ms',
@@ -59,7 +67,7 @@ export default {
       bgNums: 11,
       choice: '',
       bgUrls: {
-        png: this.requireAll(require.context('Images/', true, /^\.\/bg\d{2}\.png$/)),
+        png: this.requireAll(require.context('Images/', true, /^\.\/bg\d{2}\.png$/))
       },
       overlayUrl: import('Images/grid.png'),
       loadedImages: [],
@@ -72,107 +80,107 @@ export default {
         'kenburnsRight',
         'kenburnsUpLeft',
         'kenburnsUpRight',
-        'kenburnsUp',
-      ],
-    };
+        'kenburnsUp'
+      ]
+    }
   },
-  mounted() {
-    this.choice = 'png';
-    const self = this;
+  mounted () {
+    this.choice = 'png'
+    const self = this
     // 创建自定义事件
-    const event = new Event('onBgImagesLoaded');
+    const event = new Event('onBgImagesLoaded')
     this.preloadImg(this.bgUrls[this.choice], null, imgs => {
-      self.loadedImages = imgs;
-      window.dispatchEvent(event);
-    });
-    self.firstScene.enable = true;
+      self.loadedImages = imgs
+      window.dispatchEvent(event)
+    })
+    self.firstScene.enable = true
     window.addEventListener('onBgImagesLoaded', () => {
-      console.log('background images all loaded');
-      self.firstScene.imgUrl = self.loadedImages[self.bgIndex].src;
-      self.firstScene.kenburnChoice = self.rdKenburn();
-      self.$refs.firstScene.classList
-        && self.$refs.firstScene.classList.add(self.firstScene.kenburnChoice);
-      self.firstScene.showStyle = true;
-      self.timer.duration = '8100ms';
-      self.timer.enable = true;
-      self.startTimer(8000);
-    });
+      console.log('background images all loaded')
+      self.firstScene.imgUrl = self.loadedImages[self.bgIndex].src
+      self.firstScene.kenburnChoice = self.rdKenburn()
+      self.$refs.firstScene.classList &&
+        self.$refs.firstScene.classList.add(self.firstScene.kenburnChoice)
+      self.firstScene.showStyle = true
+      self.timer.duration = '8100ms'
+      self.timer.enable = true
+      self.startTimer(8000)
+    })
   },
   methods: {
     // 格式化为两位整数
-    zerofill(num, bit) {
-      return (new Array(bit).join('0') + num).slice(-bit);
+    zerofill (num, bit) {
+      return (new Array(bit).join('0') + num).slice(-bit)
     },
     // 随机产生一个 kenburn 样式 class
-    rdKenburn() {
-      return `slide-anim-${this.kenburnMap[Math.floor(Math.random() * 9)]}`;
+    rdKenburn () {
+      return `slide-anim-${this.kenburnMap[Math.floor(Math.random() * 9)]}`
     },
     // 批量 require 背景图片
-    requireAll(requireContext) {
-      return requireContext.keys().map(requireContext);
+    requireAll (requireContext) {
+      return requireContext.keys().map(requireContext)
     },
-    startTimer(timeout) {
+    startTimer (timeout) {
       // 黑屏是因为图片未preload的问题
-      const self = this;
+      const self = this
       setTimeout(() => {
         if (!self.secondScene.enable) {
-          self.secondScene.enable = true;
+          self.secondScene.enable = true
         } else {
-          self.trSetting = 'all 0ms';
-          self.secondScene.showStyle = false;
-          self.firstScene.imgUrl = self.secondScene.imgUrl;
+          self.trSetting = 'all 0ms'
+          self.secondScene.showStyle = false
+          self.firstScene.imgUrl = self.secondScene.imgUrl
           // 在 secondScene 开启了 kenburn 特效之后，关闭 firstScene 的 kenburn 特效
           if (self.firstScene.kenburnChoice.length > 0) {
-            self.$refs.firstScene.classList
-              && self.$refs.firstScene.classList.remove(self.firstScene.kenburnChoice);
-            self.firstScene.kenburnChoice = '';
+            self.$refs.firstScene.classList &&
+              self.$refs.firstScene.classList.remove(self.firstScene.kenburnChoice)
+            self.firstScene.kenburnChoice = ''
           }
         }
-        self.timer.duration = '0ms';
-        self.timer.enable = false;
-        self.bgIndex = ++self.bgIndex % self.bgNums;
-        self.secondScene.imgUrl = self.loadedImages[self.bgIndex].src;
+        self.timer.duration = '0ms'
+        self.timer.enable = false
+        self.bgIndex = ++self.bgIndex % self.bgNums
+        self.secondScene.imgUrl = self.loadedImages[self.bgIndex].src
         // 移除旧的 kenburn 特效
         if (self.secondScene.kenburnChoice.length > 0) {
-          self.$refs.secondScene.classList
-            && self.$refs.secondScene.classList.remove(self.secondScene.kenburnChoice);
-          self.secondScene.kenburnChoice = '';
+          self.$refs.secondScene.classList &&
+            self.$refs.secondScene.classList.remove(self.secondScene.kenburnChoice)
+          self.secondScene.kenburnChoice = ''
         }
         setTimeout(() => { // 使用Timeout来防止只有一次重绘的问题
-          self.secondScene.kenburnChoice = self.rdKenburn();
-          self.$refs.secondScene.classList
-            && self.$refs.secondScene.classList.add(self.secondScene.kenburnChoice);
-          self.trSetting = 'all 8000ms';
-          self.timer.duration = '8100ms';
-          self.timer.enable = true;
-          self.secondScene.showStyle = true;
-        }, 100);
-        self.startTimer(8000);
-      }, timeout);
+          self.secondScene.kenburnChoice = self.rdKenburn()
+          self.$refs.secondScene.classList &&
+            self.$refs.secondScene.classList.add(self.secondScene.kenburnChoice)
+          self.trSetting = 'all 8000ms'
+          self.timer.duration = '8100ms'
+          self.timer.enable = true
+          self.secondScene.showStyle = true
+        }, 100)
+        self.startTimer(8000)
+      }, timeout)
     },
     // 预加载所有图片（递归写法）
-    preloadImg(list, imgs = [], cb) {
+    preloadImg (list, imgs = [], cb) {
       // 用于存储预加载好的图片资源
-      const fn = this.preloadImg;
+      const fn = this.preloadImg
       if (list.length === 0) {
-        cb.call(this, imgs);
+        cb.call(this, imgs)
       }
-      const img = new Image();
-      img.src = list[0];
+      const img = new Image()
+      img.src = list[0]
       if (img.complete) {
-        imgs.push(img);
-        list.shift();
-        fn(list, imgs, cb);
+        imgs.push(img)
+        list.shift()
+        fn(list, imgs, cb)
       } else {
-        img.onload = function() {
-          imgs.push(img);
-          list.shift();
-          fn(list, imgs, cb);
-        };
+        img.onload = function () {
+          imgs.push(img)
+          list.shift()
+          fn(list, imgs, cb)
+        }
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style lang="scss">

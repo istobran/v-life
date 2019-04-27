@@ -1,32 +1,46 @@
 <template lang="html">
-  <v-toolbar class="nav-bar primary" dark>
+  <v-toolbar
+    class="nav-bar primary"
+    dark
+  >
     <v-toolbar-side-icon @click="toggleMenu" />
     <v-toolbar-title>{{ title }}</v-toolbar-title>
     <month-selector v-if="$route.name === 'calendar'" />
     <task-info v-if="$route.name === 'tasklist'" />
     <v-spacer />
-    <router-link is="v-btn"
-                 to="/todo/tasklist"
-                 flat
-                 icon
+    <router-link
+      is="v-btn"
+      to="/todo/tasklist"
+      flat
+      icon
     >
       <v-icon>list</v-icon>
     </router-link>
-    <router-link is="v-btn"
-                 to="/todo/calendar"
-                 flat
-                 icon
+    <router-link
+      is="v-btn"
+      to="/todo/calendar"
+      flat
+      icon
     >
       <v-icon>today</v-icon>
     </router-link>
     <v-toolbar-items class="hidden-sm-and-down">
-      <v-menu class="user-container prevent-select" offset-y>
-        <v-btn slot="activator" flat>
+      <v-menu
+        class="user-container prevent-select"
+        offset-y
+      >
+        <v-btn
+          slot="activator"
+          flat
+        >
           <span class="user-name">
             {{ user.username }}
           </span>
           <span class="user-avatar">
-            <img :src="user.avatarUrl" alt="">
+            <img
+              :src="user.avatarUrl"
+              alt=""
+            >
           </span>
         </v-btn>
         <v-list>
@@ -51,39 +65,39 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
-import MonthSelector from './calendar/MonthSelector.vue';
-import TaskInfo from './tasklist/TaskInfo.vue';
+import { mapGetters, mapMutations } from 'vuex'
+import MonthSelector from './calendar/MonthSelector.vue'
+import TaskInfo from './tasklist/TaskInfo.vue'
 
 export default {
   components: { MonthSelector, TaskInfo },
-  data() {
+  data () {
     return {
       title: 'V-LIFE',
       user: {
         avatarUrl: 'http://en.gravatar.com/userimage/99616975/827489fdfb37acbf6ed0254f4f311417.jpg?size=48',
-        username: 'BangZ',
-      },
-    };
+        username: 'BangZ'
+      }
+    }
   },
   computed: {
-    ...mapGetters(['showMenu']),
+    ...mapGetters(['showMenu'])
   },
   methods: {
     ...mapMutations(['toggleMenu']),
-    logout() {
-      delete sessionStorage.isLogin;
-      delete localStorage.isLogin;
-      this.$router.push({ path: '/login' });
+    logout () {
+      delete sessionStorage.isLogin
+      delete localStorage.isLogin
+      this.$router.push({ path: '/login' })
     },
-    setting() {
-      this.$router.push({ path: '/app/settings' });
+    setting () {
+      this.$router.push({ path: '/app/settings' })
     },
-    support() {
-      this.$router.push({ path: '/app/support' });
-    },
-  },
-};
+    support () {
+      this.$router.push({ path: '/app/support' })
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

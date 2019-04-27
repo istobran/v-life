@@ -1,34 +1,64 @@
 <template lang="html">
-  <v-dialog v-model="show" class="ab-dialog prevent-select" @close="close">
+  <v-dialog
+    v-model="show"
+    class="ab-dialog prevent-select"
+    @close="close"
+  >
     <v-card>
-      <v-card-title class="ab-title headline grey lighten-2" primary-title>
+      <v-card-title
+        class="ab-title headline grey lighten-2"
+        primary-title
+      >
         <span class="v-mid">
           新建便签
         </span>
-        <v-btn class="v-icon-button" @click="toggleTab(type.TEXT)">
+        <v-btn
+          class="v-icon-button"
+          @click="toggleTab(type.TEXT)"
+        >
           <v-icon>title</v-icon>
         </v-btn>
-        <v-btn class="v-icon-button" @click="toggleTab(type.TODO)">
+        <v-btn
+          class="v-icon-button"
+          @click="toggleTab(type.TODO)"
+        >
           <v-icon>menu</v-icon>
         </v-btn>
-        <v-btn class="v-icon-button" @click="toggleTab(type.DRAW)">
+        <v-btn
+          class="v-icon-button"
+          @click="toggleTab(type.DRAW)"
+        >
           <v-icon>create</v-icon>
         </v-btn>
       </v-card-title>
     </v-card>
     <v-card-text v-show="currentType === type.TEXT">
-      <textarea v-model="textPane.input"
-                name="name"
-                rows="20"
-                cols="60"
-                placeholder="请在这里输入便签内容"
+      <textarea
+        v-model="textPane.input"
+        name="name"
+        rows="20"
+        cols="60"
+        placeholder="请在这里输入便签内容"
       />
     </v-card-text>
-    <v-card-text v-show="currentType === type.TODO" type="todo">
+    <v-card-text
+      v-show="currentType === type.TODO"
+      type="todo"
+    >
       <ul>
-        <li v-for="(todo, index) in todoPane.todoList" :key="index" class="clearfix">
-          <v-checkbox v-model="todo.checked" :label="todo.desc" />
-          <v-btn class="v-icon-button pull-right" @click="delTodo(index)">
+        <li
+          v-for="(todo, index) in todoPane.todoList"
+          :key="index"
+          class="clearfix"
+        >
+          <v-checkbox
+            v-model="todo.checked"
+            :label="todo.desc"
+          />
+          <v-btn
+            class="v-icon-button pull-right"
+            @click="delTodo(index)"
+          >
             <v-icon>cancel</v-icon>
           </v-btn>
         </li>
@@ -40,52 +70,129 @@
         @keyup.enter.native="addTodo"
       />
     </v-card-text>
-    <v-card-text v-show="currentType === type.DRAW" type="draw">
-      <canvas ref="board"
-              width="500"
-              height="410"
-              :state="drawPane.state"
-              :style="{ 'background-color': drawPane.bgColor }"
+    <v-card-text
+      v-show="currentType === type.DRAW"
+      type="draw"
+    >
+      <canvas
+        ref="board"
+        width="500"
+        height="410"
+        :state="drawPane.state"
+        :style="{ 'background-color': drawPane.bgColor }"
       />
     </v-card-text>
     <v-card-actions>
-      <div v-show="currentType === type.DRAW" class="draw-tool-bar">
-        <v-btn class="draw-tool" @click="toggleTool(tool.PEN)">
-          <img src="~Images/pen.svg" class="svg v-icon md-theme-default">
+      <div
+        v-show="currentType === type.DRAW"
+        class="draw-tool-bar"
+      >
+        <v-btn
+          class="draw-tool"
+          @click="toggleTool(tool.PEN)"
+        >
+          <img
+            src="~Images/pen.svg"
+            class="svg v-icon md-theme-default"
+          >
         </v-btn>
-        <v-btn class="draw-tool" @click="toggleTool(tool.ERASER)">
-          <img src="~Images/eraser.svg" class="svg v-icon md-theme-default">
+        <v-btn
+          class="draw-tool"
+          @click="toggleTool(tool.ERASER)"
+        >
+          <img
+            src="~Images/eraser.svg"
+            class="svg v-icon md-theme-default"
+          >
         </v-btn>
-        <v-btn class="draw-tool" @click="showPalette">
-          <img src="~Images/palette.svg" class="svg v-icon md-theme-default">
+        <v-btn
+          class="draw-tool"
+          @click="showPalette"
+        >
+          <img
+            src="~Images/palette.svg"
+            class="svg v-icon md-theme-default"
+          >
         </v-btn>
-        <div v-show="drawPane.showPalette" ref="palette" class="palette">
+        <div
+          v-show="drawPane.showPalette"
+          ref="palette"
+          class="palette"
+        >
           <div class="color-row clearfix">
-            <div class="color-block pull-left" @click="selectBgColor(0)">
-              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[0] }" />
+            <div
+              class="color-block pull-left"
+              @click="selectBgColor(0)"
+            >
+              <i
+                class="color-fill"
+                :style="{ 'background-color': drawPane.availColor[0] }"
+              />
             </div>
-            <div class="color-block pull-left" @click="selectBgColor(1)">
-              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[1] }" />
+            <div
+              class="color-block pull-left"
+              @click="selectBgColor(1)"
+            >
+              <i
+                class="color-fill"
+                :style="{ 'background-color': drawPane.availColor[1] }"
+              />
             </div>
-            <div class="color-block pull-left" @click="selectBgColor(2)">
-              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[2] }" />
+            <div
+              class="color-block pull-left"
+              @click="selectBgColor(2)"
+            >
+              <i
+                class="color-fill"
+                :style="{ 'background-color': drawPane.availColor[2] }"
+              />
             </div>
-            <div class="color-block pull-left" @click="selectBgColor(3)">
-              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[3] }" />
+            <div
+              class="color-block pull-left"
+              @click="selectBgColor(3)"
+            >
+              <i
+                class="color-fill"
+                :style="{ 'background-color': drawPane.availColor[3] }"
+              />
             </div>
           </div>
           <div class="color-row clearfix">
-            <div class="color-block pull-left" @click="selectBgColor(4)">
-              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[4] }" />
+            <div
+              class="color-block pull-left"
+              @click="selectBgColor(4)"
+            >
+              <i
+                class="color-fill"
+                :style="{ 'background-color': drawPane.availColor[4] }"
+              />
             </div>
-            <div class="color-block pull-left" @click="selectBgColor(5)">
-              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[5] }" />
+            <div
+              class="color-block pull-left"
+              @click="selectBgColor(5)"
+            >
+              <i
+                class="color-fill"
+                :style="{ 'background-color': drawPane.availColor[5] }"
+              />
             </div>
-            <div class="color-block pull-left" @click="selectBgColor(6)">
-              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[6] }" />
+            <div
+              class="color-block pull-left"
+              @click="selectBgColor(6)"
+            >
+              <i
+                class="color-fill"
+                :style="{ 'background-color': drawPane.availColor[6] }"
+              />
             </div>
-            <div class="color-block pull-left" @click="selectBgColor(7)">
-              <i class="color-fill" :style="{ 'background-color': drawPane.availColor[7] }" />
+            <div
+              class="color-block pull-left"
+              @click="selectBgColor(7)"
+            >
+              <i
+                class="color-fill"
+                :style="{ 'background-color': drawPane.availColor[7] }"
+              />
             </div>
           </div>
         </div>
@@ -101,25 +208,25 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex'
 
 const type = {
   TEXT: Symbol('TEXT'),
   TODO: Symbol('TODO'),
-  DRAW: Symbol('DRAW'),
-};
+  DRAW: Symbol('DRAW')
+}
 const tool = {
   PEN: 'pen',
-  ERASER: 'eraser',
-};
+  ERASER: 'eraser'
+}
 export default {
-  data() {
+  data () {
     return {
       type,
       tool,
       currentType: type.TEXT,
       textPane: {
-        input: '',
+        input: ''
       },
       todoPane: {
         todoList: [
@@ -129,7 +236,7 @@ export default {
           // { checked: false, desc: "任务事项 4" },
           // { checked: false, desc: "任务事项 5" }
         ],
-        input: '',
+        input: ''
       },
       drawPane: {
         state: tool.PEN,
@@ -144,171 +251,171 @@ export default {
           'rgb(207, 216, 220)',
           'rgb(128, 216, 255)',
           'rgb(167, 255, 235)',
-          'rgb(204, 255, 144)',
-        ],
-      },
-    };
+          'rgb(204, 255, 144)'
+        ]
+      }
+    }
   },
   computed: {
-    ...mapGetters({ show: 'showBookmarkDialog' }),
+    ...mapGetters({ show: 'showBookmarkDialog' })
   },
   watch: {
-    'drawPane.showPalette': function(value) {
-      const self = this;
-      const handleClickOuter = function(e) {
-        const rect = self.$refs.palette.$el.getBoundingClientRect();
-        if (self.drawPane.showPalette === false) removeEventListener('click', handleClickOuter, false);
-        if (e.clientX < rect.left || e.clientX > rect.right
-          || e.clientY < rect.top || e.clientY > rect.bottom) {
-          self.drawPane.showPalette = false;
-          removeEventListener('click', handleClickOuter, false);
+    'drawPane.showPalette': function (value) {
+      const self = this
+      const handleClickOuter = function (e) {
+        const rect = self.$refs.palette.$el.getBoundingClientRect()
+        if (self.drawPane.showPalette === false) removeEventListener('click', handleClickOuter, false)
+        if (e.clientX < rect.left || e.clientX > rect.right ||
+          e.clientY < rect.top || e.clientY > rect.bottom) {
+          self.drawPane.showPalette = false
+          removeEventListener('click', handleClickOuter, false)
         }
-      };
+      }
       if (value === true) {
         setTimeout(() => {
-          addEventListener('click', handleClickOuter, false);
-        }, 10);
+          addEventListener('click', handleClickOuter, false)
+        }, 10)
       } else {
-        removeEventListener('click', handleClickOuter, false);
+        removeEventListener('click', handleClickOuter, false)
       }
-    },
+    }
   },
-  mounted() {
-    this.initDrawing();
+  mounted () {
+    this.initDrawing()
   },
   methods: {
     ...mapMutations({ close: 'closeBookmarkDialog' }),
     /**
      * 初始化 canvas 绘图
      */
-    initDrawing() {
-      const drawboard = this.$refs.board;
-      const self = this;
-      const penWeight = 8;
-      const eraserWeight = penWeight + 4;
+    initDrawing () {
+      const drawboard = this.$refs.board
+      const self = this
+      const penWeight = 8
+      const eraserWeight = penWeight + 4
       // 监听绘制线条
-      drawboard.onmousedown = function(mouseDownEvent) {
+      drawboard.onmousedown = function (mouseDownEvent) {
         // 初始化 pen
-        const pen = drawboard.getContext('2d');
+        const pen = drawboard.getContext('2d')
         if (self.drawPane.state === tool.PEN) {
-          pen.strokeStyle = '#000';
-          pen.lineWidth = penWeight;
-          pen.lineCap = 'round';
-          pen.lineJoin = 'round';
-          pen.beginPath();
-          pen.moveTo(mouseDownEvent.offsetX, mouseDownEvent.offsetY);
-          pen.lineTo(mouseDownEvent.offsetX, mouseDownEvent.offsetY);
-          pen.stroke();
+          pen.strokeStyle = '#000'
+          pen.lineWidth = penWeight
+          pen.lineCap = 'round'
+          pen.lineJoin = 'round'
+          pen.beginPath()
+          pen.moveTo(mouseDownEvent.offsetX, mouseDownEvent.offsetY)
+          pen.lineTo(mouseDownEvent.offsetX, mouseDownEvent.offsetY)
+          pen.stroke()
         } else if (self.drawPane.state === tool.ERASER) {
           pen.clearRect(
             mouseDownEvent.offsetX - eraserWeight / 2,
             mouseDownEvent.offsetY - eraserWeight / 2,
-            eraserWeight, eraserWeight,
-          );
+            eraserWeight, eraserWeight
+          )
         }
         // 获取整个 canvas 的宽高
-        const computedBoard = getComputedStyle(drawboard);
-        const width = parseInt(computedBoard.getPropertyValue('width'));
-        const height = parseInt(computedBoard.getPropertyValue('height'));
+        const computedBoard = getComputedStyle(drawboard)
+        const width = parseInt(computedBoard.getPropertyValue('width'))
+        const height = parseInt(computedBoard.getPropertyValue('height'))
         // 获取 canvas 在屏幕上的 X 和 Y 坐标
-        const rect = drawboard.getBoundingClientRect();
-        const offsetLeft = rect.left;
-        const offsetTop = rect.top;
+        const rect = drawboard.getBoundingClientRect()
+        const offsetLeft = rect.left
+        const offsetTop = rect.top
         // 监听鼠标移动
-        const handleMouseMove = function(mouseMoveEvent) {
+        const handleMouseMove = function (mouseMoveEvent) {
           // 计算鼠标相对 canvas 的位置
-          const mouseOffsetX = mouseMoveEvent.clientX - offsetLeft;
-          const mouseOffsetY = mouseMoveEvent.clientY - offsetTop;
-          const cond = mouseOffsetX < 0
-            || mouseOffsetX > width
-            || mouseOffsetY < 0
-            || mouseOffsetY > height;
-          const handleMouseUp = function() {
+          const mouseOffsetX = mouseMoveEvent.clientX - offsetLeft
+          const mouseOffsetY = mouseMoveEvent.clientY - offsetTop
+          const cond = mouseOffsetX < 0 ||
+            mouseOffsetX > width ||
+            mouseOffsetY < 0 ||
+            mouseOffsetY > height
+          const handleMouseUp = function () {
             // 取消移动事件的监听
-            window.removeEventListener('mousemove', handleMouseMove, false);
-            window.removeEventListener('mouseup', handleMouseUp, false);
-          };
+            window.removeEventListener('mousemove', handleMouseMove, false)
+            window.removeEventListener('mouseup', handleMouseUp, false)
+          }
           if (cond) {
-            window.removeEventListener('mousemove', handleMouseMove, false);
-            window.removeEventListener('mouseup', handleMouseUp, false);
-            return;
+            window.removeEventListener('mousemove', handleMouseMove, false)
+            window.removeEventListener('mouseup', handleMouseUp, false)
+            return
           }
           if (self.drawPane.state === tool.PEN) {
-            pen.lineTo(mouseMoveEvent.offsetX, mouseMoveEvent.offsetY);
-            pen.stroke();
+            pen.lineTo(mouseMoveEvent.offsetX, mouseMoveEvent.offsetY)
+            pen.stroke()
           } else if (self.drawPane.state === tool.ERASER) {
             pen.clearRect(
               mouseMoveEvent.offsetX - eraserWeight / 2,
               mouseMoveEvent.offsetY - eraserWeight / 2,
-              eraserWeight, eraserWeight,
-            );
+              eraserWeight, eraserWeight
+            )
           }
-          window.addEventListener('mouseup', handleMouseUp, false);
-        };
-        window.addEventListener('mousemove', handleMouseMove, false);
-      };
+          window.addEventListener('mouseup', handleMouseUp, false)
+        }
+        window.addEventListener('mousemove', handleMouseMove, false)
+      }
     },
     /**
      * 切换便签类型
      * @param  {Symbol} t 目标类型
      */
-    toggleTab(t) {
-      this.currentType = t;
+    toggleTab (t) {
+      this.currentType = t
     },
     /**
      * 切换绘制工具
      * @param  {String} t 目标工具
      */
-    toggleTool(t) {
-      this.drawPane.state = t;
+    toggleTool (t) {
+      this.drawPane.state = t
     },
     /**
      * 添加待完成任务项
      */
-    addTodo() {
-      const { input } = this.todoPane;
+    addTodo () {
+      const { input } = this.todoPane
       if (input) {
-        this.todoPane.todoList.push({ checked: false, desc: input });
+        this.todoPane.todoList.push({ checked: false, desc: input })
       }
-      this.todoPane.input = '';
+      this.todoPane.input = ''
     },
     /**
      * 删除待完成任务项
      * @param  {Number} index 任务项的index
      */
-    delTodo(index) {
-      this.todoPane.todoList.splice(index, 1);
+    delTodo (index) {
+      this.todoPane.todoList.splice(index, 1)
     },
     /**
      * 初始化调色板
      */
-    showPalette() {
-      this.drawPane.showPalette = true;
+    showPalette () {
+      this.drawPane.showPalette = true
     },
     /**
      * 用户选择了背景颜色
      * @param  {Number} index 被选中背景颜色在颜色数组中的 index
      */
-    selectBgColor(index) {
-      this.drawPane.bgColor = this.drawPane.availColor[index];
-      this.drawPane.showPalette = false;
+    selectBgColor (index) {
+      this.drawPane.bgColor = this.drawPane.availColor[index]
+      this.drawPane.showPalette = false
     },
     /**
      * 确认新建便签
      */
-    createBookmark() {
+    createBookmark () {
       if (this.currentType === type.TEXT) {
-        this.$emit('addText', this.textPane);
+        this.$emit('addText', this.textPane)
       } else if (this.currentType === type.TODO) {
-        this.$emit('addTodo', this.todoPane);
+        this.$emit('addTodo', this.todoPane)
       } else {
-        this.drawPane.input = this.$refs.board.toDataURL();
-        this.$emit('addDraw', this.drawPane);
+        this.drawPane.input = this.$refs.board.toDataURL()
+        this.$emit('addDraw', this.drawPane)
       }
-      this.show = false;
-    },
-  },
-};
+      this.show = false
+    }
+  }
+}
 </script>
 
 <style lang="sass">

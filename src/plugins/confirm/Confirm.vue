@@ -1,34 +1,41 @@
 <template>
-  <v-dialog value="true"
-            :max-width="width"
-            @input="change"
-            @keydown.esc="choose(false)"
+  <v-dialog
+    value="true"
+    :max-width="width"
+    @input="change"
+    @keydown.esc="choose(false)"
   >
-    <v-toolbar v-if="Boolean(title)"
-               dark
-               :color="color"
-               dense
+    <v-toolbar
+      v-if="Boolean(title)"
+      dark
+      :color="color"
+      dense
     >
       <v-icon v-if="Boolean(icon)">
         {{ icon }}
       </v-icon>
-      <v-toolbar-title class="white--text" v-text="title" />
+      <v-toolbar-title
+        class="white--text"
+        v-text="title"
+      />
     </v-toolbar>
     <v-card tile>
       <v-card-text v-html="message" />
       <v-card-actions>
         <v-spacer />
-        <v-btn v-if="Boolean(buttonFalseText)"
-               :color="buttonFalseColor"
-               flat
-               @click="choose(false)"
+        <v-btn
+          v-if="Boolean(buttonFalseText)"
+          :color="buttonFalseColor"
+          flat
+          @click="choose(false)"
         >
           {{ buttonFalseText }}
         </v-btn>
-        <v-btn v-if="Boolean(buttonTrueText)"
-               :color="buttonTrueColor"
-               flat
-               @click="choose(true)"
+        <v-btn
+          v-if="Boolean(buttonTrueText)"
+          :color="buttonTrueColor"
+          flat
+          @click="choose(true)"
         >
           {{ buttonTrueText }}
         </v-btn>
@@ -39,8 +46,8 @@
 
 <script>
 import {
-  VCard, VCardActions, VCardText, VDialog, VIcon, VToolbar, VToolbarTitle, VSpacer, VBtn,
-} from 'vuetify/lib';
+  VCard, VCardActions, VCardText, VDialog, VIcon, VToolbar, VToolbarTitle, VSpacer, VBtn
+} from 'vuetify/lib'
 
 export default {
   components: {
@@ -52,59 +59,59 @@ export default {
     VToolbar,
     VToolbarTitle,
     VSpacer,
-    VBtn,
+    VBtn
   },
   props: {
     buttonTrueText: {
       type: String,
-      default: 'Yes',
+      default: 'Yes'
     },
     buttonFalseText: {
       type: String,
-      default: 'No',
+      default: 'No'
     },
     buttonTrueColor: {
       type: String,
-      default: 'primary',
+      default: 'primary'
     },
     buttonFalseColor: {
       type: String,
-      default: 'grey',
+      default: 'grey'
     },
     color: {
       type: String,
-      default: 'warning',
+      default: 'warning'
     },
     icon: {
       type: String,
-      default: 'warning',
+      default: 'warning'
     },
     message: {
       type: String,
-      reqiured: true,
+      reqiured: true
     },
     title: {
-      type: String,
+      type: String
     },
     width: {
       type: Number,
-      default: 350,
-    },
+      default: 350
+    }
   },
-  data() {
+  data () {
     return {
-      value: false,
-    };
+      value: false
+    }
   },
   methods: {
-    choose(value) {
-      this.$emit('result', value);
-      this.value = value;
-      this.$destroy();
+    choose (value) {
+      this.$emit('result', value)
+      this.value = value
+      this.$destroy()
     },
-    change() {
-      this.$destroy();
-    },
-  },
-};
+    change () {
+      this.$destroy()
+    }
+  }
+}
 </script>

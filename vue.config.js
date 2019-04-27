@@ -1,7 +1,7 @@
-const path = require('path');
+const path = require('path')
 
-function resolve(dir) {
-  return path.join(__dirname, dir);
+function resolve (dir) {
+  return path.join(__dirname, dir)
 }
 module.exports = {
   lintOnSave: true,
@@ -15,6 +15,6 @@ module.exports = {
       .set('Fonts', resolve('src/assets/fonts'))
       .set('Apis', resolve('src/apis'))
       .set('Utils', resolve('src/utils'))
-      .set('Plugins', resolve('src/plugins'));
-  },
-};
+      .set('Plugins', resolve('src/plugins'))
+  }
+}

@@ -8,27 +8,44 @@
       <h1 class="register-title">
         新用户注册
       </h1>
-      <input v-model="email" type="email" placeholder="请输入邮箱"><br>
+      <input
+        v-model="email"
+        type="email"
+        placeholder="请输入邮箱"
+      ><br>
       <span data-tip="用户名需以字母开头，且仅由数字和字母组成">
-        <input v-model="username" type="text" placeholder="请输入用户名">
+        <input
+          v-model="username"
+          type="text"
+          placeholder="请输入用户名"
+        >
       </span><br>
       <span data-tip="密码需至少 6 位">
-        <input v-model="password" type="password" placeholder="请输入密码">
+        <input
+          v-model="password"
+          type="password"
+          placeholder="请输入密码"
+        >
       </span><br>
-      <input v-model="cpassword"
-             type="password"
-             placeholder="请再次输入密码"
-             @keyup.enter="register"
+      <input
+        v-model="cpassword"
+        type="password"
+        placeholder="请再次输入密码"
+        @keyup.enter="register"
       ><br>
-      <button class="register-button"
-              name="register"
-              @click="register"
+      <button
+        class="register-button"
+        name="register"
+        @click="register"
       >
         注&nbsp;&nbsp;&nbsp;册
       </button>
       <div class="login-hint">
         <span>
-          已拥有账号？<router-link class="btn-login" to="/login">
+          已拥有账号？<router-link
+            class="btn-login"
+            to="/login"
+          >
             去登录>>
           </router-link>
         </span>
@@ -38,22 +55,22 @@
 </template>
 
 <script>
-import MD5 from 'js-md5';
-import { UserService, successFilter, errToast } from 'Apis';
-import Slideshow from './Slideshow.vue';
+import MD5 from 'js-md5'
+import { UserService, successFilter, errToast } from 'Apis'
+import Slideshow from './Slideshow.vue'
 
 export default {
   components: { Slideshow },
-  data() {
+  data () {
     return {
       email: '',
       username: '',
       password: '',
-      cpassword: '',
-    };
+      cpassword: ''
+    }
   },
   methods: {
-    register() {
+    register () {
       /**
        * 至少6位
        * 或者至少一个小写字母和大写字母
@@ -61,48 +78,48 @@ export default {
        * 或者至少一个大写字母和数字的组合
        */
       // 验证表单
-      this.email = this.email.trim();
+      this.email = this.email.trim()
       if (!this.email) {
-        this.$message.error('请输入邮箱！', '提示');
-        return;
+        this.$message.error('请输入邮箱！', '提示')
+        return
       }
-      this.username = this.username.trim();
+      this.username = this.username.trim()
       if (!this.username) {
-        this.$message.error('请输入用户名！', '提示');
-        return;
+        this.$message.error('请输入用户名！', '提示')
+        return
       } if (!/^[A-Za-z][A-Za-z0-9]+$/.test(this.username)) {
-        this.$message.error('用户名需以字母开头，且仅由数字和字母组成', '用户名不合规则');
-        return;
+        this.$message.error('用户名需以字母开头，且仅由数字和字母组成', '用户名不合规则')
+        return
       }
-      this.password = this.password.trim();
+      this.password = this.password.trim()
       if (!this.password) {
-        this.$message.error('请输入密码！', '提示');
-        return;
+        this.$message.error('请输入密码！', '提示')
+        return
       } if (this.password.length < 6) {
-        this.$message.error('密码需至少 6 位', '密码强度不足');
-        return;
+        this.$message.error('密码需至少 6 位', '密码强度不足')
+        return
       }
-      this.cpassword = this.cpassword.trim();
+      this.cpassword = this.cpassword.trim()
       if (!this.cpassword) {
-        this.$message.error('请再次输入确认密码', '提示');
-        return;
+        this.$message.error('请再次输入确认密码', '提示')
+        return
       }
       if (this.password !== this.cpassword) {
-        this.$message.error('两次输入的密码不一致！', '提示');
-        return;
+        this.$message.error('两次输入的密码不一致！', '提示')
+        return
       }
       UserService.register({
         username: this.username,
         password: MD5.hex(this.password),
-        email: this.email,
+        email: this.email
       }).then(successFilter)
         .then(() => {
-          this.$message.success('激活邮件已经发送到您的邮箱，请到邮箱中点击链接激活您的账号，账号激活后便可正常登录');
+          this.$message.success('激活邮件已经发送到您的邮箱，请到邮箱中点击链接激活您的账号，账号激活后便可正常登录')
         })
-        .catch(errToast);
-    },
-  },
-};
+        .catch(errToast)
+    }
+  }
+}
 </script>
 
 <style lang="scss">

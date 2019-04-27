@@ -1,25 +1,38 @@
 <template>
   <main id="tasklist">
     <v-layout>
-      <v-flex md6 class="list">
-        <v-text-field ref="textField"
-                      v-model="inputText"
-                      label="添加任务"
-                      outline
+      <v-flex
+        md6
+        class="list"
+      >
+        <v-text-field
+          ref="textField"
+          v-model="inputText"
+          label="添加任务"
+          outline
         >
           <v-fade-transition slot="append">
             <div v-if="focused">
-              <v-btn icon class="primary--text">
+              <v-btn
+                icon
+                class="primary--text"
+              >
                 <v-icon>timer</v-icon>
               </v-btn>
-              <v-btn icon class="primary--text">
+              <v-btn
+                icon
+                class="primary--text"
+              >
                 <v-icon>library_books</v-icon>
               </v-btn>
             </div>
           </v-fade-transition>
         </v-text-field>
       </v-flex>
-      <v-flex md6 class="detail">
+      <v-flex
+        md6
+        class="detail"
+      >
         <div />
       </v-flex>
     </v-layout>
@@ -38,16 +51,16 @@
 </style>
 <script>
 export default {
-  data() {
+  data () {
     return {
       inputText: '',
-      focused: false,
-    };
+      focused: false
+    }
   },
-  mounted() {
+  mounted () {
     this.$watch('$refs.textField.isFocused', val => {
-      this.focused = val;
-    });
-  },
-};
+      this.focused = val
+    })
+  }
+}
 </script>

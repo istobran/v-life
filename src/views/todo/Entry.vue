@@ -2,7 +2,10 @@
   <v-app>
     <nav-bar />
     <side-bar />
-    <v-content class="main-content" :class="{ 'shrink': showMenu }">
+    <v-content
+      class="main-content"
+      :class="{ 'shrink': showMenu }"
+    >
       <router-view />
     </v-content>
     <create-menu-dialog />
@@ -10,19 +13,19 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import NavBar from './NavBar.vue';
-import SideBar from './SideBar.vue';
-import CreateMenuDialog from './dialogs/CreateMenuDialog.vue';
+import { mapGetters } from 'vuex'
+import NavBar from './NavBar.vue'
+import SideBar from './SideBar.vue'
+import CreateMenuDialog from './dialogs/CreateMenuDialog.vue'
 
 export default {
   components: {
-    SideBar, NavBar, CreateMenuDialog,
+    SideBar, NavBar, CreateMenuDialog
   },
   computed: {
-    ...mapGetters(['showMenu']),
-  },
-};
+    ...mapGetters(['showMenu'])
+  }
+}
 </script>
 
 <style lang="scss">

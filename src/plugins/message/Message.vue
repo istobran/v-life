@@ -31,32 +31,32 @@ export default {
     mode: { type: String, default: '' },
     timeout: { type: Number, default: 3e3 },
     color: { type: String, default: 'info' },
-    icon: { type: String, default: '' },
+    icon: { type: String, default: '' }
   },
   data: () => ({
-    active: false,
+    active: false
   }),
   watch: {
-    active(newVal, oldVal) {
+    active (newVal, oldVal) {
       if (!newVal && oldVal) {
-        this.$el.addEventListener('transitionend', this.destroyElement);
+        this.$el.addEventListener('transitionend', this.destroyElement)
       }
-    },
+    }
   },
-  destroyed() {
-    document.body.removeChild(this.$el);
+  destroyed () {
+    document.body.removeChild(this.$el)
   },
   methods: {
-    open() {
-      this.active = true;
+    open () {
+      this.active = true
     },
-    close() {
-      this.active = false;
+    close () {
+      this.active = false
     },
-    destroyElement() {
-      this.$el.removeEventListener('transitionend', this.destroyElement);
-      this.$destroy();
-    },
-  },
-};
+    destroyElement () {
+      this.$el.removeEventListener('transitionend', this.destroyElement)
+      this.$destroy()
+    }
+  }
+}
 </script>

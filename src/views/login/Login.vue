@@ -8,36 +8,54 @@
       <h1 class="login-title display-1">
         登录系统
       </h1>
-      <input v-model="username" type="text" placeholder="请输入用户名"><br>
-      <input v-model="password"
-             type="password"
-             placeholder="请输入密码"
-             @keyup.enter="login"
+      <input
+        v-model="username"
+        type="text"
+        placeholder="请输入用户名"
+      ><br>
+      <input
+        v-model="password"
+        type="password"
+        placeholder="请输入密码"
+        @keyup.enter="login"
       ><br>
       <div class="login-option">
         <span class="login-remember">
-          <input id="remember"
-                 v-model="rememberLogin"
-                 type="checkbox"
-                 class="cb_rem"
-                 name="remember"
+          <input
+            id="remember"
+            v-model="rememberLogin"
+            type="checkbox"
+            class="cb_rem"
+            name="remember"
           >
-          <label class="lb_rem" for="remember">
+          <label
+            class="lb_rem"
+            for="remember"
+          >
             记住我
           </label>
         </span>
         <span class="login-forget">
-          <a class="btn-findpasswd" href="#">
+          <a
+            class="btn-findpasswd"
+            href="#"
+          >
             忘记密码？
           </a>
         </span>
       </div>
-      <button class="login-button" @click="login">
+      <button
+        class="login-button"
+        @click="login"
+      >
         登&nbsp;&nbsp;&nbsp;录
       </button>
       <div class="register-hint">
         <span>
-          还没有账号？<router-link class="btn-register" to="/register">
+          还没有账号？<router-link
+            class="btn-register"
+            to="/register"
+          >
             创建新账户>>
           </router-link>
         </span>
@@ -47,63 +65,63 @@
 </template>
 
 <script>
-import MD5 from 'js-md5';
-import { UserService, successFilter, errToast } from 'Apis';
-import Slideshow from './Slideshow.vue';
+import MD5 from 'js-md5'
+import { UserService, successFilter, errToast } from 'Apis'
+import Slideshow from './Slideshow.vue'
 
 export default {
   components: {
-    Slideshow,
+    Slideshow
   },
-  data() {
+  data () {
     return {
       rememberLogin: false,
       username: '',
-      password: '',
-    };
+      password: ''
+    }
   },
-  created() {
+  created () {
   },
-  mounted() {
-    const isLogin = Boolean(sessionStorage.getItem('isLogin'));
+  mounted () {
+    const isLogin = Boolean(sessionStorage.getItem('isLogin'))
     if (isLogin) {
-      this.$router.push({ path: '/app' });
+      this.$router.push({ path: '/app' })
     } else {
-      const localStatus = Boolean(localStorage.getItem('isLogin'));
+      const localStatus = Boolean(localStorage.getItem('isLogin'))
       if (localStatus) {
-        sessionStorage.setItem('isLogin', localStatus);
-        this.$router.push({ path: '/app' });
+        sessionStorage.setItem('isLogin', localStatus)
+        this.$router.push({ path: '/app' })
       }
     }
   },
   methods: {
-    login() {
+    login () {
       // 验证表单
-      this.username = this.username.trim();
+      this.username = this.username.trim()
       if (!this.username) {
-        this.$message.error('请输入用户名！');
-        return;
+        this.$message.error('请输入用户名！')
+        return
       }
-      this.password = this.password.trim();
+      this.password = this.password.trim()
       if (!this.password) {
-        this.$message.error('请输入密码！');
-        return;
+        this.$message.error('请输入密码！')
+        return
       }
       UserService.login({
         username: this.username,
-        password: MD5.hex(this.password),
+        password: MD5.hex(this.password)
       }).then(successFilter)
         .then(resp => {
-          sessionStorage.setItem('stoken', resp.data);
+          sessionStorage.setItem('stoken', resp.data)
           if (this.rememberLogin) {
-            localStorage.setItem('stoken', resp.data);
+            localStorage.setItem('stoken', resp.data)
           }
-          this.$router.push({ path: '/app' });
+          this.$router.push({ path: '/app' })
         })
-        .catch(errToast);
-    },
-  },
-};
+        .catch(errToast)
+    }
+  }
+}
 </script>
 
 <style lang="scss">

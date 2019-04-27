@@ -1,9 +1,15 @@
 <template>
   <div class="month-selector prevent-select">
-    <v-icon class="prev" @click="prevMonth">
+    <v-icon
+      class="prev"
+      @click="prevMonth"
+    >
       keyboard_arrow_left
     </v-icon>
-    <v-icon class="next" @click="nextMonth">
+    <v-icon
+      class="next"
+      @click="nextMonth"
+    >
       keyboard_arrow_right
     </v-icon>
     <span class="mid-dot">
@@ -30,17 +36,17 @@
 }
 </style>
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters(['currYear', 'currMonth']),
+    ...mapGetters(['currYear', 'currMonth'])
   },
-  created() {
-    this.setupCurr();
+  created () {
+    this.setupCurr()
   },
   methods: {
-    ...mapMutations(['setupCurr', 'nextMonth', 'prevMonth']),
-  },
-};
+    ...mapMutations(['setupCurr', 'nextMonth', 'prevMonth'])
+  }
+}
 </script>

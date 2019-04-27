@@ -1,27 +1,36 @@
 <template lang="html">
   <main id="calendar">
     <header class="dayname-container prevent-select">
-      <div v-for="dayname in daynames" :key="dayname" class="dayname">
+      <div
+        v-for="dayname in daynames"
+        :key="dayname"
+        class="dayname"
+      >
         {{ dayname }}
       </div>
     </header>
     <section class="day-container">
-      <div v-for="(day, index) in days"
-           :key="index"
-           :class="{ 'day': true, 'not-this-month': !day.inThisMonth, 'editing': day.editFlag }"
-           @dblclick="startEdit(day)"
-           @blur="endEdit(day)"
+      <div
+        v-for="(day, index) in days"
+        :key="index"
+        :class="{ 'day': true, 'not-this-month': !day.inThisMonth, 'editing': day.editFlag }"
+        @dblclick="startEdit(day)"
+        @blur="endEdit(day)"
       >
         <header class="day-header prevent-select">
           <i>{{ day.solar }}</i>
-          <span v-if="isToday(day)" class="tag">
+          <span
+            v-if="isToday(day)"
+            class="tag"
+          >
             今天
           </span>
         </header>
-        <day-context :ref="day.moment.format('YYYY-MM-DD')"
-                     v-model="day.context"
-                     :flag="day.editFlag"
-                     @blur="endEdit(day)"
+        <day-context
+          :ref="day.moment.format('YYYY-MM-DD')"
+          v-model="day.context"
+          :flag="day.editFlag"
+          @blur="endEdit(day)"
         />
       </div>
     </section>
@@ -29,54 +38,54 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import DayContext from './DayContext.vue';
+import { mapGetters } from 'vuex'
+import DayContext from './DayContext.vue'
 
 export default {
   components: {
-    DayContext,
+    DayContext
   },
-  data() {
+  data () {
     return {
       daynames: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
       days: [],
-      events: {}, // key: YYYY-MM-DD, value: context
-    };
+      events: {} // key: YYYY-MM-DD, value: context
+    }
   },
-  created() {
+  created () {
   },
-  beforeRouteEnter(to, from, next) {
-    const reqRoute = to.fullPath.replace('/app/', '').split('/');
+  beforeRouteEnter (to, from, next) {
+    const reqRoute = to.fullPath.replace('/app/', '').split('/')
     next(vm => {
-      vm.reqRoute = reqRoute;
-      vm.loadEvents();
-      vm.render();
-    });
+      vm.reqRoute = reqRoute
+      vm.loadEvents()
+      vm.render()
+    })
   },
-  beforeRouteUpdate(to, from, next) {
-    this.reqRoute = to.fullPath.replace('/app/', '').split('/');
-    this.loadEvents();
-    this.render();
-    next();
+  beforeRouteUpdate (to, from, next) {
+    this.reqRoute = to.fullPath.replace('/app/', '').split('/')
+    this.loadEvents()
+    this.render()
+    next()
   },
-  mounted() {
+  mounted () {
     // 监听月份变化
-    this.$store.watch(state => state.curr.month, this.render);
+    this.$store.watch(state => state.curr.month, this.render)
     // 读取本地事件数据
     // this.loadEvents();
     // this.render();
   },
   computed: {
-    ...mapGetters(['showMenu', 'today', 'curr', 'currYear', 'currMonth']),
+    ...mapGetters(['showMenu', 'today', 'curr', 'currYear', 'currMonth'])
   },
   methods: {
     // 渲染日历
-    render() {
-      this.days.splice(0, this.days.length);
+    render () {
+      this.days.splice(0, this.days.length)
       // 获取当前日期
-      const current = this.curr;
+      const current = this.curr
       // 获取当月天数
-      const monthDays = current.daysInMonth();
+      const monthDays = current.daysInMonth()
 
       // 创建日历表
       for (let i = 1; i <= monthDays; i++) {
@@ -86,17 +95,17 @@ export default {
           inThisMonth: true,
           editFlag: false,
           moment: current.clone().date(i),
-          context: '',
-        });
+          context: ''
+        })
       }
 
       // 获取当月第一天是星期几（从 0 开始，0 是星期天）
-      const firstDay = current.clone().date(1);
+      const firstDay = current.clone().date(1)
 
       // 补全日历（前）
       if (firstDay.day() > 1 || firstDay.day() === 0) {
         // 获取上个月的最后一天
-        let temp1 = firstDay.subtract(1, 'days');
+        let temp1 = firstDay.subtract(1, 'days')
         while (temp1.day() !== 0) { // 补到星期一
           this.days.unshift({
             solar: temp1.date(), // 公历
@@ -104,17 +113,17 @@ export default {
             inThisMonth: false,
             editFlag: false,
             moment: temp1.clone(),
-            context: '',
-          });
-          temp1 = temp1.subtract(1, 'days');
+            context: ''
+          })
+          temp1 = temp1.subtract(1, 'days')
         }
       }
 
       // 获取当月最后一天
-      const lastDay = current.clone().date(monthDays);
+      const lastDay = current.clone().date(monthDays)
       // 补全日历（后）
       if (lastDay.day() <= 6) {
-        let temp2 = lastDay.add(1, 'days');
+        let temp2 = lastDay.add(1, 'days')
         while (temp2.day() !== 1) { // 补到星期天
           this.days.push({
             solar: temp2.date(), // 公历
@@ -122,83 +131,83 @@ export default {
             inThisMonth: false,
             editFlag: false,
             moment: temp2.clone(),
-            context: '',
-          });
-          temp2 = temp2.add(1, 'days');
+            context: ''
+          })
+          temp2 = temp2.add(1, 'days')
         }
       }
 
       // 导入事件
-      this.insertEvents();
+      this.insertEvents()
     },
     // 将事件导入日历表
-    insertEvents() {
+    insertEvents () {
       this.days.forEach(day => {
         if (this.events[day.moment.format('YYYY-MM-DD')]) {
-          day.context = this.events[day.moment.format('YYYY-MM-DD')];
+          day.context = this.events[day.moment.format('YYYY-MM-DD')]
           if (this.isToday(day)) {
-            const vnode = document.createElement('span');
-            vnode.innerHTML = day.context;
-            this.$notify('今日任务', vnode.innerText);
+            const vnode = document.createElement('span')
+            vnode.innerHTML = day.context
+            this.$notify('今日任务', vnode.innerText)
           }
         }
-      });
+      })
       // 等待子组件 props 数据变化后再触发事件
       this.$nextTick(() => {
-        this.$emit('updateContext');
-      });
+        this.$emit('updateContext')
+      })
     },
     // 读取本地存储的事件列表
-    loadEvents() {
-      const data = window.localStorage[`v-life-events-${this.reqRoute.join('-')}`];
+    loadEvents () {
+      const data = window.localStorage[`v-life-events-${this.reqRoute.join('-')}`]
       if (data) {
-        this.events = JSON.parse(data);
+        this.events = JSON.parse(data)
       } else {
-        this.events = {};
+        this.events = {}
       }
     },
     // 保存事件列表到本地
-    saveEvents() {
-      window.localStorage[`v-life-events-${this.reqRoute.join('-')}`] = JSON.stringify(this.events);
+    saveEvents () {
+      window.localStorage[`v-life-events-${this.reqRoute.join('-')}`] = JSON.stringify(this.events)
     },
     // 判断是否为今天
-    isToday(day) {
-      return day.moment.diff(this.today, 'days') === 0;
+    isToday (day) {
+      return day.moment.diff(this.today, 'days') === 0
     },
     // 进入编辑日历
-    startEdit(day) {
+    startEdit (day) {
       if (day.inThisMonth) {
-        day.editFlag = true;
+        day.editFlag = true
         // 这里有坑：http://stackoverflow.com/a/37162116/5160100
         // contentEditable元素不能够直接focus，需要有timeout
-        const node = this.$refs[day.moment.format('YYYY-MM-DD')][0].$el;
+        const node = this.$refs[day.moment.format('YYYY-MM-DD')][0].$el
         // console.log(node);
-        setTimeout(() => node.focus(), 0);
+        setTimeout(() => node.focus(), 0)
       }
     },
     // 退出编辑日历
-    endEdit(day) {
+    endEdit (day) {
       if (day.inThisMonth) {
-        day.editFlag = false;
-        const tempNode = document.createElement('p');
-        tempNode.innerHTML = day.context;
+        day.editFlag = false
+        const tempNode = document.createElement('p')
+        tempNode.innerHTML = day.context
         if (tempNode.innerText.trim().length === 0) {
-          day.context = '';
-          delete this.events[day.moment.format('YYYY-MM-DD')];
+          day.context = ''
+          delete this.events[day.moment.format('YYYY-MM-DD')]
         } else {
-          this.events[day.moment.format('YYYY-MM-DD')] = day.context;
+          this.events[day.moment.format('YYYY-MM-DD')] = day.context
         }
-        this.saveEvents();
+        this.saveEvents()
       }
-    },
+    }
     // 修改日历值
     // changeContext(day) {
     //   const refName = day.moment.format('YYYY-MM-DD')
     //   day.context = this.$refs[refName][0].innerHTML;
     //   console.log(this.$refs[refName][0].innerHTML);
     // }
-  },
-};
+  }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

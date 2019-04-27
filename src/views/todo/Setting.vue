@@ -1,5 +1,8 @@
 <template lang="html">
-  <main id="setting" class="clearfix">
+  <main
+    id="setting"
+    class="clearfix"
+  >
     <div class="system-setting pull-left">
       <h1 class="md-title">
         系统设置
@@ -9,13 +12,19 @@
         <span class="pull-left">
           同步到云端
         </span>
-        <v-switch v-model="checked1" class="pull-right" />
+        <v-switch
+          v-model="checked1"
+          class="pull-right"
+        />
       </p>
       <p class="clearfix">
         <span class="pull-left">
           同步到谷歌日历
         </span>
-        <v-switch v-model="checked2" class="pull-right" />
+        <v-switch
+          v-model="checked2"
+          class="pull-right"
+        />
       </p>
     </div>
     <div class="personal-setting pull-left">
@@ -35,42 +44,54 @@
         <span class="pull-left">
           绑定邮箱：
         </span>
-        <v-input type="email" class="pull-right" label="请输入绑定邮箱" />
+        <v-input
+          type="email"
+          class="pull-right"
+          label="请输入绑定邮箱"
+        />
       </p>
       <p class="clearfix">
         <span class="pull-left">
           修改密码：
         </span>
-        <v-input type="password" class="pull-right" label="请输入新密码" />
+        <v-input
+          type="password"
+          class="pull-right"
+          label="请输入新密码"
+        />
       </p>
       <p class="clearfix">
         <span class="pull-left">
           确认密码：
         </span>
-        <v-input type="password" class="pull-right" label="请再次确认新密码" />
+        <v-input
+          type="password"
+          class="pull-right"
+          label="请再次确认新密码"
+        />
       </p>
     </div>
   </main>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from 'vuex'
 
 export default {
-  data() {
+  data () {
     return {
       checked1: true,
       checked2: true,
       user: {
         avatarUrl: 'http://en.gravatar.com/userimage/99616975/827489fdfb37acbf6ed0254f4f311417.jpg?size=48',
         username: 'BangZ',
-        email: 'i@bangz.me',
-      },
-    };
+        email: 'i@bangz.me'
+      }
+    }
   },
   computed: {
-    ...mapGetters(['showMenu']),
-  },
-};
+    ...mapGetters(['showMenu'])
+  }
+}
 </script>
 <style lang="sass">
 #setting
