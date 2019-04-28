@@ -6,40 +6,40 @@
   >
     <div class="sidebar-inner grey--text darken-2 prevent-select">
       <ul class="custom">
-        <router-link
+        <RouterLink
           v-for="item in navList.custom"
           :key="item.name"
           v-ripple
           tag="li"
           :to="item.link"
         >
-          <v-icon
+          <VIcon
             :style="{ 'color': item.color }"
             class="m0"
           >
             {{ item.icon }}
-          </v-icon>
+          </VIcon>
           <span class="text">
             {{ item.name }}
           </span>
-          <v-icon
+          <VIcon
             class="btn-close"
             @click.prevent.stop="delRequest(item)"
           >
             clear
-          </v-icon>
-        </router-link>
+          </VIcon>
+        </RouterLink>
         <li
           id="btnCreate"
           v-ripple
           @click="addMenu"
         >
-          <v-icon
+          <VIcon
             :style="{ 'color': '#616161' }"
             class="m0"
           >
             add
-          </v-icon>
+          </VIcon>
           <span class="text">
             新建
           </span>

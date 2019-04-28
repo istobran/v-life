@@ -4,14 +4,14 @@ import Router from 'vue-router'
 // route level code-splitting
 // this generates a separate chunk (about.[hash].js) for this route
 // which is lazy-loaded when the route is visited.
-const Calendar = () => import(/* webpackChunkName: "calendar" */ './views/todo/calendar/Calendar')
-const TaskList = () => import(/* webpackChunkName: "taskList" */ './views/todo/tasklist/TaskList')
-const Bookmark = () => import(/* webpackChunkName: "bookmark" */ './views/bookmark/Bookmark')
-const Setting = () => import(/* webpackChunkName: "setting" */ './views/todo/Setting')
-const Support = () => import(/* webpackChunkName: "support" */ './views/todo/Support')
-const AppEntry = () => import(/* webpackChunkName: "entry" */ './views/todo/Entry')
-const LoginPage = () => import(/* webpackChunkName: "login" */ './views/login/Login')
-const RegisterPage = () => import(/* webpackChunkName: "register" */ './views/login/Register')
+const Calendar = () => import(/* webpackChunkName: "calendar" */ './views/todo/calendar/Calendar.vue')
+const TaskList = () => import(/* webpackChunkName: "taskList" */ './views/todo/tasklist/TaskList.vue')
+const Bookmark = () => import(/* webpackChunkName: "bookmark" */ './views/bookmark/Bookmark.vue')
+const Setting = () => import(/* webpackChunkName: "setting" */ './views/todo/Setting.vue')
+const Support = () => import(/* webpackChunkName: "support" */ './views/todo/Support.vue')
+const AppEntry = () => import(/* webpackChunkName: "entry" */ './views/todo/Entry.vue')
+const LoginPage = () => import(/* webpackChunkName: "login" */ './views/login/Login.vue')
+const RegisterPage = () => import(/* webpackChunkName: "register" */ './views/login/Register.vue')
 
 Vue.use(Router)
 

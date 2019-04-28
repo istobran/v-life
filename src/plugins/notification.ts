@@ -1,7 +1,8 @@
 import Alarm from 'Images/alarm.jpg'
+import _Vue from 'Vue'
 
-function Install (Vue) {
-  Vue.prototype.$notify = (title, text) => {
+function Install (Vue: typeof _Vue) {
+  Vue.prototype.$notify = (title: string, text: string) => {
     const options = {
       body: text,
       icon: Alarm
@@ -14,9 +15,9 @@ function Install (Vue) {
       const notification = new Notification(title, options)
       setTimeout(notification.close.bind(notification), 5000)
     } else if (Notification.permission !== 'denied') {
-      Notification.requestPermission(permission => {
+      Notification.requestPermission().then(result => {
         // If the user accepts, let's create a notification
-        if (permission === 'granted') {
+        if (result === 'granted') {
           const notification = new Notification(title, options)
           setTimeout(notification.close.bind(notification), 5000)
         }

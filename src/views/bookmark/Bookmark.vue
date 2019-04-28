@@ -4,15 +4,15 @@
     :class="{ 'main-content': true, 'shrink': showMenu }"
   >
     <div class="op-container">
-      <v-btn @click="openAddBookmark">
-        <v-icon>add</v-icon> 新增便签
-      </v-btn>
+      <VBtn @click="openAddBookmark">
+        <VIcon>add</VIcon> 新增便签
+      </VBtn>
     </div>
-    <waterfall
+    <Waterfall
       :line-gap="220"
       :watch="stickers"
     >
-      <waterfall-slot
+      <WaterfallSlot
         v-for="(sticker, index) in stickers"
         :key="sticker.id"
         :width="sticker.width"
@@ -24,18 +24,18 @@
           class="bookmark-instance"
           type="todo"
         >
-          <v-icon
+          <VIcon
             class="btn-del"
             @click.native="delBookmark(index)"
           >
             close
-          </v-icon>
+          </VIcon>
           <ul>
             <li
               v-for="it in sticker.content"
               :key="it.id"
             >
-              <v-checkbox
+              <VCheckbox
                 v-model="it.checked"
                 :label="it.desc"
               />
@@ -47,12 +47,12 @@
           class="bookmark-instance"
           type="text"
         >
-          <v-icon
+          <VIcon
             class="btn-del"
             @click="delBookmark(index)"
           >
             close
-          </v-icon>
+          </VIcon>
           {{ sticker.content }}
         </div>
         <div
@@ -60,17 +60,17 @@
           class="bookmark-instance"
           type="draw"
         >
-          <v-icon
+          <VIcon
             class="btn-del"
             @click="delBookmark(index)"
           >
             close
-          </v-icon>
+          </VIcon>
           <img :src="sticker.content">
         </div>
-      </waterfall-slot>
-    </waterfall>
-    <create-bookmark-dialog
+      </WaterfallSlot>
+    </Waterfall>
+    <CreateBookmarkDialog
       @addText="addText"
       @addTodo="addTodo"
       @addDraw="addDraw"

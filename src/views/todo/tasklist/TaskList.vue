@@ -1,41 +1,41 @@
 <template>
   <main id="tasklist">
-    <v-layout>
-      <v-flex
+    <VLayout>
+      <VFlex
         md6
         class="list"
       >
-        <v-text-field
+        <VTextField
           ref="textField"
           v-model="inputText"
           label="添加任务"
           outline
         >
-          <v-fade-transition slot="append">
+          <VFadeTransition slot="append">
             <div v-if="focused">
-              <v-btn
+              <VBtn
                 icon
                 class="primary--text"
               >
-                <v-icon>timer</v-icon>
-              </v-btn>
-              <v-btn
+                <VIcon>timer</VIcon>
+              </VBtn>
+              <VBtn
                 icon
                 class="primary--text"
               >
-                <v-icon>library_books</v-icon>
-              </v-btn>
+                <VIcon>library_books</VIcon>
+              </VBtn>
             </div>
-          </v-fade-transition>
-        </v-text-field>
-      </v-flex>
-      <v-flex
+          </VFadeTransition>
+        </VTextField>
+      </VFlex>
+      <VFlex
         md6
         class="detail"
       >
         <div />
-      </v-flex>
-    </v-layout>
+      </VFlex>
+    </VLayout>
   </main>
 </template>
 <style lang="scss">

@@ -1,35 +1,35 @@
 <template lang="html">
-  <v-toolbar
+  <VToolbar
     class="nav-bar primary"
     dark
   >
-    <v-toolbar-side-icon @click="toggleMenu" />
-    <v-toolbar-title>{{ title }}</v-toolbar-title>
-    <month-selector v-if="$route.name === 'calendar'" />
-    <task-info v-if="$route.name === 'tasklist'" />
-    <v-spacer />
-    <router-link
+    <VToolbarSideIcon @click="toggleMenu" />
+    <VToolbarTitle>{{ title }}</VToolbarTitle>
+    <MonthSelector v-if="$route.name === 'calendar'" />
+    <TaskInfo v-if="$route.name === 'taskList'" />
+    <VSpacer />
+    <RouterLink
       is="v-btn"
       to="/todo/tasklist"
       flat
       icon
     >
-      <v-icon>list</v-icon>
-    </router-link>
-    <router-link
+      <VIcon>list</VIcon>
+    </RouterLink>
+    <RouterLink
       is="v-btn"
       to="/todo/calendar"
       flat
       icon
     >
-      <v-icon>today</v-icon>
-    </router-link>
-    <v-toolbar-items class="hidden-sm-and-down">
-      <v-menu
+      <VIcon>today</VIcon>
+    </RouterLink>
+    <VToolbarItems class="hidden-sm-and-down">
+      <VMenu
         class="user-container prevent-select"
         offset-y
       >
-        <v-btn
+        <VBtn
           slot="activator"
           flat
         >
@@ -42,26 +42,26 @@
               alt=""
             >
           </span>
-        </v-btn>
-        <v-list>
-          <v-list-tile @click="setting">
-            <v-icon class="mr-2">
+        </VBtn>
+        <VList>
+          <VListTile @click="setting">
+            <VIcon class="mr-2">
               settings
-            </v-icon> 设置
-          </v-list-tile>
-          <v-list-tile @click="support">
-            <v-icon class="mr-2">
+            </VIcon> 设置
+          </VListTile>
+          <VListTile @click="support">
+            <VIcon class="mr-2">
               help
-            </v-icon> 帮助
-          </v-list-tile>
-          <v-divider />
-          <v-list-tile @click="logout">
+            </VIcon> 帮助
+          </VListTile>
+          <VDivider />
+          <VListTile @click="logout">
             退出登录
-          </v-list-tile>
-        </v-list>
-      </v-menu>
-    </v-toolbar-items>
-  </v-toolbar>
+          </VListTile>
+        </VList>
+      </VMenu>
+    </VToolbarItems>
+  </VToolbar>
 </template>
 
 <script>

@@ -1,6 +1,6 @@
 <template lang="html">
   <div id="login">
-    <slideshow />
+    <Slideshow />
     <div class="register-container">
       <div class="register-avatar">
         <i class="fa fa-user" />
@@ -42,12 +42,12 @@
       </button>
       <div class="login-hint">
         <span>
-          已拥有账号？<router-link
+          已拥有账号？<RouterLink
             class="btn-login"
             to="/login"
           >
             去登录>>
-          </router-link>
+          </RouterLink>
         </span>
       </div>
     </div>

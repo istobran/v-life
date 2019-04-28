@@ -12,7 +12,7 @@
         <span class="pull-left">
           同步到云端
         </span>
-        <v-switch
+        <VSwitch
           v-model="checked1"
           class="pull-right"
         />
@@ -21,7 +21,7 @@
         <span class="pull-left">
           同步到谷歌日历
         </span>
-        <v-switch
+        <VSwitch
           v-model="checked2"
           class="pull-right"
         />
@@ -44,7 +44,7 @@
         <span class="pull-left">
           绑定邮箱：
         </span>
-        <v-input
+        <VInput
           type="email"
           class="pull-right"
           label="请输入绑定邮箱"
@@ -54,7 +54,7 @@
         <span class="pull-left">
           修改密码：
         </span>
-        <v-input
+        <VInput
           type="password"
           class="pull-right"
           label="请输入新密码"
@@ -64,7 +64,7 @@
         <span class="pull-left">
           确认密码：
         </span>
-        <v-input
+        <VInput
           type="password"
           class="pull-right"
           label="请再次确认新密码"

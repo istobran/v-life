@@ -1,38 +1,38 @@
 <template lang="html">
-  <v-dialog
+  <VDialog
     v-model="show"
     class="ab-dialog prevent-select"
     @close="close"
   >
-    <v-card>
-      <v-card-title
+    <VCard>
+      <VCardTitle
         class="ab-title headline grey lighten-2"
         primary-title
       >
         <span class="v-mid">
           新建便签
         </span>
-        <v-btn
+        <VBtn
           class="v-icon-button"
           @click="toggleTab(type.TEXT)"
         >
-          <v-icon>title</v-icon>
-        </v-btn>
-        <v-btn
+          <VIcon>title</VIcon>
+        </VBtn>
+        <VBtn
           class="v-icon-button"
           @click="toggleTab(type.TODO)"
         >
-          <v-icon>menu</v-icon>
-        </v-btn>
-        <v-btn
+          <VIcon>menu</VIcon>
+        </VBtn>
+        <VBtn
           class="v-icon-button"
           @click="toggleTab(type.DRAW)"
         >
-          <v-icon>create</v-icon>
-        </v-btn>
-      </v-card-title>
-    </v-card>
-    <v-card-text v-show="currentType === type.TEXT">
+          <VIcon>create</VIcon>
+        </VBtn>
+      </VCardTitle>
+    </VCard>
+    <VCardText v-show="currentType === type.TEXT">
       <textarea
         v-model="textPane.input"
         name="name"
@@ -40,8 +40,8 @@
         cols="60"
         placeholder="请在这里输入便签内容"
       />
-    </v-card-text>
-    <v-card-text
+    </VCardText>
+    <VCardText
       v-show="currentType === type.TODO"
       type="todo"
     >
@@ -51,26 +51,26 @@
           :key="index"
           class="clearfix"
         >
-          <v-checkbox
+          <VCheckbox
             v-model="todo.checked"
             :label="todo.desc"
           />
-          <v-btn
+          <VBtn
             class="v-icon-button pull-right"
             @click="delTodo(index)"
           >
-            <v-icon>cancel</v-icon>
-          </v-btn>
+            <VIcon>cancel</VIcon>
+          </VBtn>
         </li>
       </ul>
-      <v-input
+      <VInput
         v-model="todoPane.input"
         label="输入要完成的任务"
         prepend-icon="add"
         @keyup.enter.native="addTodo"
       />
-    </v-card-text>
-    <v-card-text
+    </VCardText>
+    <VCardText
       v-show="currentType === type.DRAW"
       type="draw"
     >
@@ -81,13 +81,13 @@
         :state="drawPane.state"
         :style="{ 'background-color': drawPane.bgColor }"
       />
-    </v-card-text>
-    <v-card-actions>
+    </VCardText>
+    <VCardActions>
       <div
         v-show="currentType === type.DRAW"
         class="draw-tool-bar"
       >
-        <v-btn
+        <VBtn
           class="draw-tool"
           @click="toggleTool(tool.PEN)"
         >
@@ -95,8 +95,8 @@
             src="~Images/pen.svg"
             class="svg v-icon md-theme-default"
           >
-        </v-btn>
-        <v-btn
+        </VBtn>
+        <VBtn
           class="draw-tool"
           @click="toggleTool(tool.ERASER)"
         >
@@ -104,8 +104,8 @@
             src="~Images/eraser.svg"
             class="svg v-icon md-theme-default"
           >
-        </v-btn>
-        <v-btn
+        </VBtn>
+        <VBtn
           class="draw-tool"
           @click="showPalette"
         >
@@ -113,7 +113,7 @@
             src="~Images/palette.svg"
             class="svg v-icon md-theme-default"
           >
-        </v-btn>
+        </VBtn>
         <div
           v-show="drawPane.showPalette"
           ref="palette"
@@ -197,14 +197,14 @@
           </div>
         </div>
       </div>
-      <v-btn @click="show=false">
+      <VBtn @click="show=false">
         取消
-      </v-btn>
-      <v-btn @click="createBookmark">
+      </VBtn>
+      <VBtn @click="createBookmark">
         新建
-      </v-btn>
-    </v-card-actions>
-  </v-dialog>
+      </VBtn>
+    </VCardActions>
+  </VDialog>
 </template>
 
 <script>

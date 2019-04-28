@@ -1,6 +1,6 @@
 <template lang="html">
   <div id="login">
-    <slideshow />
+    <Slideshow />
     <div class="login-container">
       <div class="login-avatar">
         <i class="fa fa-user" />
@@ -52,12 +52,12 @@
       </button>
       <div class="register-hint">
         <span>
-          还没有账号？<router-link
+          还没有账号？<RouterLink
             class="btn-register"
             to="/register"
           >
             创建新账户>>
-          </router-link>
+          </RouterLink>
         </span>
       </div>
     </div>

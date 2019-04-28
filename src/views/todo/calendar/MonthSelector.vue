@@ -1,17 +1,17 @@
 <template>
   <div class="month-selector prevent-select">
-    <v-icon
+    <VIcon
       class="prev"
       @click="prevMonth"
     >
       keyboard_arrow_left
-    </v-icon>
-    <v-icon
+    </VIcon>
+    <VIcon
       class="next"
       @click="nextMonth"
     >
       keyboard_arrow_right
-    </v-icon>
+    </VIcon>
     <span class="mid-dot">
       &bull;
     </span>

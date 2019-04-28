@@ -1,15 +1,15 @@
 <template lang="html">
-  <v-app>
-    <nav-bar />
-    <side-bar />
-    <v-content
+  <VApp>
+    <NavBar />
+    <SideBar />
+    <VContent
       class="main-content"
       :class="{ 'shrink': showMenu }"
     >
-      <router-view />
-    </v-content>
-    <create-menu-dialog />
-  </v-app>
+      <RouterView />
+    </VContent>
+    <CreateMenuDialog />
+  </VApp>
 </template>
 
 <script>
@@ -30,6 +30,7 @@ export default {
 
 <style lang="scss">
 @import "~Styles/toast.scss";
+
 .main-content {
   position: absolute;
   left: 0;

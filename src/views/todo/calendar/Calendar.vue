@@ -26,7 +26,7 @@
             今天
           </span>
         </header>
-        <day-context
+        <DayContext
           :ref="day.moment.format('YYYY-MM-DD')"
           v-model="day.context"
           :flag="day.editFlag"
