@@ -1,28 +1,52 @@
-import Message from './Message.vue'
+import Message from './Message.js'
+import _Vue from 'vue'
 
-const colors = ['success', 'info', 'warning', 'error']
-
-function Install (Vue, options) {
-  const property = (options && options.property) || '$message'
-
-  function createMessageCmp (opts) {
-    const cmp = new Vue(Message)
-    Object.assign(cmp, Vue.prototype[property].options || {}, opts)
-    document.body.appendChild(cmp.$mount().$el)
-    cmp.open()
-    return cmp.$el
-  }
-
-  function show (opts = {}) {
-    return createMessageCmp(opts)
-  }
-
-  colors.forEach(color => {
-    show[color] = (text, opts) => show({ text, color, ...opts })
-  })
-
-  Vue.prototype[property] = show // eslint-disable-line no-param-reassign
-  Vue.prototype[property].options = options // eslint-disable-line no-param-reassign
+interface IVuetifyMessagePluginOptions {
+  property?: string
 }
 
-export default Install
+interface IMessageProps {
+  text?: string,
+  x?: string,
+  y?: string,
+  mode?: string,
+  timeout?: number,
+  color?: string,
+  icon?: string,
+}
+
+const colors = <const> ['success', 'info', 'warning', 'error']
+type ColorName = typeof colors[number]
+
+type IMessageFunction = {
+  (opts: IMessageProps): Element;
+} & {
+  [K in ColorName]: (text: string, opts: IMessageProps) => Element
+}
+
+function MessagePlugin (Vue: typeof _Vue, options: IVuetifyMessagePluginOptions): void {
+  function createMessageCmp (opts: IMessageProps): Element {
+    const messageComponent = new Message()
+    Object.assign(messageComponent, Vue.prototype.$message.options || {}, opts)
+    document.body.appendChild(messageComponent.$mount().$el)
+    messageComponent.open()
+    return messageComponent.$el
+  }
+
+  Vue.prototype.$message = (function () {
+    function sourceShow (opts: IMessageProps = {}): Element {
+      return createMessageCmp(opts)
+    }
+
+    sourceShow.success = (text: string, opts: IMessageProps): Element => sourceShow({ text, color: 'success', ...opts })
+    sourceShow.info = (text: string, opts: IMessageProps): Element => sourceShow({ text, color: 'info', ...opts })
+    sourceShow.warning = (text: string, opts: IMessageProps): Element => sourceShow({ text, color: 'warning', ...opts })
+    sourceShow.error = (text: string, opts: IMessageProps): Element => sourceShow({ text, color: 'error', ...opts })
+
+    return sourceShow
+  })() as IMessageFunction // eslint-disable-line no-param-reassign
+
+  Vue.prototype.$message.options = options // eslint-disable-line no-param-reassign
+}
+
+export default MessagePlugin
