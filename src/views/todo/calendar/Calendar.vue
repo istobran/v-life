@@ -1,27 +1,36 @@
 <template lang="html">
   <main id="calendar">
     <header class="dayname-container prevent-select">
-      <div v-for="dayname in daynames" :key="dayname" class="dayname">
+      <div
+        v-for="dayname in daynames"
+        :key="dayname"
+        class="dayname"
+      >
         {{ dayname }}
       </div>
     </header>
     <section class="day-container">
-      <div v-for="(day, index) in days"
-           :key="index"
-           :class="{ 'day': true, 'not-this-month': !day.inThisMonth, 'editing': day.editFlag }"
-           @dblclick="startEdit(day)"
-           @blur="endEdit(day)"
+      <div
+        v-for="(day, index) in days"
+        :key="index"
+        :class="{ 'day': true, 'not-this-month': !day.inThisMonth, 'editing': day.editFlag }"
+        @dblclick="startEdit(day)"
+        @blur="endEdit(day)"
       >
         <header class="day-header prevent-select">
           <i>{{ day.solar }}</i>
-          <span v-if="isToday(day)" class="tag">
+          <span
+            v-if="isToday(day)"
+            class="tag"
+          >
             今天
           </span>
         </header>
-        <day-context :ref="day.moment.format('YYYY-MM-DD')"
-                     v-model="day.context"
-                     :flag="day.editFlag"
-                     @blur="endEdit(day)"
+        <day-context
+          :ref="day.moment.format('YYYY-MM-DD')"
+          v-model="day.context"
+          :flag="day.editFlag"
+          @blur="endEdit(day)"
         />
       </div>
     </section>
